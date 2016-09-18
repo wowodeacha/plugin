@@ -1,0 +1,42 @@
+
+
+
+
+#remote cmds 远程命令
+
+    #查看远程库
+    git remote -v
+
+    #关联一个远程库 \
+    git remote add origin git@--------.git
+
+    #推送命令
+    git push -u origin master
+
+    #从远程克隆
+    git clone git@-------.git
+
+    #
+    git merge upstream/origin
+
+
+
+#git branch cmds  分支命令
+
+    #查看分支
+    git branch
+
+    创建分支
+    git branch <name>
+
+    切换分支：
+    git checkout <name>
+
+    创建+切换分支：
+    git checkout -b <name>
+
+    合并某分支到当前分支：
+    git merge <name>
+
+    删除分支：
+    git branch -d <name>
