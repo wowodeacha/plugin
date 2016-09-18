@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Material_Form</class>
+ <widget class="QWidget" name="Material_Form">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>485</width>
+    <height>590</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Material_Tool</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout">
+   <item row="0" column="0">
+    <layout class="QVBoxLayout" name="verticalLayout">
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout_2">
+       <item>
+        <widget class="QLineEdit" name="SGJson_lineEdit"/>
+       </item>
+       <item>
+        <widget class="QPushButton" name="getCurrentPath_pushButton">
+         <property name="text">
+          <string>获取当前场景路径</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="selectFileDir_pushButton">
+         <property name="text">
+          <string>浏览...</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout">
+       <item>
+        <layout class="QVBoxLayout" name="verticalLayout_2">
+         <item>
+          <layout class="QGridLayout" name="gridLayout_2">
+           <item row="0" column="0">
+            <widget class="QComboBox" name="SGJson_comboBox">
+             <property name="maximumSize">
+              <size>
+               <width>16777215</width>
+               <height>20</height>
+              </size>
+             </property>
+             <property name="iconSize">
+              <size>
+               <width>16</width>
+               <height>20</height>
+              </size>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="1">
+            <spacer name="horizontalSpacer_3">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>40</width>
+               <height>15</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item row="3" column="2">
+            <layout class="QHBoxLayout" name="horizontalLayout_4">
+             <item>
+              <widget class="QCheckBox" name="method_checkBox">
+               <property name="text">
+                <string>点击切换</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="LoadMesh_pushButton">
+               <property name="text">
+                <string>载入</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="outPut_pushButton">
+               <property name="text">
+                <string>输出</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item row="3" column="0">
+            <widget class="QPushButton" name="LoadJson_pushButton">
+             <property name="text">
+              <string>导入</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="0">
+            <widget class="QLabel" name="matJson_label">
+             <property name="styleSheet">
+              <string notr="true">background-color: rgb(230, 248, 255);
+color: rgb(0, 0, 0);</string>
+             </property>
+             <property name="text">
+              <string>材质资源</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignCenter</set>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="2">
+            <widget class="QLabel" name="modelList_label">
+             <property name="styleSheet">
+              <string notr="true">background-color: rgb(230, 248, 255);
+color: rgb(0, 0, 0);</string>
+             </property>
+             <property name="text">
+              <string>当前模型列表</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignCenter</set>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="0">
+            <widget class="QListWidget" name="mat_listWidget"/>
+           </item>
+           <item row="2" column="2">
+            <widget class="QListWidget" name="currentModelList_listWidget"/>
+           </item>
+           <item row="0" column="2">
+            <widget class="QLabel" name="changeEditType_label">
+             <property name="styleSheet">
+              <string notr="true">background-color: rgb(20, 170, 255);
+color: rgb(0, 0, 255);
+</string>
+             </property>
+             <property name="text">
+              <string>点击切换列表操作模式（点我切换）</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignCenter</set>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <widget class="QProgressBar" name="MatReplace_progressBar">
+       <property name="value">
+        <number>0</number>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item row="1" column="0">
+    <layout class="QHBoxLayout" name="horizontalLayout_5">
+     <item>
+      <widget class="QPushButton" name="MatReplace_pushButton">
+       <property name="text">
+        <string>》上材质》</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
