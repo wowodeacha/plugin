@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'Texture_Replace_UI.ui'
 #
-# Created by: PyQt4 UI code generator 4.11.4
+# Created by: PyQt4 ui code generator 4.11.4
 #
 # WARNING! All changes made in this file will be lost!
 

@@ -1,22 +1,27 @@
 # -*- coding: utf-8 -*-
-'''
-autor     yangjie
-mail      wowodeacha@gmail.com
-created   2016.07.20
-Nothing Impossible
+#
+# author     YangJie
+# mail      wowodeacha@gmail.com
+# created   2016.07.20
+# Nothing Impossible
+#
+#
 
-'''
 import maya.cmds as mpy
 import maya.OpenMaya as OpenMaya
 
-class faceRigPubFuc():
-    def __init__(self,auther = 'YJ'):
-        self.auther = auther
-    #2根据骨骼生成曲线
-    def createCvByJnts(self,cName,inList):
-        jntDir = self.getObjListPivDir(inList)
+
+class FaceRigPubFuc():
+    def __init__(self, author='YJ'):
+        self.author = author
+#    根据骨骼生成曲线
+#
+
+    def create_cv_by_jnt(self, cv_name, in_list):
+
+        jntDir = self.getObjListPivDir(in_list)
         jntPivList = jntDir.values()
-        mpy.curve(n = cName , ep =jntPivList)
+        mpy.curve(n=cv_name , ep =jntPivList)
         return
     
     #2给骨骼添加标签
