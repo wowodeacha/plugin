@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
-'''
-autor yangjie
-mail wowodeacha@gmail.com
+#
+# author YangJie
+# mail wowodeacha@gmail.com
+#
+#
 
-'''
-
-from UI.FaceRig import Ui_faceUI_Form
+from ui.FaceRig import Ui_faceUI_Form
 from PyQt4 import QtGui,QtCore
 import maya.cmds as mpy
 from customAttrSet import customAttrSetCla
