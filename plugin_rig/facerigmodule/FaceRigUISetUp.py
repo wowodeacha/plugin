@@ -8,7 +8,7 @@
 from plugin_rig.ui.facerig import Ui_faceUI_Form
 from PyQt4 import QtGui,QtCore
 import maya.cmds as mpy
-from customAttrSet import customAttrSetCla
+from plugin_rig.customAttrSet import customAttrSetCla
 
 
 #设置表情窗口
