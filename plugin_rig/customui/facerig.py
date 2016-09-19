@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'FaceRig.ui'
+# Form implementation generated from reading ui file 'facerig.ui'
 #
 # Created by: PyQt4 ui code generator 4.11.4
 #

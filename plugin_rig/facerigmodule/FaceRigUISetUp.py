@@ -5,7 +5,7 @@
 #
 #
 
-from custonui.facerig import Ui_faceUI_Form
+from customui.facerig import Ui_faceUI_Form
 from PyQt4 import QtGui,QtCore
 import maya.cmds as mpy
 from customAttrSet import customAttrSetCla
