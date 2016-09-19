@@ -40,7 +40,7 @@ class FaceRigUISetUp(QtGui.QWidget):
 
     #导入基础骨骼文件   
     def import_need_base_jnt_fun(self, instr):
-        target_file = self.PugPath +'MayaFile'+'/'+ instr + '.ma'
+        target_file = self.PugPath + 'MayaFile' + '/' + instr + '.ma'
         mpy.file(target_file, i=1, options="v=0;", mergeNamespacesOnClash=0, rpr=instr)
         return    
     #
