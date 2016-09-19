@@ -5,9 +5,9 @@
 # date 2016/09/19
 #
 import os,inspect
+from plugin_rig.customui.intallui import
 
-
-class IntallPlug(object):
+class InstallPlug(object):
     def __init__(self):
         pass
 
@@ -20,5 +20,5 @@ class IntallPlug(object):
         return cur_path
 
 if __name__ == '__main__':
-    CSet = IntallPlug()
+    CSet = InstallPlug()
     CSet.get_cur_dir_fun()
