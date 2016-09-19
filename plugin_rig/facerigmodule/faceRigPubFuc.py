@@ -20,32 +20,32 @@ class FaceRigPubFuc():
 
         jnt_dir = self.getObjListPivDir(in_list)
         jnt_piv_list = jnt_dir.values()
-        mpy.curve(n=cv_name , ep =jnt_piv_list)
+        mpy.curve(n=cv_name, ep=jnt_piv_list)
         return
-    
+
     # 2给骨骼添加标签
 
     def add_label_to_jnt(self, in_jnt_list, in_label):
         for i in in_jnt_list:
-            mpy.setAttr( i + '.type', 18)
+            mpy.setAttr(i + '.type', 18)
             mpy.setAttr(i + '.otherType', in_label, type='string')
-            mpy.setAttr(i + '.drawLabel' , 1)
+            mpy.setAttr(i + '.drawLabel', 1)
         return
-    
+
     ##获取所选骨骼列表
     def getSelectedJntList(self):
         jntList = mpy.ls(sl=1)
         return jntList
 
-    #2获取骨骼列表的坐标列表
-    def getObjListPivDir(self,inList):
+    # 2获取骨骼列表的坐标列表
+    def getObjListPivDir(self, inList):
         outPivDir = {}
         for i in inList:
-            iPiv = mpy.xform(i,t=1,ws=1,q=1)
+            iPiv = mpy.xform(i, t=1, ws=1, q=1)
             outPivDir[i] = iPiv
         return outPivDir
-    
-    #***吸附模型到指定模型
+
+    # ***吸附模型到指定模型
     def wrapMeshFun(self, TarMeshList, wapMesh):
         global wpOrigArray
         pcyFnMesh = self.getMfnMeshByName(wapMesh)
@@ -120,7 +120,6 @@ class FaceRigPubFuc():
         finally:
             print ('Done')
 
-
     def getMItMeshVertexByName(self, name):
         sList = OpenMaya.MSelectionList()
         sList.add(name)
@@ -129,11 +128,11 @@ class FaceRigPubFuc():
         mItMesh = OpenMaya.MItMeshVertex(dagPath)
         return mItMesh
 
-#  get获取模型详细点列表
-# def getDetailedList(self,inObj):
-#     pointList = inObj+'.vtx[*]'
-#     MemberList = mpy.ls(pointList, fl=1)
-#     return  MemberList
+    #  get获取模型详细点列表
+    # def getDetailedList(self,inObj):
+    #     pointList = inObj+'.vtx[*]'
+    #     MemberList = mpy.ls(pointList, fl=1)
+    #     return  MemberList
 
     def getMfnMeshByName(self, name):
         sList = OpenMaya.MSelectionList()
@@ -143,43 +142,37 @@ class FaceRigPubFuc():
         meshPolygon = OpenMaya.MFnMesh(dagPath)
         return meshPolygon
 
-    #吸附目标到指定模型最近点
-    def matchObjToCloset(self,tarMesh,objList):
-        #tarMesh 目标模型  objList吸附列表
+    # 吸附目标到指定模型最近点
+    def matchObjToCloset(self, tarMesh, objList):
+        # tarMesh 目标模型  objList吸附列表
         tarMesh = self.getMfnMeshByName(tarMesh)
         clostP = OpenMaya.MPoint()
         util = OpenMaya.MScriptUtil()
         util.createFromInt(0)
         idPointer = util.asIntPtr()
-        vtxPointList=OpenMaya.MPointArray()
-        tarMesh.getPoints(vtxPointList,OpenMaya.MSpace.kWorld)
-        locList=objList
+        vtxPointList = OpenMaya.MPointArray()
+        tarMesh.getPoints(vtxPointList, OpenMaya.MSpace.kWorld)
+        locList = objList
         for i in locList:
-            secLoc=i
-            pos=mpy.xform(secLoc,q=1,ws=1,t=1)
+            secLoc = i
+            pos = mpy.xform(secLoc, q=1, ws=1, t=1)
             curPos = OpenMaya.MPoint(pos[0], pos[1], pos[2])
-            tarMesh.getClosestPoint(curPos,clostP,OpenMaya.MSpace.kWorld,idPointer)
+            tarMesh.getClosestPoint(curPos, clostP, OpenMaya.MSpace.kWorld, idPointer)
             idx = OpenMaya.MScriptUtil(idPointer).asInt()
-            nearestList=OpenMaya.MIntArray()
-            tarMesh.getPolygonVertices(idx,nearestList)
-            tmpdis=None
-            retIdx=None
+            nearestList = OpenMaya.MIntArray()
+            tarMesh.getPolygonVertices(idx, nearestList)
+            tmpdis = None
+            retIdx = None
             for d in nearestList:
-                dis=vtxPointList[d].distanceTo(curPos)
-                if(tmpdis==None or dis<tmpdis):
-                    tmpdis=dis
-                    retIdx=d
-            mpy.xform(secLoc,ws=1,t=[vtxPointList[retIdx].x,vtxPointList[retIdx].y,vtxPointList[retIdx].z])
-
-
-
-
-
-
+                dis = vtxPointList[d].distanceTo(curPos)
+                if (tmpdis == None or dis < tmpdis):
+                    tmpdis = dis
+                    retIdx = d
+            mpy.xform(secLoc, ws=1, t=[vtxPointList[retIdx].x, vtxPointList[retIdx].y, vtxPointList[retIdx].z])
 
 
 if __name__ == '__main__':
     faceRigPubFuc = faceRigPubFuc()
     jntList = faceRigPubFuc.getDetailedList('pSphere1')
-#     faceRigPubFuc.matchPlaneToMesh('pPlane1','pSphere1')
-    faceRigPubFuc.wrapMeshFun(['head_Geo'],'ForeHead_Plane')
+    #     faceRigPubFuc.matchPlaneToMesh('pPlane1','pSphere1')
+    faceRigPubFuc.wrapMeshFun(['head_Geo'], 'ForeHead_Plane')
