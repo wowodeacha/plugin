@@ -14,22 +14,23 @@ import maya.OpenMaya as OpenMaya
 class FaceRigPubFuc():
     def __init__(self, author='YJ'):
         self.author = author
-#    根据骨骼生成曲线
-#
 
+    # 根据骨骼生成曲线
     def create_cv_by_jnt(self, cv_name, in_list):
 
-        jntDir = self.getObjListPivDir(in_list)
-        jntPivList = jntDir.values()
-        mpy.curve(n=cv_name , ep =jntPivList)
+        jnt_dir = self.getObjListPivDir(in_list)
+        jnt_piv_list = jnt_dir.values()
+        mpy.curve(n=cv_name , ep =jnt_piv_list)
         return
     
-    #2给骨骼添加标签
-    def addLabelToJnts(self,inJntList,inLabel):
-        for i in inJntList:
-            mpy.setAttr( i + '.type',18)
-            mpy.setAttr(i + '.otherType' , inLabel ,type = 'string')
+    # 2给骨骼添加标签
+
+    def add_label_to_jnt(self, in_jnt_list, in_label):
+        for i in in_jnt_list:
+            mpy.setAttr( i + '.type', 18)
+            mpy.setAttr(i + '.otherType', in_label, type='string')
             mpy.setAttr(i + '.drawLabel' , 1)
+        return
     
     ##获取所选骨骼列表
     def getSelectedJntList(self):
