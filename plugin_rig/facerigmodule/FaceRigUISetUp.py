@@ -5,10 +5,10 @@
 #
 #
 
-from plugin_rig.ui.facerig import Ui_faceUI_Form
+from ui.facerig import Ui_faceUI_Form
 from PyQt4 import QtGui,QtCore
 import maya.cmds as mpy
-from plugin_rig.customAttrSet import customAttrSetCla
+from customAttrSet import customAttrSetCla
 
 
 #设置表情窗口
