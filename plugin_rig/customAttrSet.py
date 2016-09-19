@@ -6,7 +6,7 @@ date 2016/08/26
 '''
 import os,inspect
 
-class customAttrSetCla(object):
+class CustomAttrSetCla(object):
     def __init__(self):
         pass
 
@@ -17,5 +17,5 @@ class customAttrSetCla(object):
         return Curpath
 
 if __name__ == '__main__':
-    CSet = customAttrSetCla()
+    CSet = CustomAttrSetCla()
     CSet.getCurDirFun()

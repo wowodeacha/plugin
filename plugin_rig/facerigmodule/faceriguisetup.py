@@ -8,7 +8,7 @@
 from customui.facerig import Ui_faceUI_Form
 from PyQt4 import QtGui,QtCore
 import maya.cmds as mpy
-from customAttrSet import customAttrSetCla
+from customAttrSet import CustomAttrSetCla
 
 
 #设置表情窗口
@@ -16,7 +16,7 @@ from customAttrSet import customAttrSetCla
 class FaceRigUISetUp(QtGui.QWidget):
     def __init__(self,parent = None):
         super(FaceRigUISetUp,self).__init__(parent = parent)
-        customAttrSet = customAttrSetCla()
+        customAttrSet = CustomAttrSetCla()
         self.PugPath = customAttrSet.getCurDirFun()
         self.ui = Ui_faceUI_Form()
         self.ui.setupUi(self)
