@@ -13,9 +13,9 @@ from customAttrSet import customAttrSetCla
 
 #设置表情窗口
 #lambda: self.on_button(1)
-class FaceUISetUp(QtGui.QWidget):
+class FaceRigUISetUp(QtGui.QWidget):
     def __init__(self,parent = None):
-        super(FaceUISetUp,self).__init__(parent = parent)
+        super(FaceRigUISetUp,self).__init__(parent = parent)
         customAttrSet = customAttrSetCla()
         self.PugPath = customAttrSet.getCurDirFun()
         self.ui = Ui_faceUI_Form()
@@ -30,7 +30,7 @@ class FaceUISetUp(QtGui.QWidget):
         importForeHeadBone_pushButton = self.ui.importForeHeadBone_pushButton
 
         loadHeadMeshButton.clicked.connect(self.loadMeshFun)
-        importForeHeadBone_pushButton.clicked.connect(lambda:self.importNeedBaseJntFun('Face_ForeHead_Plane'))
+        importForeHeadBone_pushButton.clicked.connect(lambda:self.import_need_base_jnt_fun('Face_ForeHead_Plane'))
 
     #载入头部模型
     def loadMeshFun(self):
@@ -39,13 +39,13 @@ class FaceUISetUp(QtGui.QWidget):
         loadHeadMesh_lineEdit.setText(Mesh)
 
     #导入基础骨骼文件   
-    def importNeedBaseJntFun(self,inS):
-        TarFile = self.PugPath +'MayaFile'+'/'+ inS + '.ma'
-        mpy.file(TarFile ,i=1,options="v=0;",mergeNamespacesOnClash=0,rpr = inS)
+    def import_need_base_jnt_fun(self, instr):
+        target_file = self.PugPath +'MayaFile'+'/'+ instr + '.ma'
+        mpy.file(target_file, i=1, options="v=0;", mergeNamespacesOnClash=0, rpr=instr)
         return    
     #
 
 if __name__ == '__main__':
 
-    Face_Win = FaceUISetUp()
+    Face_Win = FaceRigUISetUp()
     Face_Win.show()
