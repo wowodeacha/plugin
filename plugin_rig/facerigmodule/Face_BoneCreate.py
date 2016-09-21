@@ -1,13 +1,11 @@
-'''
-Nothing       Impossible
-
-Autor      :    Yang Jie
-
-Created On :   2016.6.13
-
-Version    :       NT_01
-
-'''
+# -*- coding: utf-8 -*-
+#
+# author     YangJie
+# mail      wowodeacha@gmail.com
+# created   2016.09.21
+# Nothing Impossible
+#
+#
 import maya.cmds as mpy
 from PathAboutFile.NT_PathSet import _pathAbout
 
