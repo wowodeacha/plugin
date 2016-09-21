@@ -19,10 +19,9 @@ class _FaceJnt_Create():
     def __init__(self,_charName = '_testChar'):        
         self._charName = _charName
 
-    
 
-# Import Base Loctor    
-    def _importBaseloc(self):
+# Import Base Locator
+    def import_base_loc(self):
         
         _LocFilePath = self._pathAbout._getMayaFilePath() + self._BaseLocFile
         _LocFile = _LocFilePath + '.ma'
@@ -33,9 +32,6 @@ class _FaceJnt_Create():
             pass
         print _LocFile,_LocFilePath
 
-        
-
-    
     def test(self):
         _newDis = self._baseDis
         print _newDis
@@ -46,4 +42,4 @@ if __name__ == "__main__":
     
     _FaceJntCreate = _FaceJnt_Create()
 
-    _FaceJntCreate._importBaseloc()
+    _FaceJntCreate.import_base_loc()

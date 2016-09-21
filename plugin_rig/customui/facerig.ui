@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>470</width>
-    <height>516</height>
+    <width>463</width>
+    <height>508</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -35,199 +35,435 @@
          <string>导入骨骼</string>
         </attribute>
         <layout class="QGridLayout" name="gridLayout_2">
-         <item row="1" column="0">
-          <widget class="QGroupBox" name="groupBox">
-           <property name="title">
-            <string>JntCreat</string>
-           </property>
-           <layout class="QGridLayout" name="gridLayout_4">
-            <item row="1" column="0">
-             <widget class="QScrollArea" name="scrollArea">
-              <property name="widgetResizable">
-               <bool>true</bool>
-              </property>
-              <widget class="QWidget" name="scrollAreaWidgetContents">
-               <property name="geometry">
-                <rect>
-                 <x>0</x>
-                 <y>0</y>
-                 <width>385</width>
-                 <height>308</height>
-                </rect>
-               </property>
-               <layout class="QGridLayout" name="gridLayout_3">
-                <item row="0" column="0">
-                 <widget class="QToolBox" name="toolBox">
-                  <property name="frameShape">
-                   <enum>QFrame::Box</enum>
-                  </property>
-                  <property name="currentIndex">
-                   <number>0</number>
-                  </property>
-                  <widget class="QWidget" name="page_4">
-                   <property name="geometry">
-                    <rect>
-                     <x>0</x>
-                     <y>0</y>
-                     <width>365</width>
-                     <height>132</height>
-                    </rect>
-                   </property>
-                   <attribute name="label">
-                    <string>ForeHead_Create</string>
-                   </attribute>
-                   <layout class="QGridLayout" name="gridLayout_7">
-                    <item row="0" column="0">
-                     <layout class="QGridLayout" name="gridLayout_6">
-                      <item row="0" column="0">
-                       <widget class="QPushButton" name="importForeHeadBone_pushButton">
-                        <property name="styleSheet">
-                         <string notr="true">background-color: rgba(46, 76, 113, 247);</string>
-                        </property>
-                        <property name="text">
-                         <string>导入额头骨骼</string>
-                        </property>
-                       </widget>
-                      </item>
-                      <item row="0" column="1">
-                       <widget class="QPushButton" name="snapForeHeadMeshToHeadMesh_pushButton">
-                        <property name="styleSheet">
-                         <string notr="true">background-color: rgba(46, 76, 113, 247);</string>
-                        </property>
-                        <property name="text">
-                         <string>吸附模型</string>
-                        </property>
-                       </widget>
-                      </item>
-                      <item row="2" column="0" colspan="2">
-                       <widget class="QPushButton" name="rebulidForeHeadBone_pushButton">
-                        <property name="styleSheet">
-                         <string notr="true">background-color: rgba(46, 76, 80, 220);</string>
-                        </property>
-                        <property name="text">
-                         <string>重建额头骨骼</string>
-                        </property>
-                       </widget>
-                      </item>
-                      <item row="1" column="0" colspan="2">
-                       <widget class="QPushButton" name="foreHeadBoneMir_pushButton">
-                        <property name="styleSheet">
-                         <string notr="true">background-color: rgb(46, 101, 113);</string>
-                        </property>
-                        <property name="text">
-                         <string>镜像</string>
-                        </property>
-                       </widget>
-                      </item>
-                     </layout>
-                    </item>
-                   </layout>
-                  </widget>
-                  <widget class="QWidget" name="page_5">
-                   <property name="geometry">
-                    <rect>
-                     <x>0</x>
-                     <y>0</y>
-                     <width>377</width>
-                     <height>98</height>
-                    </rect>
-                   </property>
-                   <attribute name="label">
-                    <string>Brow_Create</string>
-                   </attribute>
-                  </widget>
-                  <widget class="QWidget" name="page_6">
-                   <property name="geometry">
-                    <rect>
-                     <x>0</x>
-                     <y>0</y>
-                     <width>377</width>
-                     <height>98</height>
-                    </rect>
-                   </property>
-                   <attribute name="label">
-                    <string>Eye_Create</string>
-                   </attribute>
-                  </widget>
-                  <widget class="QWidget" name="page_7">
-                   <property name="geometry">
-                    <rect>
-                     <x>0</x>
-                     <y>0</y>
-                     <width>377</width>
-                     <height>98</height>
-                    </rect>
-                   </property>
-                   <attribute name="label">
-                    <string>Check_Create</string>
-                   </attribute>
-                  </widget>
-                  <widget class="QWidget" name="page_8">
-                   <property name="geometry">
-                    <rect>
-                     <x>0</x>
-                     <y>0</y>
-                     <width>377</width>
-                     <height>98</height>
-                    </rect>
-                   </property>
-                   <attribute name="label">
-                    <string>Nose_Create</string>
-                   </attribute>
-                  </widget>
-                  <widget class="QWidget" name="page_9">
-                   <property name="geometry">
-                    <rect>
-                     <x>0</x>
-                     <y>0</y>
-                     <width>377</width>
-                     <height>98</height>
-                    </rect>
-                   </property>
-                   <attribute name="label">
-                    <string>Mouth_Create</string>
-                   </attribute>
-                  </widget>
-                 </widget>
-                </item>
-               </layout>
-              </widget>
-             </widget>
-            </item>
-            <item row="0" column="0">
-             <layout class="QHBoxLayout" name="horizontalLayout_2">
-              <item>
-               <widget class="QLineEdit" name="loadHeadMesh_lineEdit"/>
-              </item>
-              <item>
-               <widget class="QPushButton" name="loadHeadMesh_pushButton">
-                <property name="text">
-                 <string>载入头部模型</string>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </item>
-           </layout>
-          </widget>
-         </item>
          <item row="2" column="0">
           <widget class="QGroupBox" name="groupBox_2">
            <property name="title">
             <string>Jnt_Import</string>
            </property>
            <layout class="QGridLayout" name="gridLayout_5">
-            <item row="1" column="0">
+            <item row="4" column="0">
              <widget class="QPushButton" name="rebulidAllBone_pushButton">
               <property name="text">
                <string>重置所有骨骼</string>
               </property>
              </widget>
             </item>
-            <item row="0" column="0">
+            <item row="3" column="0">
              <widget class="QPushButton" name="bneMir_pushButton">
               <property name="text">
                <string>镜像骨骼</string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="0">
+             <layout class="QGridLayout" name="gridLayout_18">
+              <item row="0" column="0">
+               <widget class="QPushButton" name="createheadmeshgrp_pushButton">
+                <property name="styleSheet">
+                 <string notr="true">
+background-color: rgb(75, 78, 99);</string>
+                </property>
+                <property name="text">
+                 <string>生成头部模型组</string>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="0">
+               <widget class="QPushButton" name="setheadmesh_pushButton">
+                <property name="text">
+                 <string>设置模型</string>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="0">
+               <widget class="QScrollArea" name="scrollArea">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="widgetResizable">
+                 <bool>true</bool>
+                </property>
+                <widget class="QWidget" name="scrollAreaWidgetContents">
+                 <property name="geometry">
+                  <rect>
+                   <x>0</x>
+                   <y>0</y>
+                   <width>376</width>
+                   <height>245</height>
+                  </rect>
+                 </property>
+                 <layout class="QGridLayout" name="gridLayout_3">
+                  <item row="1" column="0">
+                   <widget class="QToolBox" name="toolBox">
+                    <property name="sizePolicy">
+                     <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                      <horstretch>0</horstretch>
+                      <verstretch>0</verstretch>
+                     </sizepolicy>
+                    </property>
+                    <property name="contextMenuPolicy">
+                     <enum>Qt::DefaultContextMenu</enum>
+                    </property>
+                    <property name="acceptDrops">
+                     <bool>true</bool>
+                    </property>
+                    <property name="layoutDirection">
+                     <enum>Qt::LeftToRight</enum>
+                    </property>
+                    <property name="autoFillBackground">
+                     <bool>true</bool>
+                    </property>
+                    <property name="frameShape">
+                     <enum>QFrame::Panel</enum>
+                    </property>
+                    <property name="frameShadow">
+                     <enum>QFrame::Plain</enum>
+                    </property>
+                    <property name="currentIndex">
+                     <number>5</number>
+                    </property>
+                    <property name="tabSpacing">
+                     <number>2</number>
+                    </property>
+                    <widget class="QWidget" name="page_4">
+                     <property name="geometry">
+                      <rect>
+                       <x>0</x>
+                       <y>0</y>
+                       <width>356</width>
+                       <height>69</height>
+                      </rect>
+                     </property>
+                     <attribute name="label">
+                      <string>ForeHead_Create</string>
+                     </attribute>
+                     <layout class="QGridLayout" name="gridLayout_4">
+                      <item row="0" column="0">
+                       <layout class="QVBoxLayout" name="verticalLayout_7">
+                        <item>
+                         <widget class="QCheckBox" name="checkBox_9">
+                          <property name="text">
+                           <string/>
+                          </property>
+                          <property name="checked">
+                           <bool>true</bool>
+                          </property>
+                         </widget>
+                        </item>
+                        <item>
+                         <widget class="QPushButton" name="importForeHeadBone_pushButton_15">
+                          <property name="sizePolicy">
+                           <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                            <horstretch>0</horstretch>
+                            <verstretch>0</verstretch>
+                           </sizepolicy>
+                          </property>
+                          <property name="styleSheet">
+                           <string notr="true">background-color: rgba(46, 76, 113, 247);</string>
+                          </property>
+                          <property name="text">
+                           <string>导入基础骨骼</string>
+                          </property>
+                         </widget>
+                        </item>
+                       </layout>
+                      </item>
+                     </layout>
+                    </widget>
+                    <widget class="QWidget" name="page_5">
+                     <property name="geometry">
+                      <rect>
+                       <x>0</x>
+                       <y>0</y>
+                       <width>356</width>
+                       <height>69</height>
+                      </rect>
+                     </property>
+                     <attribute name="label">
+                      <string>Brow_Create</string>
+                     </attribute>
+                     <layout class="QGridLayout" name="gridLayout_7">
+                      <item row="0" column="0">
+                       <widget class="QSplitter" name="splitter_2">
+                        <property name="orientation">
+                         <enum>Qt::Horizontal</enum>
+                        </property>
+                        <widget class="QWidget" name="layoutWidget_2">
+                         <layout class="QVBoxLayout" name="verticalLayout_2">
+                          <item>
+                           <widget class="QCheckBox" name="checkBox_3">
+                            <property name="text">
+                             <string/>
+                            </property>
+                            <property name="checked">
+                             <bool>true</bool>
+                            </property>
+                           </widget>
+                          </item>
+                          <item>
+                           <widget class="QPushButton" name="importForeHeadBone_pushButton_9">
+                            <property name="sizePolicy">
+                             <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                              <horstretch>0</horstretch>
+                              <verstretch>0</verstretch>
+                             </sizepolicy>
+                            </property>
+                            <property name="styleSheet">
+                             <string notr="true">background-color: rgba(46, 76, 113, 247);</string>
+                            </property>
+                            <property name="text">
+                             <string>导入基础骨骼</string>
+                            </property>
+                           </widget>
+                          </item>
+                         </layout>
+                        </widget>
+                       </widget>
+                      </item>
+                     </layout>
+                    </widget>
+                    <widget class="QWidget" name="page_6">
+                     <property name="geometry">
+                      <rect>
+                       <x>0</x>
+                       <y>0</y>
+                       <width>356</width>
+                       <height>69</height>
+                      </rect>
+                     </property>
+                     <attribute name="label">
+                      <string>Eye_Create</string>
+                     </attribute>
+                     <layout class="QGridLayout" name="gridLayout_8">
+                      <item row="0" column="0">
+                       <widget class="QSplitter" name="splitter_3">
+                        <property name="orientation">
+                         <enum>Qt::Horizontal</enum>
+                        </property>
+                        <widget class="QWidget" name="layoutWidget_4">
+                         <layout class="QVBoxLayout" name="verticalLayout_3">
+                          <item>
+                           <widget class="QCheckBox" name="checkBox_5">
+                            <property name="text">
+                             <string/>
+                            </property>
+                            <property name="checked">
+                             <bool>true</bool>
+                            </property>
+                           </widget>
+                          </item>
+                          <item>
+                           <widget class="QPushButton" name="importForeHeadBone_pushButton_11">
+                            <property name="sizePolicy">
+                             <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                              <horstretch>0</horstretch>
+                              <verstretch>0</verstretch>
+                             </sizepolicy>
+                            </property>
+                            <property name="styleSheet">
+                             <string notr="true">background-color: rgba(46, 76, 113, 247);</string>
+                            </property>
+                            <property name="text">
+                             <string>导入基础骨骼</string>
+                            </property>
+                           </widget>
+                          </item>
+                         </layout>
+                        </widget>
+                       </widget>
+                      </item>
+                     </layout>
+                    </widget>
+                    <widget class="QWidget" name="page_7">
+                     <property name="geometry">
+                      <rect>
+                       <x>0</x>
+                       <y>0</y>
+                       <width>356</width>
+                       <height>69</height>
+                      </rect>
+                     </property>
+                     <attribute name="label">
+                      <string>Check_Create</string>
+                     </attribute>
+                     <layout class="QGridLayout" name="gridLayout_9">
+                      <item row="0" column="0">
+                       <widget class="QSplitter" name="splitter_4">
+                        <property name="orientation">
+                         <enum>Qt::Horizontal</enum>
+                        </property>
+                        <widget class="QWidget" name="layoutWidget_3">
+                         <layout class="QVBoxLayout" name="verticalLayout_4">
+                          <item>
+                           <widget class="QCheckBox" name="checkBox_4">
+                            <property name="text">
+                             <string/>
+                            </property>
+                            <property name="checked">
+                             <bool>true</bool>
+                            </property>
+                           </widget>
+                          </item>
+                          <item>
+                           <widget class="QPushButton" name="importForeHeadBone_pushButton_10">
+                            <property name="sizePolicy">
+                             <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                              <horstretch>0</horstretch>
+                              <verstretch>0</verstretch>
+                             </sizepolicy>
+                            </property>
+                            <property name="styleSheet">
+                             <string notr="true">background-color: rgba(46, 76, 113, 247);</string>
+                            </property>
+                            <property name="text">
+                             <string>导入基础骨骼</string>
+                            </property>
+                           </widget>
+                          </item>
+                         </layout>
+                        </widget>
+                       </widget>
+                      </item>
+                     </layout>
+                    </widget>
+                    <widget class="QWidget" name="page_8">
+                     <property name="geometry">
+                      <rect>
+                       <x>0</x>
+                       <y>0</y>
+                       <width>356</width>
+                       <height>69</height>
+                      </rect>
+                     </property>
+                     <attribute name="label">
+                      <string>Nose_Create</string>
+                     </attribute>
+                     <layout class="QGridLayout" name="gridLayout_10">
+                      <item row="0" column="0">
+                       <widget class="QSplitter" name="splitter_5">
+                        <property name="orientation">
+                         <enum>Qt::Horizontal</enum>
+                        </property>
+                        <widget class="QWidget" name="layoutWidget_5">
+                         <layout class="QVBoxLayout" name="verticalLayout_5">
+                          <item>
+                           <widget class="QCheckBox" name="checkBox_6">
+                            <property name="text">
+                             <string/>
+                            </property>
+                            <property name="checked">
+                             <bool>true</bool>
+                            </property>
+                           </widget>
+                          </item>
+                          <item>
+                           <widget class="QPushButton" name="importForeHeadBone_pushButton_12">
+                            <property name="sizePolicy">
+                             <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                              <horstretch>0</horstretch>
+                              <verstretch>0</verstretch>
+                             </sizepolicy>
+                            </property>
+                            <property name="styleSheet">
+                             <string notr="true">background-color: rgba(46, 76, 113, 247);</string>
+                            </property>
+                            <property name="text">
+                             <string>导入基础骨骼</string>
+                            </property>
+                           </widget>
+                          </item>
+                         </layout>
+                        </widget>
+                       </widget>
+                      </item>
+                     </layout>
+                    </widget>
+                    <widget class="QWidget" name="page_9">
+                     <property name="geometry">
+                      <rect>
+                       <x>0</x>
+                       <y>0</y>
+                       <width>356</width>
+                       <height>69</height>
+                      </rect>
+                     </property>
+                     <attribute name="label">
+                      <string>Mouth_Create</string>
+                     </attribute>
+                     <layout class="QGridLayout" name="gridLayout_11">
+                      <item row="0" column="0">
+                       <widget class="QSplitter" name="splitter_6">
+                        <property name="orientation">
+                         <enum>Qt::Horizontal</enum>
+                        </property>
+                        <widget class="QWidget" name="layoutWidget_6">
+                         <layout class="QVBoxLayout" name="verticalLayout_6">
+                          <item>
+                           <widget class="QCheckBox" name="checkBox_7">
+                            <property name="text">
+                             <string/>
+                            </property>
+                            <property name="checked">
+                             <bool>true</bool>
+                            </property>
+                           </widget>
+                          </item>
+                          <item>
+                           <widget class="QPushButton" name="importForeHeadBone_pushButton_13">
+                            <property name="sizePolicy">
+                             <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                              <horstretch>0</horstretch>
+                              <verstretch>0</verstretch>
+                             </sizepolicy>
+                            </property>
+                            <property name="styleSheet">
+                             <string notr="true">background-color: rgba(46, 76, 113, 247);</string>
+                            </property>
+                            <property name="text">
+                             <string>导入基础骨骼</string>
+                            </property>
+                           </widget>
+                          </item>
+                         </layout>
+                        </widget>
+                       </widget>
+                      </item>
+                     </layout>
+                    </widget>
+                   </widget>
+                  </item>
+                 </layout>
+                </widget>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item row="2" column="0">
+             <widget class="QPushButton" name="snapForeHeadMeshToHeadMesh_pushButton">
+              <property name="styleSheet">
+               <string notr="true">background-color: rgba(46, 76, 113, 247);</string>
+              </property>
+              <property name="text">
+               <string>吸附模型</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="0">
+             <widget class="QPushButton" name="importForeHeadBone_pushButton">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">background-color: rgba(46, 76, 113, 247);</string>
+              </property>
+              <property name="text">
+               <string>导入基础骨骼</string>
               </property>
              </widget>
             </item>
