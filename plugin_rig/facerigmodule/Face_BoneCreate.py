@@ -38,5 +38,8 @@ if __name__ == "__main__":
     cgf_c = cgf.CustomAttrSetCla()
     rig_path = cgf_c.get_cur_dir_fun()
     data_path = rig_path + "datafile/headbasebonedata.json"
-    jnt_dir = {"cc": (1, 2, 32), "ddf": (2, 3, 4)}
+    # jnt_dir =
+    jnt_dir = cgf_c.load_data(data_path)
+    print jnt_dir
+
     cgf_c.write_data(data_path, jnt_dir)
