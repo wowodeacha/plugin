@@ -13,11 +13,12 @@ class CustomAttrSetCla(object):
 
     # current function dir 获取当前脚本路径
     @staticmethod
-    def get_cur_dir_fun(self):
+    def get_cur_dir_fun():
         cur_file = inspect.getfile(inspect.currentframe())
         cur_path = os.path.dirname(cur_file) + "/"
+        # print cur_path  # test get path
         return cur_path
 
 if __name__ == '__main__':
     CSet = CustomAttrSetCla()
-    CSet.getCurDirFun()
+    CSet.get_cur_dir_fun()
