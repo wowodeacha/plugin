@@ -14,21 +14,12 @@ import sys,os,inspect
 class _pathAbout(object):
     def __init__(self):
         pass 
-       
-# current fuction dir
-    def _getCurDir(self):
-        _curFile = inspect.getfile(inspect.currentframe())
-        _Curpath = os.path.dirname(_curFile) + "/"    
-        return _Curpath
+
     def _getMayaFilePath(self):
         _curFile = inspect.getfile(inspect.currentframe())
         _Curpath = os.path.dirname(_curFile)
         _mayaFilePath = os.path.dirname(_Curpath) + "/" + "MayaFile" +"/"
         return _mayaFilePath
-    
-
-
-
 
 if __name__ == '__main__':
     _pathAbout = _pathAbout()
