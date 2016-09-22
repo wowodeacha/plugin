@@ -7,37 +7,30 @@
 #
 #
 import maya.cmds as mpy
-from PathAboutFile.NT_PathSet import _pathAbout
 
 
-class _FaceJnt_Create():       
-    _BaseLocFile = "Face_Base_Loc"
-    _pathAbout = _pathAbout() 
-    
-    def __init__(self,_charName = '_testChar'):        
-        self._charName = _charName
+class FaceJntCreate():
+    def __init__(self, char_name='test_char'):
+        self.char_name = char_name
 
-
-# Import Base Locator
+    # Import Base Locator
     def import_base_loc(self):
-        
+
         _LocFilePath = self._pathAbout._getMayaFilePath() + self._BaseLocFile
         _LocFile = _LocFilePath + '.ma'
-        _LocFile = _LocFile.replace("\\" , "/")
+        _LocFile = _LocFile.replace("\\", "/")
         try:
-            mpy.file(_LocFile, i = 1,type="mayaAscii",ra = 0 , mergeNamespacesOnClash = 0)
+            mpy.file(_LocFile, i=1, type="mayaAscii", ra=0, mergeNamespacesOnClash=0)
         except:
             pass
-        print _LocFile,_LocFilePath
+        print _LocFile, _LocFilePath
 
     def test(self):
         _newDis = self._baseDis
         print _newDis
-    
-    
-    
+
+
 if __name__ == "__main__":
-    
-    _FaceJntCreate = _FaceJnt_Create()
+    _FaceJntCreate = FaceJntCreate()
 
     _FaceJntCreate.import_base_loc()
