@@ -23,7 +23,7 @@ class CustomAttrSetCla(object):
     # 文件操作
     @staticmethod
     def write_data(in_file, in_data):
-        json.dump(in_data, open(in_file, 'w'))
+        json.dump(in_data, open(in_file, 'w'), indent=4)
 
     @staticmethod
     def load_data(in_file):
