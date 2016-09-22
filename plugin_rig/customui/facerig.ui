@@ -13,6 +13,9 @@
   <property name="windowTitle">
    <string>faceUI_Win</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">background-color: rgb(71, 71, 71);</string>
+  </property>
   <layout class="QGridLayout" name="gridLayout">
    <item row="0" column="0">
     <layout class="QVBoxLayout" name="verticalLayout">
@@ -20,6 +23,10 @@
       <widget class="QTabWidget" name="tabWidget">
        <property name="layoutDirection">
         <enum>Qt::LeftToRight</enum>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(55, 56, 62);
+color: rgb(255, 255, 255);</string>
        </property>
        <property name="tabPosition">
         <enum>QTabWidget::West</enum>
@@ -43,6 +50,9 @@
            <layout class="QGridLayout" name="gridLayout_5">
             <item row="4" column="0">
              <widget class="QPushButton" name="rebulidAllBone_pushButton">
+              <property name="styleSheet">
+               <string notr="true">background-color: rgb(138, 141, 156);</string>
+              </property>
               <property name="text">
                <string>重置所有骨骼</string>
               </property>
@@ -50,6 +60,9 @@
             </item>
             <item row="3" column="0">
              <widget class="QPushButton" name="bneMir_pushButton">
+              <property name="styleSheet">
+               <string notr="true">background-color: rgb(138, 141, 156);</string>
+              </property>
               <property name="text">
                <string>镜像骨骼</string>
               </property>
@@ -60,8 +73,7 @@
               <item row="0" column="0">
                <widget class="QPushButton" name="createheadmeshgrp_pushButton">
                 <property name="styleSheet">
-                 <string notr="true">
-background-color: rgb(75, 78, 99);</string>
+                 <string notr="true">background-color: rgb(138, 141, 156);</string>
                 </property>
                 <property name="text">
                  <string>生成头部模型组</string>
@@ -70,6 +82,9 @@ background-color: rgb(75, 78, 99);</string>
               </item>
               <item row="1" column="0">
                <widget class="QPushButton" name="setheadmesh_pushButton">
+                <property name="styleSheet">
+                 <string notr="true">background-color: rgb(138, 141, 156);</string>
+                </property>
                 <property name="text">
                  <string>设置模型</string>
                 </property>
@@ -114,7 +129,10 @@ background-color: rgb(75, 78, 99);</string>
                      <enum>Qt::LeftToRight</enum>
                     </property>
                     <property name="autoFillBackground">
-                     <bool>true</bool>
+                     <bool>false</bool>
+                    </property>
+                    <property name="styleSheet">
+                     <string notr="true"/>
                     </property>
                     <property name="frameShape">
                      <enum>QFrame::Panel</enum>
@@ -123,7 +141,7 @@ background-color: rgb(75, 78, 99);</string>
                      <enum>QFrame::Plain</enum>
                     </property>
                     <property name="currentIndex">
-                     <number>5</number>
+                     <number>0</number>
                     </property>
                     <property name="tabSpacing">
                      <number>2</number>
@@ -444,7 +462,7 @@ background-color: rgb(75, 78, 99);</string>
             <item row="2" column="0">
              <widget class="QPushButton" name="snapForeHeadMeshToHeadMesh_pushButton">
               <property name="styleSheet">
-               <string notr="true">background-color: rgba(46, 76, 113, 247);</string>
+               <string notr="true">background-color: rgb(138, 141, 156);</string>
               </property>
               <property name="text">
                <string>吸附模型</string>
@@ -460,7 +478,7 @@ background-color: rgb(75, 78, 99);</string>
                </sizepolicy>
               </property>
               <property name="styleSheet">
-               <string notr="true">background-color: rgba(46, 76, 113, 247);</string>
+               <string notr="true">background-color: rgb(138, 141, 156);</string>
               </property>
               <property name="text">
                <string>导入基础骨骼</string>
