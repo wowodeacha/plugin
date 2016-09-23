@@ -5,12 +5,13 @@
 # created   2016.09.21
 # Nothing Impossible
 #
-#
+
+import pymel.core as pm
 import maya.cmds as mpy
 import custom_global_function as cgf
 
 
-class FaceJntCreate():
+class FaceJntCreate(object):
     head_bone_key_dir = {'head': ['Head_base'],
                          'forehead': ["ForeHead_base_L", "ForeHead_base_M", "ForeHead_base_R"],
                          'brow': ['Brow_0_base_L', "Brow_0_base_R", "Brow_1_base_L", "Brow_1_base_R", "Brow_2_base_L",
@@ -37,28 +38,19 @@ class FaceJntCreate():
     def create_base_jnt(self, needed_parts_list):
         for i in needed_parts_list:
             # todo: 缺少一个子函数（创建基础骨骼）
-            print ''
+            print '0'
 
     # 子函数创建基础骨骼
-    def create_base_jnt_step(self,in_flag):
+    def create_base_jnt_step(self, in_flag):
         head_bone_name_dir = self.head_bone_key_dir
         flag_jnt_name_list = head_bone_name_dir[in_flag]
         for i in head_bone_name_dir:
-            # todo: 用pymel写一个根据点坐标创建骨骼（learning）
+            # todo: 用 'pymel' 写一个根据点坐标创建骨骼（learning）
+            pm.joint()
+
             print ''
 
 
-
-
 if __name__ == "__main__":
-    # _FaceJntCreate = FaceJntCreate()
-    #
-    # _FaceJntCreate.import_base_loc()
-    cgf_c = cgf.CustomAttrSetCla()
-    rig_path = cgf_c.get_cur_dir_fun()
-    data_path = rig_path + "datafile/headbasebonedata.json"
-    # jnt_dir =
-    jnt_dir = cgf_c.load_data(data_path)
-    print jnt_dir
-
-    cgf_c.write_data(data_path, jnt_dir)
+    fc = FaceJntCreate()
+    fc.create_base_jnt(['d'])
