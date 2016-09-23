@@ -36,4 +36,4 @@ if __name__ == "__main__":
     jnt_dir = cgf_c.load_data(data_path)
     print jnt_dir
 
-    # cgf_c.write_data(data_path, jnt_dir)
+    cgf_c.write_data(data_path, jnt_dir)
