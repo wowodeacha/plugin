@@ -11,7 +11,13 @@ import custom_global_function as cgf
 
 
 class FaceJntCreate():
-    head_bone_key_dir = {'forehead': [], 'brow': [], 'eye': [], 'check': [], 'nose': [], 'mouth': [], 'jaw': []}
+    head_bone_key_dir = {'forehead': [],
+                         'brow': ['Brow_0_base_L', "Brow_0_base_R", "Brow_1_base_L", "Brow_1_base_R", "Brow_2_base_L",
+                                  "Brow_2_base_R", "Brow_base_M"],
+                         'eye': [], 'check': ["Check_base_L", "Check_base_R", "Cheek_In_base_L", "Cheek_In_base_R",
+                                              "Cheek_Out_base_L", "Cheek_Out_base_R", "Cheek_Up_base_L",
+                                              "Cheek_Up_base_R"],
+                         'nose': [], 'mouth': [], 'jaw': []}
 
     def __init__(self, char_name='test_char'):
         self.char_name = char_name
