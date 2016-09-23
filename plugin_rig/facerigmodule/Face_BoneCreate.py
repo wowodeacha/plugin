@@ -11,20 +11,14 @@ import custom_global_function as cgf
 
 
 class FaceJntCreate():
+    head_bone_key_dir = {'forehead': [], 'brow': [], 'eye': [], 'check': [], 'nose': [], 'mouth': [], 'jaw': []}
+
     def __init__(self, char_name='test_char'):
         self.char_name = char_name
 
-    # # Import Base Locator
-    # def import_base_loc(self):
-    #
-    #     _LocFilePath = self._pathAbout._getMayaFilePath() + self._BaseLocFile
-    #     _LocFile = _LocFilePath + '.ma'
-    #     _LocFile = _LocFile.replace("\\", "/")
-    #     try:
-    #         mpy.file(_LocFile, i=1, type="mayaAscii", ra=0, mergeNamespacesOnClash=0)
-    #     except:
-    #         pass
-    #     print _LocFile, _LocFilePath
+    # 创建基础骨骼
+    def create_base_jnt(self, needed_parts_list):
+        base_dir = self.head_bone_key_dir
 
     def test(self):
         _newDis = self._baseDis
@@ -42,4 +36,4 @@ if __name__ == "__main__":
     jnt_dir = cgf_c.load_data(data_path)
     print jnt_dir
 
-    cgf_c.write_data(data_path, jnt_dir)
+    # cgf_c.write_data(data_path, jnt_dir)
