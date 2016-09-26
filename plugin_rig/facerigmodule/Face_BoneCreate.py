@@ -13,7 +13,7 @@ CAS = cgf.CustomAttrSetCla()
 PLUGIN_PATH = CAS.get_cur_dir_path_fun()
 DATA_PATH = PLUGIN_PATH + "datafile/headbasebonedata.json"
 FACE_JNT_PIV_DIR = CAS.load_data(DATA_PATH)
-print FACE_JNT_PIV_DIR
+
 
 
 class FaceJntCreate(object):
@@ -58,4 +58,4 @@ class FaceJntCreate(object):
 
 if __name__ == "__main__":
     fc = FaceJntCreate()
-    fc.create_base_jnt(['d'])
+    fc.create_base_jnt_step('brow')
