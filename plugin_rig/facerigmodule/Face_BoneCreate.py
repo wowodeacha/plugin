@@ -40,17 +40,18 @@ class FaceJntCreate(object):
 
     # 创建基础骨骼
     def create_base_jnt(self, needed_parts_list):
+        if needed_parts_list == ["base_list"]:
+            needed_parts_list = self.head_bone_key_dir.keys()
         for i in needed_parts_list:
-            # todo: 缺少一个子函数（创建基础骨骼）
-            print '0'
+            self.create_base_jnt_step(i)
 
     # 子函数创建基础骨骼
     def create_base_jnt_step(self, in_flag):
         head_bone_name_dir = self.head_bone_key_dir
         flag_jnt_name_list = head_bone_name_dir[in_flag]
         for i in flag_jnt_name_list:
-            # todo: 写一个根据点坐标创建骨骼
             piv = FACE_JNT_PIV_DIR[i]
+            mpy.select(cl=1)
             mpy.joint(n=i, p=piv)
 
 
