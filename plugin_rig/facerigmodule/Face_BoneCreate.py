@@ -48,11 +48,10 @@ class FaceJntCreate(object):
     def create_base_jnt_step(self, in_flag):
         head_bone_name_dir = self.head_bone_key_dir
         flag_jnt_name_list = head_bone_name_dir[in_flag]
-        for i in head_bone_name_dir:
+        for i in flag_jnt_name_list:
             # todo: 写一个根据点坐标创建骨骼
-            print i
-            # piv = FACE_JNT_PIV_DIR[i]
-            # mpy.joint(n=i, p=piv)
+            piv = FACE_JNT_PIV_DIR[i]
+            mpy.joint(n=i, p=piv)
 
 
 if __name__ == "__main__":
