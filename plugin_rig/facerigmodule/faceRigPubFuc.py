@@ -15,6 +15,12 @@ class FaceRigPubFuc():
     def __init__(self, author='YJ'):
         self.author = author
 
+    @staticmethod
+    # 获取目标的父层级
+    def set_object_own_parent(in_object):
+        '''check attrubute then set parent'''
+
+
     # 根据骨骼生成曲线
     def create_cv_by_jnt(self, cv_name, in_list):
 
@@ -128,12 +134,6 @@ class FaceRigPubFuc():
         mItMesh = OpenMaya.MItMeshVertex(dagPath)
         return mItMesh
 
-    #  get获取模型详细点列表
-    # def getDetailedList(self,inObj):
-    #     pointList = inObj+'.vtx[*]'
-    #     MemberList = mpy.ls(pointList, fl=1)
-    #     return  MemberList
-
     def getMfnMeshByName(self, name):
         sList = OpenMaya.MSelectionList()
         sList.add(name)
@@ -172,7 +172,4 @@ class FaceRigPubFuc():
 
 
 if __name__ == '__main__':
-    faceRigPubFuc = faceRigPubFuc()
-    jntList = faceRigPubFuc.getDetailedList('pSphere1')
-    #     faceRigPubFuc.matchPlaneToMesh('pPlane1','pSphere1')
-    faceRigPubFuc.wrapMeshFun(['head_Geo'], 'ForeHead_Plane')
+    print "get"

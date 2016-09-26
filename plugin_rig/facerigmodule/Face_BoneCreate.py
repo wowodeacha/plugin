@@ -32,8 +32,8 @@ class FaceJntCreate(object):
                                    "Cheek_Up_base_R"],
                          'nose': ["Nose_base_L", "Nose_base_M", "Nose_base_R"],
                          'mouth': ["Mouth_Corner_base_L", "Mouth_Corner_base_R", "Mouth_Dn_base_L", "Mouth_Dn_base_R",
-                                   "Mouth_Up_base_L", "Mouth_Up_base_R", "Mouth_Up_base_M", "NoseFold_base_L",
-                                   "NoseFold_base_R"],
+                                   "Mouth_Up_base_L", "Mouth_Up_base_R", "Mouth_Up_base_M", "Mouth_Dn_base_M",
+                                   "NoseFold_base_L","NoseFold_base_R"],
                          'jaw': ["Chin_base", "Jaw_base"],
                          'temple': ["Temple_base_L", "Temple_base_R"]}
 
@@ -56,7 +56,7 @@ class FaceJntCreate(object):
             mpy.select(cl=1)
             mpy.joint(n=i, p=piv)
 
-
+    #
 if __name__ == "__main__":
     fc = FaceJntCreate()
     fc.create_base_jnt(['base_list'])
