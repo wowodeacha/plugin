@@ -24,14 +24,16 @@ class FaceJntCreate(object):
                                  "Eye_root_base_L", "Eye_root_base_R", "Eyelid_DnIn_base_L", "Eyelid_DnIn_base_R",
                                  "Eyelid_DnOut_base_L", "Eyelid_DnOut_base_R", "Eyelid_Dn_base_L", "Eyelid_Dn_base_R",
                                  "Eyelid_In_base_L", "Eyelid_In_base_R", "Eyelid_Out_base_L", "Eyelid_Out_base_R",
-                                 "Eyelid_UpIn_base_L", "Eyelid_UpOut_base_L", "Eyelid_UpOut_base_R",
+                                 "Eyelid_UpIn_base_L", "Eyelid_UpIn_base_R", "Eyelid_UpOut_base_L",
+                                 "Eyelid_UpOut_base_R",
                                  "Eyelid_Up_base_L", "Eyelid_Up_base_R"],
                          'check': ["Check_base_L", "Check_base_R", "Cheek_In_base_L", "Cheek_In_base_R",
                                    "Cheek_Out_base_L", "Cheek_Out_base_R", "Cheek_Up_base_L",
                                    "Cheek_Up_base_R"],
                          'nose': ["Nose_base_L", "Nose_base_M", "Nose_base_R"],
                          'mouth': ["Mouth_Corner_base_L", "Mouth_Corner_base_R", "Mouth_Dn_base_L", "Mouth_Dn_base_R",
-                                   "Mouth_Up_base_M", "Mouth_Up_base_R", "NoseFold_base_L", "NoseFold_base_R"],
+                                   "Mouth_Up_base_L", "Mouth_Up_base_R", "Mouth_Up_base_M", "NoseFold_base_L",
+                                   "NoseFold_base_R"],
                          'jaw': ["Chin_base", "Jaw_base"],
                          'temple': ["Temple_base_L", "Temple_base_R"]}
 
