@@ -41,11 +41,9 @@ class FaceJntCreate(object):
     # 创建基础骨骼
     def create_base_jnt(self, needed_parts_list):
         if needed_parts_list == ["base_list"]:
-            needed_part_list_new = list(self.head_bone_key_dir.keys())
-            print needed_part_list_new
-        # for i in needed_part_list_new:
-        #     print i
-        #     # self.create_base_jnt_step(i)
+            needed_parts_list = list(self.head_bone_key_dir.keys())
+        for i in needed_parts_list:
+            self.create_base_jnt_step(i)
 
     # 子函数创建基础骨骼
     def create_base_jnt_step(self, in_flag):
@@ -59,5 +57,4 @@ class FaceJntCreate(object):
 
 if __name__ == "__main__":
     fc = FaceJntCreate()
-    fc.create_base_jnt('base_list')
-    print ""
+    fc.create_base_jnt(['base_list'])
