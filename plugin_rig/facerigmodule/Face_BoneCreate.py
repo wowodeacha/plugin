@@ -15,7 +15,6 @@ DATA_PATH = PLUGIN_PATH + "datafile/headbasebonedata.json"
 FACE_JNT_PIV_DIR = CAS.load_data(DATA_PATH)
 
 
-
 class FaceJntCreate(object):
     head_bone_key_dir = {'head': ['Head_base'],
                          'forehead': ["ForeHead_base_L", "ForeHead_base_M", "ForeHead_base_R"],
@@ -51,7 +50,8 @@ class FaceJntCreate(object):
         flag_jnt_name_list = head_bone_name_dir[in_flag]
         for i in head_bone_name_dir:
             # todo: 写一个根据点坐标创建骨骼
-            mpy.joint(n="new", p=(0, 0, 0))
+            piv = FACE_JNT_PIV_DIR[i]
+            mpy.joint(n=i, p=piv)
 
             print ''
 
