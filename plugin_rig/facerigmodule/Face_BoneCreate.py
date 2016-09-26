@@ -9,6 +9,11 @@
 import maya.cmds as mpy
 import custom_global_function as cgf
 
+CAS = cgf.CustomAttrSetCla()
+PLUGIN_PATH = CAS.get_cur_dir_path_fun()
+print PLUGIN_PATH
+face_jnt_piv_dir = CAS.load_data()
+
 
 class FaceJntCreate(object):
     head_bone_key_dir = {'head': ['Head_base'],
@@ -29,8 +34,8 @@ class FaceJntCreate(object):
                                    "Mouth_Up_base_M", "Mouth_Up_base_R", "NoseFold_base_L", "NoseFold_base_R"],
                          'jaw': ["Chin_base", "Jaw_base"],
                          'temple': ["Temple_base_L", "Temple_base_R"]}
-    CAS = cgf.CustomAttrSetCla()
-    face_jnt_piv_dir = CAS.load_data()
+
+
     def __init__(self, char_name='test_char'):
         self.char_name = char_name
 
