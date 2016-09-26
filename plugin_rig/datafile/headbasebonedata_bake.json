@@ -160,6 +160,11 @@
         0
     ],
     "Eyelid_UpIn_base_L": [
+        1,
+        0.25,
+        0
+    ],
+    "Eyelid_UpIn_base_R": [
         -1,
         0.25,
         0
