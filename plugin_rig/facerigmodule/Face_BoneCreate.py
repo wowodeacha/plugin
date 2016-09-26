@@ -6,7 +6,6 @@
 # Nothing Impossible
 #
 
-import pymel.core as pm
 import maya.cmds as mpy
 import custom_global_function as cgf
 
@@ -30,7 +29,8 @@ class FaceJntCreate(object):
                                    "Mouth_Up_base_M", "Mouth_Up_base_R", "NoseFold_base_L", "NoseFold_base_R"],
                          'jaw': ["Chin_base", "Jaw_base"],
                          'temple': ["Temple_base_L", "Temple_base_R"]}
-
+    CAS = cgf.CustomAttrSetCla()
+    face_jnt_piv_dir = CAS.load_data()
     def __init__(self, char_name='test_char'):
         self.char_name = char_name
 
@@ -45,8 +45,8 @@ class FaceJntCreate(object):
         head_bone_name_dir = self.head_bone_key_dir
         flag_jnt_name_list = head_bone_name_dir[in_flag]
         for i in head_bone_name_dir:
-            # todo: 用 'pymel' 写一个根据点坐标创建骨骼（learning）
-            pm.joint()
+            # todo: 写一个根据点坐标创建骨骼
+            mpy.joint(n="new", p=(0, 0, 0))
 
             print ''
 
