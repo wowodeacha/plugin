@@ -8,8 +8,12 @@
 
 import maya.cmds as mpy
 import custom_global_function as cgf
-reload(cgf)
+import facerigmodule.facerigpubfun as frpfd
 
+reload(cgf)
+reload(frpfd)
+
+FRPF = frpfd.FaceRigPubFuc()
 CAS = cgf.CustomAttrSetCla()
 PLUGIN_PATH = CAS.get_cur_dir_path_fun()
 DATA_PATH = PLUGIN_PATH + "datafile/headbasebonedata.json"
@@ -46,7 +50,9 @@ class FaceJntCreate(object):
     # TODO: 重构此处代码  这里是垃圾
     def create_base_grp(self):
         mpy.group(em=True, name=NAME_DIR["faceMoveCur"])
-
+        mpy.group(em=True, name=NAME_DIR["face_base_rig_grp"])
+        FRPF.try_parent(NAME_DIR["face_base_rig_grp"],NAME_DIR["faceMoveCur"])
+        print "here"
 
     # 创建基础骨骼
     def create_base_jnt(self, needed_parts_list):
@@ -63,7 +69,6 @@ class FaceJntCreate(object):
             piv = FACE_JNT_PIV_DIR[i]
             mpy.select(cl=1)
             mpy.joint(n=i, p=piv)
-
             #
 
 

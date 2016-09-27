@@ -222,8 +222,10 @@ class FaceRigPubFuc():
 
     @staticmethod
     def try_parent(obj_a, obj_b):
-        obj_p = mpy.listRelatives(obj_b, p=1)
+        obj_p = mpy.listRelatives(obj_a, p=1)
         if (obj_p != None and obj_p[0] != obj_b):
+            mpy.parent(obj_a, obj_b)
+        elif obj_p == None:
             mpy.parent(obj_a, obj_b)
 
 
