@@ -8,11 +8,14 @@
 
 import maya.cmds as mpy
 import custom_global_function as cgf
+reload(cgf)
 
 CAS = cgf.CustomAttrSetCla()
 PLUGIN_PATH = CAS.get_cur_dir_path_fun()
 DATA_PATH = PLUGIN_PATH + "datafile/headbasebonedata.json"
+NAME_DIR_PATH = PLUGIN_PATH + "datafile/name_dir.json"
 FACE_JNT_PIV_DIR = CAS.load_data(DATA_PATH)
+NAME_DIR = CAS.load_data(NAME_DIR_PATH)
 
 
 class FaceJntCreate(object):
@@ -33,12 +36,17 @@ class FaceJntCreate(object):
                          'nose': ["Nose_base_L", "Nose_base_M", "Nose_base_R"],
                          'mouth': ["Mouth_Corner_base_L", "Mouth_Corner_base_R", "Mouth_Dn_base_L", "Mouth_Dn_base_R",
                                    "Mouth_Up_base_L", "Mouth_Up_base_R", "Mouth_Up_base_M", "Mouth_Dn_base_M",
-                                   "NoseFold_base_L","NoseFold_base_R"],
+                                   "NoseFold_base_L", "NoseFold_base_R"],
                          'jaw': ["Chin_base", "Jaw_base"],
                          'temple': ["Temple_base_L", "Temple_base_R"]}
 
     def __init__(self, char_name='test_char'):
         self.char_name = char_name
+
+    # TODO: 重构此处代码  这里是垃圾
+    def create_base_grp(self):
+        mpy.group(em=True, name=NAME_DIR["faceMoveCur"])
+
 
     # 创建基础骨骼
     def create_base_jnt(self, needed_parts_list):
@@ -56,7 +64,9 @@ class FaceJntCreate(object):
             mpy.select(cl=1)
             mpy.joint(n=i, p=piv)
 
-    #
+            #
+
+
 if __name__ == "__main__":
     fc = FaceJntCreate()
-    fc.create_base_jnt(['base_list'])
+    fc.create_base_grp()
