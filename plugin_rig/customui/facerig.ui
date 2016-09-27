@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>463</width>
-    <height>508</height>
+    <height>534</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -60,27 +60,7 @@ color: rgb(255, 255, 255);</string>
             </item>
             <item row="0" column="0">
              <layout class="QGridLayout" name="gridLayout_18">
-              <item row="0" column="0">
-               <widget class="QPushButton" name="createheadmeshgrp_pushButton">
-                <property name="styleSheet">
-                 <string notr="true">background-color: rgb(138, 141, 156);</string>
-                </property>
-                <property name="text">
-                 <string>生成头部模型组</string>
-                </property>
-               </widget>
-              </item>
-              <item row="1" column="0">
-               <widget class="QPushButton" name="setheadmesh_pushButton">
-                <property name="styleSheet">
-                 <string notr="true">background-color: rgb(138, 141, 156);</string>
-                </property>
-                <property name="text">
-                 <string>设置吸附模型模型</string>
-                </property>
-               </widget>
-              </item>
-              <item row="2" column="0">
+              <item row="5" column="0">
                <widget class="QScrollArea" name="scrollArea">
                 <property name="sizePolicy">
                  <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
@@ -96,7 +76,7 @@ color: rgb(255, 255, 255);</string>
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>376</width>
+                   <width>359</width>
                    <height>221</height>
                   </rect>
                  </property>
@@ -142,7 +122,7 @@ color: rgb(255, 255, 255);</string>
                       <rect>
                        <x>0</x>
                        <y>0</y>
-                       <width>356</width>
+                       <width>339</width>
                        <height>69</height>
                       </rect>
                      </property>
@@ -187,7 +167,7 @@ color: rgb(255, 255, 255);</string>
                       <rect>
                        <x>0</x>
                        <y>0</y>
-                       <width>356</width>
+                       <width>339</width>
                        <height>69</height>
                       </rect>
                      </property>
@@ -239,7 +219,7 @@ color: rgb(255, 255, 255);</string>
                       <rect>
                        <x>0</x>
                        <y>0</y>
-                       <width>356</width>
+                       <width>339</width>
                        <height>69</height>
                       </rect>
                      </property>
@@ -291,7 +271,7 @@ color: rgb(255, 255, 255);</string>
                       <rect>
                        <x>0</x>
                        <y>0</y>
-                       <width>356</width>
+                       <width>339</width>
                        <height>69</height>
                       </rect>
                      </property>
@@ -343,7 +323,7 @@ color: rgb(255, 255, 255);</string>
                       <rect>
                        <x>0</x>
                        <y>0</y>
-                       <width>356</width>
+                       <width>339</width>
                        <height>69</height>
                       </rect>
                      </property>
@@ -395,7 +375,7 @@ color: rgb(255, 255, 255);</string>
                       <rect>
                        <x>0</x>
                        <y>0</y>
-                       <width>356</width>
+                       <width>339</width>
                        <height>69</height>
                       </rect>
                      </property>
@@ -446,6 +426,50 @@ color: rgb(255, 255, 255);</string>
                   </item>
                  </layout>
                 </widget>
+               </widget>
+              </item>
+              <item row="1" column="0">
+               <widget class="QListWidget" name="listWidget">
+                <property name="styleSheet">
+                 <string notr="true">background-color: rgb(255, 255, 255);</string>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="0">
+               <widget class="QPushButton" name="setheadmesh_pushButton">
+                <property name="styleSheet">
+                 <string notr="true">background-color: rgb(138, 141, 156);</string>
+                </property>
+                <property name="text">
+                 <string>设置面部模型</string>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="0">
+               <widget class="QSplitter" name="splitter_7">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <widget class="QLabel" name="label_3">
+                 <property name="text">
+                  <string>当前面部模型：</string>
+                 </property>
+                </widget>
+                <widget class="QLineEdit" name="lineEdit">
+                 <property name="styleSheet">
+                  <string notr="true">background-color: rgb(255, 255, 255);</string>
+                 </property>
+                </widget>
+               </widget>
+              </item>
+              <item row="0" column="0">
+               <widget class="QPushButton" name="pushButton">
+                <property name="styleSheet">
+                 <string notr="true">background-color: rgb(75, 78, 99);</string>
+                </property>
+                <property name="text">
+                 <string>载入模型列表</string>
+                </property>
                </widget>
               </item>
              </layout>

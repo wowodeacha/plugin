@@ -17,17 +17,17 @@ class FaceRigUISetUp(QtGui.QWidget):
     def __init__(self, parent=None):
         super(FaceRigUISetUp, self).__init__(parent=parent)
         customAttrSet = CustomAttrSetCla()
-        self.PugPath = customAttrSet.getCurDirFun()
+        self.PugPath = customAttrSet.get_cur_dir_path_fun()
         self.ui = Ui_faceUI_Form()
         self.ui.setupUi(self)
         self.signalSetUpUI()
 
     # 信号设置
     def signalSetUpUI(self):
-        loadHeadMeshButton = self.ui.loadHeadMesh_pushButton
+        # loadHeadMeshButton = self.ui.loadHeadMesh_pushButton
         importForeHeadBone_pushButton = self.ui.importForeHeadBone_pushButton
 
-        loadHeadMeshButton.clicked.connect(self.loadMeshFun)
+        # loadHeadMeshButton.clicked.connect(self.loadMeshFun)
         importForeHeadBone_pushButton.clicked.connect(lambda: self.import_need_base_jnt_fun('Face_ForeHead_Plane'))
 
     # 载入头部模型
