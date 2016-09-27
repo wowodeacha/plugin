@@ -48,23 +48,13 @@ color: rgb(255, 255, 255);</string>
             <string>Jnt_Import</string>
            </property>
            <layout class="QGridLayout" name="gridLayout_5">
-            <item row="4" column="0">
+            <item row="2" column="0">
              <widget class="QPushButton" name="rebulidAllBone_pushButton">
               <property name="styleSheet">
                <string notr="true">background-color: rgb(138, 141, 156);</string>
               </property>
               <property name="text">
                <string>重置所有骨骼</string>
-              </property>
-             </widget>
-            </item>
-            <item row="3" column="0">
-             <widget class="QPushButton" name="bneMir_pushButton">
-              <property name="styleSheet">
-               <string notr="true">background-color: rgb(138, 141, 156);</string>
-              </property>
-              <property name="text">
-               <string>镜像骨骼</string>
               </property>
              </widget>
             </item>
@@ -86,7 +76,7 @@ color: rgb(255, 255, 255);</string>
                  <string notr="true">background-color: rgb(138, 141, 156);</string>
                 </property>
                 <property name="text">
-                 <string>设置模型</string>
+                 <string>设置吸附模型模型</string>
                 </property>
                </widget>
               </item>
@@ -107,7 +97,7 @@ color: rgb(255, 255, 255);</string>
                    <x>0</x>
                    <y>0</y>
                    <width>376</width>
-                   <height>245</height>
+                   <height>221</height>
                   </rect>
                  </property>
                  <layout class="QGridLayout" name="gridLayout_3">
@@ -142,7 +132,7 @@ color: rgb(255, 255, 255);</string>
                      <enum>QFrame::Plain</enum>
                     </property>
                     <property name="currentIndex">
-                     <number>1</number>
+                     <number>2</number>
                     </property>
                     <property name="tabSpacing">
                      <number>2</number>
@@ -460,7 +450,7 @@ color: rgb(255, 255, 255);</string>
               </item>
              </layout>
             </item>
-            <item row="2" column="0">
+            <item row="3" column="0">
              <widget class="QPushButton" name="snapForeHeadMeshToHeadMesh_pushButton">
               <property name="styleSheet">
                <string notr="true">background-color: rgb(138, 141, 156);</string>
@@ -484,6 +474,29 @@ color: rgb(255, 255, 255);</string>
               <property name="text">
                <string>导入基础骨骼</string>
               </property>
+             </widget>
+            </item>
+            <item row="4" column="0">
+             <widget class="QSplitter" name="splitter">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <widget class="QPushButton" name="bneMir_pushButton">
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(138, 141, 156);</string>
+               </property>
+               <property name="text">
+                <string>L&gt;TO&gt;R镜像</string>
+               </property>
+              </widget>
+              <widget class="QPushButton" name="bneMir_pushButton_2">
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(138, 141, 156);</string>
+               </property>
+               <property name="text">
+                <string>R&gt;TO&gt;L镜像</string>
+               </property>
+              </widget>
              </widget>
             </item>
            </layout>
