@@ -108,7 +108,17 @@
         -1.3, 
         0, 
         0
-    ], 
+    ],
+    "Eye_ball_base_L": [
+        1.3,
+        0,
+        0
+    ],
+    "Eye_ball_base_R": [
+        -1.3,
+        0,
+        0
+    ],
     "Eyelid_DnIn_base_L": [
         1, 
         -0.25, 

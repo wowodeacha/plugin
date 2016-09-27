@@ -28,12 +28,12 @@ class FaceJntCreate(object):
                          'brow': ['Brow_0_base_L', "Brow_0_base_R", "Brow_1_base_L", "Brow_1_base_R", "Brow_2_base_L",
                                   "Brow_2_base_R", "Brow_base_M"],
                          'eye': ["EyeSag_Dn_base_L", "EyeSag_Dn_base_R", "EyeSag_Up_base_L", "EyeSag_Up_base_R",
-                                 "Eye_root_base_L", "Eye_root_base_R", "Eyelid_DnIn_base_L", "Eyelid_DnIn_base_R",
-                                 "Eyelid_DnOut_base_L", "Eyelid_DnOut_base_R", "Eyelid_Dn_base_L", "Eyelid_Dn_base_R",
-                                 "Eyelid_In_base_L", "Eyelid_In_base_R", "Eyelid_Out_base_L", "Eyelid_Out_base_R",
+                                 "Eye_ball_base_L", "Eye_ball_base_R", "Eye_root_base_L", "Eye_root_base_R",
+                                 "Eyelid_DnIn_base_L", "Eyelid_DnIn_base_R", "Eyelid_DnOut_base_L",
+                                 "Eyelid_DnOut_base_R", "Eyelid_Dn_base_L", "Eyelid_Dn_base_R", "Eyelid_In_base_L",
+                                 "Eyelid_In_base_R", "Eyelid_Out_base_L", "Eyelid_Out_base_R",
                                  "Eyelid_UpIn_base_L", "Eyelid_UpIn_base_R", "Eyelid_UpOut_base_L",
-                                 "Eyelid_UpOut_base_R",
-                                 "Eyelid_Up_base_L", "Eyelid_Up_base_R"],
+                                 "Eyelid_UpOut_base_R", "Eyelid_Up_base_L", "Eyelid_Up_base_R"],
                          'check': ["Check_base_L", "Check_base_R", "Cheek_In_base_L", "Cheek_In_base_R",
                                    "Cheek_Out_base_L", "Cheek_Out_base_R", "Cheek_Up_base_L",
                                    "Cheek_Up_base_R"],
@@ -51,7 +51,7 @@ class FaceJntCreate(object):
     def create_base_grp(self):
         mpy.group(em=True, name=NAME_DIR["faceMoveCur"])
         mpy.group(em=True, name=NAME_DIR["face_base_rig_grp"])
-        FRPF.try_parent(NAME_DIR["face_base_rig_grp"],NAME_DIR["faceMoveCur"])
+        FRPF.try_parent(NAME_DIR["face_base_rig_grp"], NAME_DIR["faceMoveCur"])
         print "here"
 
     # 创建基础骨骼
@@ -69,9 +69,16 @@ class FaceJntCreate(object):
             piv = FACE_JNT_PIV_DIR[i]
             mpy.select(cl=1)
             mpy.joint(n=i, p=piv)
-            #
+            # TODO: 这里整理层级的方式需要重构
+            FRPF.try_parent(i, NAME_DIR["face_base_rig_grp"])
+
+        FRPF.try_parent("Eye_ball_base_L", "Eye_root_base_L")
+        FRPF.try_parent("Eye_ball_base_R", "Eye_root_base_R")
+        FRPF.try_parent("Chin_base", "Jaw_base")
+        #
 
 
 if __name__ == "__main__":
     fc = FaceJntCreate()
     fc.create_base_grp()
+    fc.create_base_jnt(["base_list"])
