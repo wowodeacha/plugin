@@ -80,7 +80,6 @@ class FaceJntCreate(object):
         except:
             pass
 
-
     @staticmethod
     def mirr_jnt_pos(typ):
         TName = suffix_dir
@@ -90,22 +89,23 @@ class FaceJntCreate(object):
         tv = 1
         rv = 1
 
-        faceSdkSkinGrp = 'face_sdk_skin_grp'
+        faceSdkSkinGrp = NAME_DIR["face_base_rig_grp"]
         if (not mpy.objExists(faceSdkSkinGrp)):
             return
         allJnt = mpy.listRelatives(faceSdkSkinGrp, c=1, ad=1, typ='joint')
         axis = [-1, 1, 1, 1, -1, -1, 1, 1, 1]
+        print allJnt
         for i in allJnt:
             if (typ == 'L>>R'):
-                if (i[:2] == left_side):
+                if (i[-2:] == left_side):
                     getObj = i
-                    mirObj = right_side + i[2:]
+                    mirObj = i[:-2] + right_side
                 else:
                     continue
             else:
-                if (i[:2] == right_side):
+                if (i[-2:] == right_side):
                     getObj = i
-                    mirObj = left_side + i[2:]
+                    mirObj = i[:-2] + left_side
                 else:
                     continue
 
@@ -124,3 +124,4 @@ if __name__ == "__main__":
     fc = FaceJntCreate()
     # fc.create_base_grp()
     fc.mirr_jnt_pos('L>>R')
+    print "done"
