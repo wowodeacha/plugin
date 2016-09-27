@@ -12,7 +12,7 @@ import maya.OpenMaya as OpenMaya
 
 suffix_dir = {'_fol': '_fol', '_loc': '_loc', '_final': '_final', '_target': '_target', 'face': 'face',
               '_base': '_base', '_bsNode': '_bsNode', '_bs': '_bs', '_skin': '_skin', '_M': '_M', '_L': '_L',
-              '_L': '_L', '_ctrl': '_ctrl', '_rig': '_rig', '_jnt': '_jnt', '_root': '_root', '_rot': '_rot',
+              '_R': '_R', '_ctrl': '_ctrl', '_rig': '_rig', '_jnt': '_jnt', '_root': '_root', '_rot': '_rot',
               '_cur': '_cur', '_cnt': '_cnt', '_sdk': '_sdk', '_grp': '_grp', '_anim': '_anim'}
 
 
