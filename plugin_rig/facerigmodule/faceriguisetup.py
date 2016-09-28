@@ -5,10 +5,13 @@
 #
 #
 
-from customui.facerig import Ui_faceUI_Form
+
 from PyQt4 import QtGui, QtCore
 import maya.cmds as mpy
 from custom_global_function import CustomAttrSetCla
+import customui.facerig as FRUI_D
+
+reload(FRUI_D)
 
 
 # 设置表情窗口
@@ -18,7 +21,7 @@ class FaceRigUISetUp(QtGui.QWidget):
         super(FaceRigUISetUp, self).__init__(parent=parent)
         customAttrSet = CustomAttrSetCla()
         self.PugPath = customAttrSet.get_cur_dir_path_fun()
-        self.ui = Ui_faceUI_Form()
+        self.ui = FRUI_D.Ui_faceUI_Form()
         self.ui.setupUi(self)
         self.signalSetUpUI()
 
