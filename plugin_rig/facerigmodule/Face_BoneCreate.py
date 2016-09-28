@@ -49,7 +49,8 @@ class FaceJntCreate(object):
         self.char_name = char_name
 
     # TODO: 重构此处代码  这里是垃圾
-    def create_base_grp(self):
+    @staticmethod
+    def create_base_grp():
         mpy.group(em=True, name=NAME_DIR["faceMoveCur"])
         mpy.group(em=True, name=NAME_DIR["face_base_rig_grp"])
         FRPF.try_parent(NAME_DIR["face_base_rig_grp"], NAME_DIR["faceMoveCur"])

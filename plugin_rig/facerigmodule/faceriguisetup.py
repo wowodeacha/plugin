@@ -10,8 +10,12 @@ from PyQt4 import QtGui, QtCore
 import maya.cmds as mpy
 from custom_global_function import CustomAttrSetCla
 import customui.facerig as FRUI_D
+import facerigmodule.Face_BoneCreate as FBC
 
+reload(FBC)
 reload(FRUI_D)
+
+F_J_C = FBC.FaceJntCreate()
 
 
 # 设置表情窗口
@@ -23,28 +27,65 @@ class FaceRigUISetUp(QtGui.QWidget):
         self.PugPath = customAttrSet.get_cur_dir_path_fun()
         self.ui = FRUI_D.Ui_faceUI_Form()
         self.ui.setupUi(self)
-        self.signalSetUpUI()
+        self.signal_setup_ui()
 
     # 信号设置
-    def signalSetUpUI(self):
+    def signal_setup_ui(self):
         load_mesh_list_button = self.ui.loadmeshList__pushButton
-        importForeHeadBone_pushButton = self.ui.importForeHeadBone_pushButton
+        setheadmesh_pushButton = self.ui.setheadmesh_pushButton
+        setforeheadbone_pushButton = self.ui.setforeheadbone_pushButton
 
-        # loadHeadMeshButton.clicked.connect(self.loadMeshFun)
-        importForeHeadBone_pushButton.clicked.connect(lambda: self.import_need_base_jnt_fun('Face_ForeHead_Plane'))
+        load_mesh_list_button.clicked.connect(self.load_mesh_list_fun)
+        setheadmesh_pushButton.clicked.connect(self.set_current_face_fun)
+        setforeheadbone_pushButton.clicked.connect(self.create_base_jnt_fun)
 
-    # 载入头部模型
-    def loadMeshFun(self):
-        loadHeadMesh_lineEdit = self.ui.loadHeadMesh_lineEdit
-        Mesh = mpy.ls(sl=1)[0]
-        loadHeadMesh_lineEdit.setText(Mesh)
+    # 载入模型列表
+    def load_mesh_list_fun(self):
+        sel = mpy.ls(sl=1)
+        if (len(sel) == 0):
+            return
+        headmeshlist_listWidget = self.ui.headmeshlist_listWidget
 
-    # 导入基础骨骼文件
-    def import_need_base_jnt_fun(self, instr):
-        target_file = self.PugPath + 'MayaFile' + '/' + instr + '.ma'
-        mpy.file(target_file, i=1, options="v=0;", mergeNamespacesOnClash=0, rpr=instr)
-        return
-        #
+        headmeshlist_listWidget.clear()
+        print "dd"
+        for i in range(len(sel)):
+            shape = mpy.listRelatives(sel[i], s=1, f=1)
+            print sel[i]
+            if (shape == None):
+                continue
+            if (mpy.objectType(shape[0]) != 'mesh'):
+                continue
+            headmeshlist_listWidget.insertItem(i, sel[i])
+
+            # mpy.textField('frFaceMeshTF', e=1, tx='')
+            # TODO: 添加控件生效mpy.button('frSetFaceMeshB', e=1, en=1)
+
+    # 载面部部模型
+    def set_current_face_fun(self):
+        #     loadHeadMesh_lineEdit = self.ui.loadHeadMesh_lineEdit
+        #     Mesh = mpy.ls(sl=1)
+        #     loadHeadMesh_lineEdit.setText(Mesh)
+        headmeshlist_listWidget = self.ui.headmeshlist_listWidget
+        face_mesh_lineEdit = self.ui.face_mesh_lineEdit
+        sel_item = headmeshlist_listWidget.currentItem()
+        sel_item_text = sel_item.text()
+        sel_item_str = str(sel_item_text)
+        # if (selI == None):
+        #     return
+        # skinMesh = selI[0]
+        face_mesh_lineEdit.setText(sel_item_str)
+        # mpy.button('frSdkRiggingB', e=1, en=1)
+
+    # 生成基础骨骼文件
+    def create_base_jnt_fun(self):
+        # 获取需要的骨骼标签
+        cur_flag_list = ["base_list"]
+        F_J_C.create_base_grp()
+        print "here"
+        F_J_C.create_base_jnt(cur_flag_list)
+
+
+#
 
 
 if __name__ == '__main__':
