@@ -10,8 +10,8 @@ from PyQt4 import QtGui, QtCore
 import maya.cmds as mpy
 from custom_global_function import CustomAttrSetCla
 import customui.facerig as FRUI_D
-import facerigmodule.Face_BoneCreate as FBC
-import facerigmodule.facerigpubfun as FRPF
+import facerigmodule.faceBoneCreate as FBC
+import facerigmodule.faceRigPubFun as FRPF
 
 
 reload(FBC)
@@ -46,7 +46,7 @@ class FaceRigUISetUp(QtGui.QWidget):
         load_mesh_list_button.clicked.connect(self.load_mesh_list_fun)
         setheadmesh_pushButton.clicked.connect(self.set_current_face_fun)
         setforeheadbone_pushButton.clicked.connect(self.create_base_jnt_fun)
-        snapForeHeadMeshToHeadMesh_pushButton.connect(self.snap_sel_obj_to_face_mesh)
+        snapForeHeadMeshToHeadMesh_pushButton.clicked.connect(self.snap_sel_obj_to_face_mesh)
 
 
     # 载入模型列表
@@ -95,13 +95,15 @@ class FaceRigUISetUp(QtGui.QWidget):
         F_J_C.create_base_grp()
         F_J_C.create_base_jnt(cur_flag_list)  #
 
+    # 吸附选择到模型
     def snap_sel_obj_to_face_mesh(self):
         face_mesh_lineEdit = self.ui.face_mesh_lineEdit
         sel_list = mpy.ls(sl=1)
         face_mesh = face_mesh_lineEdit.text()
         face_mesh = str(face_mesh)
-        print face_mesh
+        FRPF_C.matchObjToCloset(face_mesh,sel_list)
 
+    # Rig、
 
 
 if __name__ == '__main__':

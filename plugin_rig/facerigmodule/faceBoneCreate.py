@@ -8,7 +8,7 @@
 
 import maya.cmds as mpy
 import custom_global_function as cgf
-import facerigmodule.facerigpubfun as frpfd
+import facerigmodule.faceRigPubFun as frpfd
 
 reload(cgf)
 reload(frpfd)
