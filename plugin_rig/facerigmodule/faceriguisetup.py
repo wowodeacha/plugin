@@ -27,7 +27,7 @@ class FaceRigUISetUp(QtGui.QWidget):
 
     # 信号设置
     def signalSetUpUI(self):
-        # loadHeadMeshButton = self.ui.loadHeadMesh_pushButton
+        load_mesh_list_button = self.ui.loadmeshList__pushButton
         importForeHeadBone_pushButton = self.ui.importForeHeadBone_pushButton
 
         # loadHeadMeshButton.clicked.connect(self.loadMeshFun)
