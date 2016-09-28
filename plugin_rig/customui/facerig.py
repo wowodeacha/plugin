@@ -341,7 +341,7 @@ class Ui_faceUI_Form(object):
         self.setheadmesh_pushButton.setText(_translate("faceUI_Form", "设置面部模型", None))
         self.currentfacemesh_label.setText(_translate("faceUI_Form", "当前面部模型：", None))
         self.loadmeshList__pushButton.setText(_translate("faceUI_Form", "载入模型列表", None))
-        self.snapForeHeadMeshToHeadMesh_pushButton.setText(_translate("faceUI_Form", "吸附模型", None))
+        self.snapForeHeadMeshToHeadMesh_pushButton.setText(_translate("faceUI_Form", "(选择)吸附模型", None))
         self.setforeheadbone_pushButton.setText(_translate("faceUI_Form", "生成基础骨骼", None))
         self.bneMir_pushButton.setText(_translate("faceUI_Form", "L>TO>R镜像", None))
         self.bneMir_pushButton_2.setText(_translate("faceUI_Form", "R>TO>L镜像", None))

@@ -11,11 +11,15 @@ import maya.cmds as mpy
 from custom_global_function import CustomAttrSetCla
 import customui.facerig as FRUI_D
 import facerigmodule.Face_BoneCreate as FBC
+import facerigmodule.facerigpubfun as FRPF
+
 
 reload(FBC)
 reload(FRUI_D)
+reload(FRPF)
 
 F_J_C = FBC.FaceJntCreate()
+FRPF_C = FRPF.FaceRigPubFuc()
 
 
 # 设置表情窗口
@@ -31,13 +35,19 @@ class FaceRigUISetUp(QtGui.QWidget):
 
     # 信号设置
     def signal_setup_ui(self):
+        rebulidAllBone_pushButton = self.ui.rebulidAllBone_pushButton
+        rebulidAllBone_pushButton.hide()
+
         load_mesh_list_button = self.ui.loadmeshList__pushButton
         setheadmesh_pushButton = self.ui.setheadmesh_pushButton
         setforeheadbone_pushButton = self.ui.setforeheadbone_pushButton
+        snapForeHeadMeshToHeadMesh_pushButton = self.ui.snapForeHeadMeshToHeadMesh_pushButton
 
         load_mesh_list_button.clicked.connect(self.load_mesh_list_fun)
         setheadmesh_pushButton.clicked.connect(self.set_current_face_fun)
         setforeheadbone_pushButton.clicked.connect(self.create_base_jnt_fun)
+        snapForeHeadMeshToHeadMesh_pushButton.connect(self.snap_sel_obj_to_face_mesh)
+
 
     # 载入模型列表
     def load_mesh_list_fun(self):
@@ -60,6 +70,7 @@ class FaceRigUISetUp(QtGui.QWidget):
             # mpy.textField('frFaceMeshTF', e=1, tx='')
             # TODO: 添加控件生效mpy.button('frSetFaceMeshB', e=1, en=1)
 
+
     # 载面部部模型
     def set_current_face_fun(self):
         #     loadHeadMesh_lineEdit = self.ui.loadHeadMesh_lineEdit
@@ -76,16 +87,21 @@ class FaceRigUISetUp(QtGui.QWidget):
         face_mesh_lineEdit.setText(sel_item_str)
         # mpy.button('frSdkRiggingB', e=1, en=1)
 
+
     # 生成基础骨骼文件
     def create_base_jnt_fun(self):
         # 获取需要的骨骼标签
         cur_flag_list = ["base_list"]
         F_J_C.create_base_grp()
-        print "here"
-        F_J_C.create_base_jnt(cur_flag_list)
+        F_J_C.create_base_jnt(cur_flag_list)  #
 
+    def snap_sel_obj_to_face_mesh(self):
+        face_mesh_lineEdit = self.ui.face_mesh_lineEdit
+        sel_list = mpy.ls(sl=1)
+        face_mesh = face_mesh_lineEdit.text()
+        face_mesh = str(face_mesh)
+        print face_mesh
 
-#
 
 
 if __name__ == '__main__':

@@ -480,7 +480,7 @@ color: rgb(255, 255, 255);</string>
                <string notr="true">background-color: rgb(138, 141, 156);</string>
               </property>
               <property name="text">
-               <string>吸附模型</string>
+               <string>(选择)吸附模型</string>
               </property>
              </widget>
             </item>
