@@ -74,7 +74,7 @@ class FaceRiggingClass(object):
             origMeshName = mpy.duplicate(allMesh[i], n=origMeshName)[0]
             sdd_tryParent(origMeshName, faceOrigMeshGrp)
             iOrigAttr = sdd_tryAddMessageAttr(allMesh[i], 'origMesh')
-            nOrigAttr = sdd_tryAddMessageAttr(origMeshName, 'origMesh')
+            nOrigAttr = sdd_tryAdMessage   Attr(origMeshName, 'origMesh')
             sdd_connectAttrForce(nOrigAttr, iOrigAttr)
 
             ctrGrp = chr(65 + i) + '_CorrectiveGrp'
