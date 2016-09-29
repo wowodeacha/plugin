@@ -42,11 +42,13 @@ class FaceRigUISetUp(QtGui.QWidget):
         setheadmesh_pushButton = self.ui.setheadmesh_pushButton
         setforeheadbone_pushButton = self.ui.setforeheadbone_pushButton
         snapForeHeadMeshToHeadMesh_pushButton = self.ui.snapForeHeadMeshToHeadMesh_pushButton
+        rigging_pushButton = self.ui.rigging_pushButton
 
         load_mesh_list_button.clicked.connect(self.load_mesh_list_fun)
         setheadmesh_pushButton.clicked.connect(self.set_current_face_fun)
         setforeheadbone_pushButton.clicked.connect(self.create_base_jnt_fun)
         snapForeHeadMeshToHeadMesh_pushButton.clicked.connect(self.snap_sel_obj_to_face_mesh)
+        rigging_pushButton.clicked.connect()
 
 
     # 载入模型列表

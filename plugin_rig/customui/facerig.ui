@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>472</width>
+    <width>477</width>
     <height>618</height>
    </rect>
   </property>
@@ -35,7 +35,7 @@ color: rgb(255, 255, 255);</string>
         <enum>QTabWidget::Rounded</enum>
        </property>
        <property name="currentIndex">
-        <number>1</number>
+        <number>0</number>
        </property>
        <widget class="QWidget" name="tabWidgetPage1">
         <attribute name="title">
@@ -76,7 +76,7 @@ color: rgb(255, 255, 255);</string>
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>385</width>
+                   <width>390</width>
                    <height>221</height>
                   </rect>
                  </property>
@@ -219,7 +219,7 @@ color: rgb(255, 255, 255);</string>
                       <rect>
                        <x>0</x>
                        <y>0</y>
-                       <width>365</width>
+                       <width>370</width>
                        <height>69</height>
                       </rect>
                      </property>
@@ -527,7 +527,7 @@ color: rgb(255, 255, 255);</string>
           </widget>
          </item>
          <item row="3" column="0">
-          <widget class="QPushButton" name="pushButton_4">
+          <widget class="QPushButton" name="rigging_pushButton">
            <property name="styleSheet">
             <string notr="true">background-color: rgb(144, 127, 127);</string>
            </property>
@@ -879,6 +879,9 @@ color: rgb(255, 255, 255);</string>
                    </property>
                    <property name="checked">
                     <bool>true</bool>
+                   </property>
+                   <property name="autoRepeat">
+                    <bool>false</bool>
                    </property>
                   </widget>
                  </item>
