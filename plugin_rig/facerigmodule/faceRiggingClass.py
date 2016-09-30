@@ -50,7 +50,7 @@ class FaceRiggingClass(object):
             mpy.setAttr(faceSkinMeshGrp + '.boxWidthS', cb=1)
             mpy.parent(faceSkinMeshGrp, faceMeshGrp)
             mpy.setAttr(faceSkinMeshGrp + '.it', 0)
-
+  
         meshList = mpy.textScrollList('frFaceMeshTSL', q=1, ai=1)
         for i in meshList:
             sdd_tryParent(i, faceSkinMeshGrp)
