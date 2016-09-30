@@ -12,14 +12,16 @@ from custom_global_function import CustomAttrSetCla
 import customui.facerig as FRUI_D
 import facerigmodule.faceBoneCreate as FBC
 import facerigmodule.faceRigPubFun as FRPF
+import facerigmodule.faceRiggingClass as FRC
 
-
+reload(FRC)
 reload(FBC)
 reload(FRUI_D)
 reload(FRPF)
 
 F_J_C = FBC.FaceJntCreate()
 FRPF_C = FRPF.FaceRigPubFuc()
+FRC_C = FRC.FaceRiggingClass()
 
 
 # 设置表情窗口
@@ -105,7 +107,9 @@ class FaceRigUISetUp(QtGui.QWidget):
         face_mesh = str(face_mesh)
         FRPF_C.matchObjToCloset(face_mesh,sel_list)
 
-    # Rig、
+    # Rigging
+    def rigging_face(self):
+
 
 
 if __name__ == '__main__':
