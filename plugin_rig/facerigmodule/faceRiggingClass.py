@@ -5,7 +5,7 @@
 #
 #
 import maya.OpenMaya as OpenMaya
-import maya.mpy as mpy
+import maya.cmds as mpy
 import custom_global_function as CGF
 import facerigmodule.faceRigPubFun as FRPF
 
@@ -114,6 +114,7 @@ class FaceRiggingClass(object):
     def createSdkJntRig(self):
         T = NAME_DIR
         FR, FRJntPos, FRUIPos = self.sdd_frTNameDirc()
+        _base = T['_base']
         _skin = T['_skin']
         _sdk = T['_sdk']
         _grp = T['_grp']
@@ -151,14 +152,14 @@ class FaceRiggingClass(object):
             baseName = FR[i]
             cur = FRPF_C.create_curve_cnt(baseName + _cnt, typ='Cube', r=_rad)
             curGrp = self.sdd_zeroSdkGrp(baseName, cur)
-            mpy.delete(mpy.parentConstraint(baseName + _skin, curGrp))
+            mpy.delete(mpy.parentConstraint(baseName + _base, curGrp))
             mpy.parent(curGrp, faceSdkRigGrp)
-            mpy.parentConstraint(cur, baseName + _skin)
-            mpy.scaleConstraint(cur, baseName + _skin)
+            mpy.parentConstraint(cur, baseName + _base)
+            mpy.scaleConstraint(cur, baseName + _base)
 
-            pCtrl = mpy.listRelatives(baseName + _skin, p=1)[0]
+            pCtrl = mpy.listRelatives(baseName + _base, p=1)[0]
             if (faceSdkSkinGrp != pCtrl):
-                mpy.parent(baseName + _skin, faceSdkSkinGrp)
+                mpy.parent(baseName + _base, faceSdkSkinGrp)
 
         # eyelid rig
         # L Eyelid
@@ -400,7 +401,7 @@ class FaceRiggingClass(object):
         mpy.connectAttr(jawCnt + '.R_mouth_Dn', rMouthDnRv + '.omn')
         mpy.connectAttr(rMouthDnRv + '.ov', FR['R_mouth_Dn'] + '_bta' + '.i[0]', f=1)
 
-        dis = self.sdd_getDistanceTwoPoint([FR['M_mouth_Up'] + _skin], FR['M_mouth_Dn'] + _skin)
+        dis = self.sdd_getDistanceTwoPoint([FR['M_mouth_Up'] + _base], FR['M_mouth_Dn'] + _base)
         for i in mouthList:
             cnt = FR[i] + _cnt
             vtxList = mpy.ls(cnt + '.cv[*]')

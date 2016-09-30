@@ -122,7 +122,7 @@ color: rgb(255, 255, 255);</string>
                       <rect>
                        <x>0</x>
                        <y>0</y>
-                       <width>365</width>
+                       <width>370</width>
                        <height>69</height>
                       </rect>
                      </property>
@@ -167,7 +167,7 @@ color: rgb(255, 255, 255);</string>
                       <rect>
                        <x>0</x>
                        <y>0</y>
-                       <width>365</width>
+                       <width>370</width>
                        <height>69</height>
                       </rect>
                      </property>
@@ -271,7 +271,7 @@ color: rgb(255, 255, 255);</string>
                       <rect>
                        <x>0</x>
                        <y>0</y>
-                       <width>365</width>
+                       <width>370</width>
                        <height>69</height>
                       </rect>
                      </property>
@@ -323,7 +323,7 @@ color: rgb(255, 255, 255);</string>
                       <rect>
                        <x>0</x>
                        <y>0</y>
-                       <width>365</width>
+                       <width>370</width>
                        <height>69</height>
                       </rect>
                      </property>
@@ -375,7 +375,7 @@ color: rgb(255, 255, 255);</string>
                       <rect>
                        <x>0</x>
                        <y>0</y>
-                       <width>365</width>
+                       <width>370</width>
                        <height>69</height>
                       </rect>
                      </property>
@@ -505,7 +505,7 @@ color: rgb(255, 255, 255);</string>
               <property name="orientation">
                <enum>Qt::Horizontal</enum>
               </property>
-              <widget class="QPushButton" name="bneMir_pushButton">
+              <widget class="QPushButton" name="LToRbneMir_pushButton">
                <property name="styleSheet">
                 <string notr="true">background-color: rgb(138, 141, 156);</string>
                </property>
@@ -513,7 +513,7 @@ color: rgb(255, 255, 255);</string>
                 <string>L&gt;TO&gt;R镜像</string>
                </property>
               </widget>
-              <widget class="QPushButton" name="bneMir_pushButton_2">
+              <widget class="QPushButton" name="RToLbneMir_pushButton">
                <property name="styleSheet">
                 <string notr="true">background-color: rgb(138, 141, 156);</string>
                </property>
@@ -590,8 +590,8 @@ color: rgb(255, 255, 255);</string>
                  <rect>
                   <x>0</x>
                   <y>0</y>
-                  <width>385</width>
-                  <height>124</height>
+                  <width>134</width>
+                  <height>108</height>
                  </rect>
                 </property>
                 <attribute name="label">
@@ -642,8 +642,8 @@ color: rgb(255, 255, 255);</string>
                  <rect>
                   <x>0</x>
                   <y>0</y>
-                  <width>385</width>
-                  <height>124</height>
+                  <width>176</width>
+                  <height>72</height>
                  </rect>
                 </property>
                 <attribute name="label">
@@ -698,8 +698,8 @@ color: rgb(255, 255, 255);</string>
                  <rect>
                   <x>0</x>
                   <y>0</y>
-                  <width>383</width>
-                  <height>170</height>
+                  <width>80</width>
+                  <height>16</height>
                  </rect>
                 </property>
                </widget>
@@ -715,8 +715,8 @@ color: rgb(255, 255, 255);</string>
                  <rect>
                   <x>0</x>
                   <y>0</y>
-                  <width>383</width>
-                  <height>170</height>
+                  <width>80</width>
+                  <height>16</height>
                  </rect>
                 </property>
                </widget>

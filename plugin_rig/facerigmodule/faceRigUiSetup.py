@@ -19,7 +19,7 @@ reload(FBC)
 reload(FRUI_D)
 reload(FRPF)
 
-F_J_C = FBC.FaceJntCreate()
+FBC_C = FBC.FaceJntCreate()
 FRPF_C = FRPF.FaceRigPubFuc()
 FRC_C = FRC.FaceRiggingClass()
 
@@ -45,13 +45,19 @@ class FaceRigUISetUp(QtGui.QWidget):
         setforeheadbone_pushButton = self.ui.setforeheadbone_pushButton
         snapForeHeadMeshToHeadMesh_pushButton = self.ui.snapForeHeadMeshToHeadMesh_pushButton
         rigging_pushButton = self.ui.rigging_pushButton
+        LToRbneMir_pushButton = self.ui.LToRbneMir_pushButton
+        RToLbneMir_pushButton = self.ui.RToLbneMir_pushButton
+        rigging_pushButton =self.ui.rigging_pushButton
+
 
         load_mesh_list_button.clicked.connect(self.load_mesh_list_fun)
         setheadmesh_pushButton.clicked.connect(self.set_current_face_fun)
         setforeheadbone_pushButton.clicked.connect(self.create_base_jnt_fun)
         snapForeHeadMeshToHeadMesh_pushButton.clicked.connect(self.snap_sel_obj_to_face_mesh)
-        rigging_pushButton.clicked.connect()
-
+        rigging_pushButton.clicked.connect(self.rigging_face)
+        LToRbneMir_pushButton.clicked.connect(lambda :(self.base_jnt_mir('L>>R')))
+        RToLbneMir_pushButton.clicked.connect(lambda :(self.base_jnt_mir('R>>L')))
+        rigging_pushButton.clicked.connect(self.rigging_face)
 
     # 载入模型列表
     def load_mesh_list_fun(self):
@@ -96,8 +102,8 @@ class FaceRigUISetUp(QtGui.QWidget):
     def create_base_jnt_fun(self):
         # 获取需要的骨骼标签
         cur_flag_list = ["base_list"]
-        F_J_C.create_base_grp()
-        F_J_C.create_base_jnt(cur_flag_list)  #
+        FBC_C.create_base_grp()
+        FBC_C.create_base_jnt(cur_flag_list)  #
 
     # 吸附选择到模型
     def snap_sel_obj_to_face_mesh(self):
@@ -109,6 +115,12 @@ class FaceRigUISetUp(QtGui.QWidget):
 
     # Rigging
     def rigging_face(self):
+        FRC_C.createSdkJntRig()
+
+    def base_jnt_mir(self,mir_arrow):
+        FBC_C.mirr_jnt_pos(mir_arrow)
+
+
 
 
 
