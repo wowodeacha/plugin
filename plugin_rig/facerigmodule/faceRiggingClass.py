@@ -9,6 +9,8 @@ import maya.cmds as mpy
 import custom_global_function as CGF
 import facerigmodule.faceRigPubFun as FRPF
 
+reload(FRPF)
+
 CGF_C = CGF.CustomAttrSetCla()
 FRPF_C = FRPF.FaceRigPubFuc()
 
@@ -20,8 +22,19 @@ NAME_DIR = CGF_C.load_data(NAME_DIR_PATH)
 
 
 class FaceRiggingClass(object):
-    def createSdkJntRig(self):
-        faceSdkSkinGrp = 'face_sdk_skin_grp'
+    def __init__(self, author="yangjie"):
+        author = author
+
+    def returnTempNameDirc(self):
+        TName = {'_fol': '_fol', '_loc': '_loc', '_final': '_final', '_target': '_target', 'face': 'face',
+                 '_base': '_base', '_bsNode': '_bsNode', '_bs': '_bs', '_skin': '_skin', 'M_': 'M_', 'L_': 'L_',
+                 'R_': 'R_', '_ctrl': '_ctrl', '_rig': '_rig', '_jnt': '_jnt', '_root': '_root', '_rot': '_rot',
+                 '_cur': '_cur', '_cnt': '_cnt', '_sdk': '_sdk', '_grp': '_grp', '_anim': '_anim'}
+        return TName
+
+    def createSdkJointRigging(self, face_mesh, mesh_lsit):
+
+        faceSdkSkinGrp = 'face_base_rig_grp'
         if not (mpy.objExists(faceSdkSkinGrp)):
             return
         faceCur = 'faceMoveCur'
@@ -29,19 +42,21 @@ class FaceRiggingClass(object):
         if (not mpy.objExists(faceBaseGrp)):
             return
         faceBsGrp = 'face_bs_grp'
+
         if not (mpy.objExists(faceBsGrp)):
             faceBsGrp = mpy.group(em=1, n=faceBsGrp)
             mpy.setAttr(faceBsGrp + '.it', 0)
             mpy.parent(faceBsGrp, faceBaseGrp)
+
         faceAnimCtrlGrp = 'face_anim_ctrl_grp'
         if not (mpy.objExists(faceAnimCtrlGrp)):
             faceAnimCtrlGrp = mpy.group(em=1, n=faceAnimCtrlGrp)
             mpy.parent(faceAnimCtrlGrp, faceCur)
 
-        faceMesh = mpy.textField('frFaceMeshTF', q=1, tx=1)
+        faceMesh = face_mesh
+        print face_mesh
         if (faceMesh == '' or not mpy.objExists(faceMesh)):
             return
-
         faceSdkRigGrp = 'face_sdk_rig_grp'
         if mpy.objExists(faceSdkRigGrp):
             return
@@ -63,7 +78,7 @@ class FaceRiggingClass(object):
             mpy.parent(faceSkinMeshGrp, faceMeshGrp)
             mpy.setAttr(faceSkinMeshGrp + '.it', 0)
 
-        meshList = mpy.textScrollList('frFaceMeshTSL', q=1, ai=1)
+        meshList = mesh_lsit
         for i in meshList:
             FRPF_C.try_parent(i, faceSkinMeshGrp)
 
@@ -79,14 +94,14 @@ class FaceRiggingClass(object):
         mpy.setAttr(faceOrigMeshGrp + '.v', 0)
 
         self.connectAttrForce(faceMesh + '.msg', faceSkinMeshGrp + '.faceMesh')
-        allMesh = mpy.textScrollList('frFaceMeshTSL', q=1, ai=1)
+        allMesh = mesh_lsit
 
         for i in range(len(allMesh)):
             origMeshName = allMesh[i] + '_OrigMesh'
             origMeshName = mpy.duplicate(allMesh[i], n=origMeshName)[0]
             FRPF_C.try_parent(origMeshName, faceOrigMeshGrp)
             iOrigAttr = self.tryAddMessageAttr(allMesh[i], 'origMesh')
-            nOrigAttr = self.tryAdMessageAttr(origMeshName, 'origMesh')
+            nOrigAttr = self.tryAddMessageAttr(origMeshName, 'origMesh')
             self.connectAttrForce(nOrigAttr, iOrigAttr)
 
             ctrGrp = chr(65 + i) + '_CorrectiveGrp'
@@ -107,13 +122,13 @@ class FaceRiggingClass(object):
 
         self.reloadFaceMeshInfo()
 
-    def getBoundingBox(self,obj):
+    def getBoundingBox(self, obj):
         box = mpy.xform(obj, q=1, bbi=1)
         return [box[3] - box[0], box[4] - box[1], box[5] - box[2]]
 
     def createSdkJntRig(self):
-        T = NAME_DIR
-        FR, FRJntPos, FRUIPos = self.sdd_frTNameDirc()
+        T = self.returnTempNameDirc()
+        FR, FRJntPos, FRUIPos = self.frTNameDirc()
         _base = T['_base']
         _skin = T['_skin']
         _sdk = T['_sdk']
@@ -144,7 +159,7 @@ class FaceRiggingClass(object):
         faceSdkRigGrp = mpy.group(n=faceSdkRigGrp, em=1)
         mpy.parent(faceSdkRigGrp, faceBaseGrp)
 
-        faceSdkSkinGrp = 'face_sdk_skin_grp'
+        faceSdkSkinGrp = 'face_base_rig_grp'
         if not (mpy.objExists(faceSdkSkinGrp)):
             return
         # all setDrivenKey mpy.control group
@@ -152,6 +167,7 @@ class FaceRiggingClass(object):
             baseName = FR[i]
             cur = FRPF_C.create_curve_cnt(baseName + _cnt, typ='Cube', r=_rad)
             curGrp = self.sdd_zeroSdkGrp(baseName, cur)
+            print curGrp,baseName
             mpy.delete(mpy.parentConstraint(baseName + _base, curGrp))
             mpy.parent(curGrp, faceSdkRigGrp)
             mpy.parentConstraint(cur, baseName + _base)
@@ -422,8 +438,8 @@ class FaceRiggingClass(object):
         return round(dis, 2)
 
     def sdd_zeroSdkGrp(self, baseName, curName, grpName=None):
-        T = NAME_DIR
-        FR, FRJntPos, FRUIPos = self.sdd_frTNameDirc()
+        T = self.returnTempNameDirc()
+        FR, FRJntPos, FRUIPos = self.frTNameDirc()
         _rig = T['_rig']
         _sdk = T['_sdk']
         _grp = T['_grp']
@@ -441,7 +457,7 @@ class FaceRiggingClass(object):
             mpy.parent(grpName, curRig)
         return curGrp
 
-    def sdd_frTNameDirc(self):
+    def frTNameDirc(self):
         # procName:labelName,jointPos,uiPos
         FR = {
             'head': 'head',
@@ -664,52 +680,53 @@ class FaceRiggingClass(object):
 
         }
         return FR, FRJntPos, FRUIPos
-    def connectAttrForce(self,attr1,attr2):
-        cnn=mpy.listConnections(attr2,p=1)
-        if(cnn!=None):
-            mpy.disconnectAttr(attr2,cnn[0])
-        mpy.connectAttr(attr1,attr2,f=1)
+
+    def connectAttrForce(self, attr1, attr2):
+        cnn = mpy.listConnections(attr2, p=1)
+        if (cnn != None):
+            mpy.disconnectAttr(attr2, cnn[0])
+        mpy.connectAttr(attr1, attr2, f=1)
+
     def reloadFaceMeshInfo(self):
-        faceSdkRigGrp='face_sdk_rig_grp'
-        if(mpy.objExists(faceSdkRigGrp)):
-            mpy.button('frLoadAllMeshB',e=1,en=0)
-            mpy.button('frSdkRiggingB',e=1,en=1,l='Reset Joint Position',c='sdd_resetJointPosition()')
+        faceSdkRigGrp = 'face_sdk_rig_grp'
+        if (mpy.objExists(faceSdkRigGrp)):
+            mpy.button('frLoadAllMeshB', e=1, en=0)
+            mpy.button('frSdkRiggingB', e=1, en=1, l='Reset Joint Position', c='sdd_resetJointPosition()')
         else:
-            mpy.button('frLoadAllMeshB',e=1,en=1)
-            mpy.button('frSdkRiggingB',e=1,en=1,l='Rigging',c='createSdkJntRig()')
-    
-        faceBsGrp='face_bs_grp'
-        if not(mpy.objExists(faceBsGrp)):
+            mpy.button('frLoadAllMeshB', e=1, en=1)
+            mpy.button('frSdkRiggingB', e=1, en=1, l='Rigging', c='createSdkJntRig()')
+
+        faceBsGrp = 'face_bs_grp'
+        if not (mpy.objExists(faceBsGrp)):
             return
-        faceSkinMeshGrp='face_skin_mesh_grp'
-        if not(mpy.objExists(faceSkinMeshGrp)):
+        faceSkinMeshGrp = 'face_skin_mesh_grp'
+        if not (mpy.objExists(faceSkinMeshGrp)):
             return
-        faceAllList=mpy.listRelatives(faceSkinMeshGrp,c=1)
-        mpy.textScrollList('frFaceMeshTSL',e=1,ra=1)
+        faceAllList = mpy.listRelatives(faceSkinMeshGrp, c=1)
+        mpy.textScrollList('frFaceMeshTSL', e=1, ra=1)
         for i in faceAllList:
-            mpy.textScrollList('frFaceMeshTSL',e=1,a=i)
-        skinMesh=mpy.listConnections(faceSkinMeshGrp+'.faceMesh')[0]
+            mpy.textScrollList('frFaceMeshTSL', e=1, a=i)
+        skinMesh = mpy.listConnections(faceSkinMeshGrp + '.faceMesh')[0]
         # origMeshName=mpy.listConnections(skinMesh+'.origMesh')[0]
         # if not(mpy.objExists(origMeshName)):
         #     return
-        mpy.textField('frFaceMeshTF',e=1,tx=skinMesh)
-
+        mpy.textField('frFaceMeshTF', e=1, tx=skinMesh)
 
     def importAndConnectPanel(self):
         global frRootPath
-        T = NAME_DIR
-        FR, FRJntPos, FRUIPos = self.sdd_frTNameDirc()()
+        T = self.returnTempNameDirc()
+        FR, FRJntPos, FRUIPos = self.frTNameDirc()()
         _root = T['_root']
         _sdk = T['_sdk']
         _cnt = T['_cnt']
-    
+
         mpy.file(frRootPath + 'files/facePanel.ma', i=1, type="mayaAscii")
         faceCur = 'faceMoveCur'
         panelGrp = 'Face_Panel_grp'
         mpy.delete(mpy.parentConstraint(faceCur, panelGrp))
         bbox = self.getBoundingBox(faceCur)
         mpy.setAttr(panelGrp + '.tx', bbox[0])
-    
+
         self.sdd_connectPanelAttr('M_brow_U', 'Face_M_brow_anim.ty', 1)
         self.sdd_connectPanelAttr('M_brow_D', 'Face_M_brow_anim.ty', -1)
         self.sdd_connectPanelAttr('L_brow_In_U', 'Face_L_brow_a_anim.ty', 1)
@@ -717,70 +734,70 @@ class FaceRiggingClass(object):
         self.sdd_connectPanelAttr('L_brow_In_In', 'Face_L_brow_a_anim.tx', 1)
         self.sdd_connectPanelAttr('L_brow_Out_U', 'Face_L_brow_b_anim.ty', 1)
         self.sdd_connectPanelAttr('L_brow_Out_D', 'Face_L_brow_b_anim.ty', -1)
-    
+
         self.sdd_connectPanelAttr('R_brow_In_U', 'Face_R_brow_a_anim.ty', 1)
         self.sdd_connectPanelAttr('R_brow_In_D', 'Face_R_brow_a_anim.ty', -1)
         self.sdd_connectPanelAttr('R_brow_In_In', 'Face_R_brow_a_anim.tx', 1)
         self.sdd_connectPanelAttr('R_brow_Out_U', 'Face_R_brow_b_anim.ty', 1)
         self.sdd_connectPanelAttr('R_brow_Out_D', 'Face_R_brow_b_anim.ty', -1)
-    
+
         self.sdd_connectPanelAttr('L_brow_Mid_U', 'Face_L_brow_b_anim.rz', -15)
         self.sdd_connectPanelAttr('L_brow_Mid_D', 'Face_L_brow_b_anim.rz', 15)
-    
+
         self.sdd_connectPanelAttr('R_brow_Mid_U', 'Face_R_brow_b_anim.rz', 15)
         self.sdd_connectPanelAttr('R_brow_Mid_D', 'Face_R_brow_b_anim.rz', -15)
-    
+
         self.sdd_connectPanelAttr('L_eyelid_Up_U', 'Face_L_eyelid_Up_anim.ty', 1)
         self.sdd_connectPanelAttr('L_eyelid_Up_D', 'Face_L_eyelid_Up_anim.ty', -1)
         self.sdd_connectPanelAttr('L_eyelid_Dn_U', 'Face_L_eyelid_Dn_anim.ty', 1)
         self.sdd_connectPanelAttr('L_eyelid_Dn_D', 'Face_L_eyelid_Dn_anim.ty', -1)
-    
+
         self.sdd_connectPanelAttr('R_eyelid_Up_U', 'Face_R_eyelid_Up_anim.ty', 1)
         self.sdd_connectPanelAttr('R_eyelid_Up_D', 'Face_R_eyelid_Up_anim.ty', -1)
         self.sdd_connectPanelAttr('R_eyelid_Dn_U', 'Face_R_eyelid_Dn_anim.ty', 1)
         self.sdd_connectPanelAttr('R_eyelid_Dn_D', 'Face_R_eyelid_Dn_anim.ty', -1)
-    
+
         self.sdd_connectPanelAttr('L_eyelid_close', 'Face_L_eyelid_close_anim.ty', -1)
         self.sdd_connectPanelAttr('R_eyelid_close', 'Face_R_eyelid_close_anim.ty', -1)
-    
+
         self.sdd_connectPanelAttr('L_eyelid_Squint', 'Face_L_squint_anim.tx', -1)
         self.sdd_connectPanelAttr('R_eyelid_Squint', 'Face_R_squint_anim.tx', -1)
-    
+
         self.sdd_connectPanelAttr('L_eyelid_Up_side_O', 'Face_L_eyelid_Up_anim.tx', 1)
         self.sdd_connectPanelAttr('L_eyelid_Up_side_I', 'Face_L_eyelid_Up_anim.tx', -1)
         self.sdd_connectPanelAttr('L_eyelid_Dn_side_I', 'Face_L_eyelid_Dn_anim.tx', -1)
         self.sdd_connectPanelAttr('L_eyelid_Dn_side_O', 'Face_L_eyelid_Dn_anim.tx', 1)
-    
+
         self.sdd_connectPanelAttr('R_eyelid_Up_side_O', 'Face_R_eyelid_Up_anim.tx', 1)
         self.sdd_connectPanelAttr('R_eyelid_Up_side_I', 'Face_R_eyelid_Up_anim.tx', -1)
         self.sdd_connectPanelAttr('R_eyelid_Dn_side_I', 'Face_R_eyelid_Dn_anim.tx', -1)
         self.sdd_connectPanelAttr('R_eyelid_Dn_side_O', 'Face_R_eyelid_Dn_anim.tx', 1)
-    
+
         self.sdd_connectPanelAttr('L_mouth_corner_O', 'Face_L_mouth_anim.txLink', 1)
         self.sdd_connectPanelAttr('L_mouth_corner_I', 'Face_L_mouth_anim.txLink', -1)
         self.sdd_connectPanelAttr('L_mouth_corner_U', 'Face_L_mouth_anim.tyLink', 1)
         self.sdd_connectPanelAttr('L_mouth_corner_D', 'Face_L_mouth_anim.tyLink', -1)
-    
+
         self.sdd_connectPanelAttr('R_mouth_corner_O', 'Face_R_mouth_anim.txLink', 1)
         self.sdd_connectPanelAttr('R_mouth_corner_I', 'Face_R_mouth_anim.txLink', -1)
         self.sdd_connectPanelAttr('R_mouth_corner_U', 'Face_R_mouth_anim.tyLink', 1)
         self.sdd_connectPanelAttr('R_mouth_corner_D', 'Face_R_mouth_anim.tyLink', -1)
-    
+
         self.sdd_connectPanelAttr('L_mouth_Up_U', 'Face_L_lip_side_Up_anim.ty', 1)
         self.sdd_connectPanelAttr('L_mouth_Up_D', 'Face_L_lip_side_Up_anim.ty', -1)
         self.sdd_connectPanelAttr('L_mouth_Dn_U', 'Face_L_lip_side_Dn_anim.ty', 1)
         self.sdd_connectPanelAttr('L_mouth_Dn_D', 'Face_L_lip_side_Dn_anim.ty', -1)
-    
+
         self.sdd_connectPanelAttr('R_mouth_Up_U', 'Face_R_lip_side_Up_anim.ty', 1)
         self.sdd_connectPanelAttr('R_mouth_Up_D', 'Face_R_lip_side_Up_anim.ty', -1)
         self.sdd_connectPanelAttr('R_mouth_Dn_U', 'Face_R_lip_side_Dn_anim.ty', 1)
         self.sdd_connectPanelAttr('R_mouth_Dn_D', 'Face_R_lip_side_Dn_anim.ty', -1)
-    
+
         self.sdd_connectPanelAttr('mouth_Up_roll_O', 'Face_lip_roll_Up_anim.ty', 1)
         self.sdd_connectPanelAttr('mouth_Up_roll_I', 'Face_lip_roll_Up_anim.ty', -1)
         self.sdd_connectPanelAttr('mouth_Dn_roll_O', 'Face_lip_roll_Dn_anim.ty', 1)
         self.sdd_connectPanelAttr('mouth_Dn_roll_I', 'Face_lip_roll_Dn_anim.ty', -1)
-    
+
         self.sdd_connectPanelAttr('mouth_A', 'Face_L_mouth_A_anim.tx', 1)
         self.sdd_connectPanelAttr('mouth_E', 'Face_L_mouth_E_anim.tx', 1)
         self.sdd_connectPanelAttr('mouth_F', 'Face_L_mouth_F_anim.tx', 1)
@@ -788,90 +805,90 @@ class FaceRiggingClass(object):
         self.sdd_connectPanelAttr('mouth_M', 'Face_L_mouth_M_anim.tx', 1)
         self.sdd_connectPanelAttr('mouth_O', 'Face_L_mouth_O_anim.tx', 1)
         self.sdd_connectPanelAttr('mouth_U', 'Face_L_mouth_U_anim.tx', 1)
-    
+
         self.sdd_connectPanelAttr('L_eyeBall_U', 'Face_L_eye_anim.ty', 1)
         self.sdd_connectPanelAttr('L_eyeBall_D', 'Face_L_eye_anim.ty', -1)
         self.sdd_connectPanelAttr('L_eyeBall_O', 'Face_L_eye_anim.tx', 1)
         self.sdd_connectPanelAttr('L_eyeBall_I', 'Face_L_eye_anim.tx', -1)
-    
+
         self.sdd_connectPanelAttr('R_eyeBall_U', 'Face_R_eye_anim.ty', 1)
         self.sdd_connectPanelAttr('R_eyeBall_D', 'Face_R_eye_anim.ty', -1)
         self.sdd_connectPanelAttr('R_eyeBall_I', 'Face_R_eye_anim.tx', 1)
         self.sdd_connectPanelAttr('R_eyeBall_O', 'Face_R_eye_anim.tx', -1)
-    
+
         self.sdd_connectPanelAttr('L_eyeAll_U', 'Face_L_eye_all_anim.ty', 1)
         self.sdd_connectPanelAttr('L_eyeAll_D', 'Face_L_eye_all_anim.ty', -1)
         self.sdd_connectPanelAttr('L_eyeAll_O', 'Face_L_eye_all_anim.tx', 1)
         self.sdd_connectPanelAttr('L_eyeAll_I', 'Face_L_eye_all_anim.tx', -1)
-    
+
         mpy.connectAttr('Face_L_eye_all_anim.sx', FR['L_eye_root'] + _sdk + '.sx')
         mpy.connectAttr('Face_L_eye_all_anim.sy', FR['L_eye_root'] + _sdk + '.sy')
-    
+
         self.sdd_connectPanelAttr('R_eyeAll_U', 'Face_R_eye_all_anim.ty', 1)
         self.sdd_connectPanelAttr('R_eyeAll_D', 'Face_R_eye_all_anim.ty', -1)
         self.sdd_connectPanelAttr('R_eyeAll_O', 'Face_R_eye_all_anim.tx', 1)
         self.sdd_connectPanelAttr('R_eyeAll_I', 'Face_R_eye_all_anim.tx', -1)
         mpy.connectAttr('Face_R_eye_all_anim.sx', FR['R_eye_root'] + _sdk + '.sx')
         mpy.connectAttr('Face_R_eye_all_anim.sy', FR['R_eye_root'] + _sdk + '.sy')
-    
+
         mpy.connectAttr('Face_mouth_all_anim.sx', FR['jaw'] + _root + _sdk + '.sx')
         mpy.connectAttr('Face_mouth_all_anim.sy', FR['jaw'] + _root + _sdk + '.sy')
-    
+
         self.sdd_connectPanelAttr('M_nose_U', 'Face_nose_anim.ty', 1)
         self.sdd_connectPanelAttr('M_nose_D', 'Face_nose_anim.ty', -1)
         self.sdd_connectPanelAttr('M_nose_L', 'Face_nose_anim.tx', 1)
         self.sdd_connectPanelAttr('M_nose_R', 'Face_nose_anim.tx', -1)
-    
+
         self.sdd_connectPanelAttr('L_nose_U', 'Face_L_nose_anim.ty', 1)
         self.sdd_connectPanelAttr('L_nose_D', 'Face_L_nose_anim.ty', -1)
         self.sdd_connectPanelAttr('L_nose_O', 'Face_L_nose_anim.tx', 1)
         self.sdd_connectPanelAttr('L_nose_I', 'Face_L_nose_anim.tx', -1)
-    
+
         self.sdd_connectPanelAttr('R_nose_U', 'Face_R_nose_anim.ty', 1)
         self.sdd_connectPanelAttr('R_nose_D', 'Face_R_nose_anim.ty', -1)
         self.sdd_connectPanelAttr('R_nose_O', 'Face_R_nose_anim.tx', 1)
         self.sdd_connectPanelAttr('R_nose_I', 'Face_R_nose_anim.tx', -1)
-    
+
         self.sdd_connectPanelAttr('L_cheek_U', 'Face_L_cheek_anim.ty', 1)
         self.sdd_connectPanelAttr('L_cheek_O', 'Face_L_cheek_anim.tx', 1)
         self.sdd_connectPanelAttr('L_cheek_I', 'Face_L_cheek_anim.tx', -1)
-    
+
         self.sdd_connectPanelAttr('R_cheek_U', 'Face_R_cheek_anim.ty', 1)
         self.sdd_connectPanelAttr('R_cheek_O', 'Face_R_cheek_anim.tx', 1)
         self.sdd_connectPanelAttr('R_cheek_I', 'Face_R_cheek_anim.tx', -1)
-    
+
         mpy.connectAttr('Face_mouth_sticky_anim.ty', FR['jaw'] + _cnt + '.Lip_Sticky_P')
         mpy.connectAttr('Face_L_lip_corner_anim.ty', FR['jaw'] + _cnt + '.L_Lip_Corner_P')
         mpy.connectAttr('Face_R_lip_corner_anim.ty', FR['jaw'] + _cnt + '.R_Lip_Corner_P')
-    
+
         self.sdd_connectPanelAttr('M_jaw_U', 'Face_jaw_anim.ty', 1)
         self.sdd_connectPanelAttr('M_jaw_D', 'Face_jaw_anim.ty', -1)
         self.sdd_connectPanelAttr('M_jaw_L', 'Face_jaw_anim.tx', 1)
         self.sdd_connectPanelAttr('M_jaw_R', 'Face_jaw_anim.tx', -1)
-    
+
         self.sdd_connectPanelAttr('M_jaw_all_U', 'Face_mouth_all_anim.ty', 1)
         self.sdd_connectPanelAttr('M_jaw_all_D', 'Face_mouth_all_anim.ty', -1)
         self.sdd_connectPanelAttr('M_jaw_all_L', 'Face_mouth_all_anim.tx', 1)
         self.sdd_connectPanelAttr('M_jaw_all_R', 'Face_mouth_all_anim.tx', -1)
-    
+
         self.sdd_connectPanelAttr('M_mouth_Up_U', 'Face_lip_open_Up_anim.ty', 1)
         self.sdd_connectPanelAttr('M_mouth_Dn_U', 'Face_lip_open_Dn_anim.ty', 1)
         self.sdd_connectPanelAttr('M_mouth_Dn_D', 'Face_lip_open_Dn_anim.ty', -1)
-    
+
         self.sdd_connectPanelAttr('L_pump_O', 'Face_L_Pump_anim.tx', 1)
         self.sdd_connectPanelAttr('R_pump_O', 'Face_R_Pump_anim.tx', 1)
-        
-    def sdd_connectPanelAttr(self,sdkAttr,pCtrlAttr,dv,v=None):
-        faceSdkHandle='face_sdk_handle'
-        if not(mpy.objExists(faceSdkHandle)):
-            return
-        if(v==None):
-            v=1
-        mpy.setDrivenKeyframe(faceSdkHandle+'.'+sdkAttr,cd=pCtrlAttr,v=0,dv=0,itt='linear',ott='linear')
-        mpy.setDrivenKeyframe(faceSdkHandle+'.'+sdkAttr,cd=pCtrlAttr,v=v,dv=dv,itt='linear',ott='linear')
 
-    def tryAddMessageAttr(i,attr):
-        attrList=mpy.listAttr(i,ud=1)
-        if(attrList==None or not(attr in attrList)):
-            mpy.addAttr(i,ln=attr,dt='string')
-        return i+'.'+attr
+    def sdd_connectPanelAttr(self, sdkAttr, pCtrlAttr, dv, v=None):
+        faceSdkHandle = 'face_sdk_handle'
+        if not (mpy.objExists(faceSdkHandle)):
+            return
+        if (v == None):
+            v = 1
+        mpy.setDrivenKeyframe(faceSdkHandle + '.' + sdkAttr, cd=pCtrlAttr, v=0, dv=0, itt='linear', ott='linear')
+        mpy.setDrivenKeyframe(faceSdkHandle + '.' + sdkAttr, cd=pCtrlAttr, v=v, dv=dv, itt='linear', ott='linear')
+
+    def tryAddMessageAttr(self, i, attr):
+        attrList = mpy.listAttr(i, ud=1)
+        if (attrList == None or not (attr in attrList)):
+            mpy.addAttr(i, ln=attr, dt='string')
+        return i + '.' + attr
