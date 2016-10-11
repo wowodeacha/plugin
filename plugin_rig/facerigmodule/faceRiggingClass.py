@@ -22,6 +22,64 @@ NAME_DIR = CGF_C.load_data(NAME_DIR_PATH)
 
 
 class FaceRiggingClass(object):
+    head_bone_key_dir_reset = {'head_base': 'Head_base',
+                               "L_brow_a_base": 'Brow_0_base_L',
+                               "R_brow_a_base": "Brow_0_base_R",
+                               "L_brow_b_base": "Brow_1_base_L",
+                               "R_brow_b_base": "Brow_1_base_R",
+                               "L_brow_c_base": "Brow_2_base_L",
+                               "R_brow_c_base": "Brow_2_base_R",
+                               "M_brow_base": "Brow_base_M",
+                               "L_eyeSag_Dn_base": "EyeSag_Dn_base_L",
+                               "R_eyeSag_Dn_base": "EyeSag_Dn_base_R",
+                               "L_eyeSag_Up_base": "EyeSag_Up_base_L",
+                               "R_eyeSag_Up_base": "EyeSag_Up_base_R",
+                               "L_eyeBall_base": "Eye_ball_base_L",
+                               "R_eyeBall_base": "Eye_ball_base_R",
+                               "L_eye_root_base": "Eye_root_base_L",
+                               "R_eye_root_base": "Eye_root_base_R",
+                               "L_eyelid_DnIn_base": "Eyelid_DnIn_base_L",
+                               "R_eyelid_DnIn_base": "Eyelid_DnIn_base_R",
+                               "L_eyelid_DnOut_base": "Eyelid_DnOut_base_L",
+                               "R_eyelid_DnOut_base": "Eyelid_DnOut_base_R",
+                               "L_eyelid_Dn_base": "Eyelid_Dn_base_L",
+                               "R_eyelid_Dn_base": "Eyelid_Dn_base_R",
+                               "L_eyelid_In_base": "Eyelid_In_base_L",
+                               "R_eyelid_In_base": "Eyelid_In_base_R",
+                               "L_eyelid_Out_base": "Eyelid_Out_base_L",
+                               "R_eyelid_Out_base": "Eyelid_Out_base_R",
+                               "L_eyelid_UpIn_base": "Eyelid_UpIn_base_L",
+                               "R_eyelid_UpIn_base": "Eyelid_UpIn_base_R",
+                               "L_eyelid_UpOut_base": "Eyelid_UpOut_base_L",
+                               "R_eyelid_UpOut_base": "Eyelid_UpOut_base_R",
+                               "L_eyelid_Up_base": "Eyelid_Up_base_L",
+                               "R_eyelid_Up_base": "Eyelid_Up_base_R",
+                               "L_cheek_base": "Check_base_L",
+                               "R_cheek_base": "Check_base_R",
+                               "L_cheek_In_base": "Cheek_In_base_L",
+                               "R_cheek_In_base": "Cheek_In_base_R",
+                               "L_cheek_Out_base": "Cheek_Out_base_L",
+                               "R_cheek_Out_base": "Cheek_Out_base_R",
+                               "L_cheek_Up_base": "Cheek_Up_base_L",
+                               "R_cheek_Up_base": "Cheek_Up_base_R",
+                               "L_nose_base": "Nose_base_L",
+                               "M_nose_base": "Nose_base_M",
+                               "R_nose_base": "Nose_base_R",
+                               "L_mouth_Corner_base": "Mouth_Corner_base_L",
+                               "R_mouth_Corner_base": "Mouth_Corner_base_R",
+                               "L_mouth_Dn_base": "Mouth_Dn_base_L",
+                               "_mouth_Dn_base": "Mouth_Dn_base_R",
+                               "L_mouth_UpR": "Mouth_Up_base_L",
+                               "R_mouth_Up_base": "Mouth_Up_base_R",
+                               "M_mouth_Up_base": "Mouth_Up_base_M",
+                               "M_mouth_Dn_base": "Mouth_Dn_base_M",
+                               "L_noseFold_base": "NoseFold_base_L",
+                               "R_noseFold_base": "NoseFold_base_R",
+                               "chin_base": "Chin_base",
+                               "jaw_base": "Jaw_base",
+                               "L_temple_base": "Temple_base_L",
+                               "R_temple_base": "Temple_base_R"}
+
     def __init__(self, author="yangjie"):
         author = author
 
@@ -167,15 +225,15 @@ class FaceRiggingClass(object):
             baseName = FR[i]
             cur = FRPF_C.create_curve_cnt(baseName + _cnt, typ='Cube', r=_rad)
             curGrp = self.sdd_zeroSdkGrp(baseName, cur)
-            print curGrp,baseName
-            mpy.delete(mpy.parentConstraint(baseName + _base, curGrp))
+            skin_jnt = self.head_bone_key_dir_reset[baseName + _base]
+            mpy.delete(mpy.parentConstraint(skin_jnt, curGrp))
             mpy.parent(curGrp, faceSdkRigGrp)
-            mpy.parentConstraint(cur, baseName + _base)
-            mpy.scaleConstraint(cur, baseName + _base)
+            mpy.parentConstraint(cur, skin_jnt)
+            mpy.scaleConstraint(cur, skin_jnt)
 
-            pCtrl = mpy.listRelatives(baseName + _base, p=1)[0]
+            pCtrl = mpy.listRelatives(skin_jnt, p=1)[0]
             if (faceSdkSkinGrp != pCtrl):
-                mpy.parent(baseName + _base, faceSdkSkinGrp)
+                mpy.parent(skin_jnt, faceSdkSkinGrp)
 
         # eyelid rig
         # L Eyelid

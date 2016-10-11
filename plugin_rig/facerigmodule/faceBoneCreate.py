@@ -52,7 +52,7 @@ class FaceJntCreate(object):
     @staticmethod
     def create_base_grp():
         mpy.group(em=True, name=NAME_DIR["faceMoveCur"])
-        mpy.addAttr(NAME_DIR["faceMoveCur"], longName='globalScale', attributeType='float',k=1)
+        mpy.addAttr(NAME_DIR["faceMoveCur"], longName='globalScale', attributeType='float', k=1)
         mpy.group(em=True, name=NAME_DIR["face_base_rig_grp"])
         FRPF.try_parent(NAME_DIR["face_base_rig_grp"], NAME_DIR["faceMoveCur"])
         print "here"
