@@ -474,8 +474,7 @@ class FaceRiggingClass(object):
         mpy.connectAttr(lipMd + '.oy', rMouthDnRv + '.i')
         mpy.connectAttr(jawCnt + '.R_mouth_Dn', rMouthDnRv + '.omn')
         mpy.connectAttr(rMouthDnRv + '.ov', FR['R_mouth_Dn'] + '_bta' + '.i[0]', f=1)
-
-        dis = self.sdd_getDistanceTwoPoint([FR['M_mouth_Up'] + _base], FR['M_mouth_Dn'] + _base)
+        dis = self.sdd_getDistanceTwoPoint( self.head_bone_key_dir_reset[[FR['M_mouth_Up'] + _base]], self.head_bone_key_dir_reset[FR['M_mouth_Dn'] + _base])
         for i in mouthList:
             cnt = FR[i] + _cnt
             vtxList = mpy.ls(cnt + '.cv[*]')
