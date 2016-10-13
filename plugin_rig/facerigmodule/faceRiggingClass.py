@@ -1013,8 +1013,7 @@ class FaceRiggingClass(object):
         cdAttr, mircdAttr = self.sdd_addAttrToHandle('L_brow_In_In', 'R_brow_In_In', faceSdkHandle)
         self.sdd_setDrivenKeyframe(FR['L_brow_a'] + _sdk, 'tx', -dis * 0.5, faceSdkHandle, cdAttr, 1, mircdAttr)
 
-    @staticmethod
-    def sdd_eyeballDefultSdk():
+    def sdd_eyeballDefultSdk(self):
         FR, _sdk, _root, _cnt, faceSdkHandle = self.sdd_getDefultSdkName()
 
         # eyeball
@@ -1039,8 +1038,7 @@ class FaceRiggingClass(object):
         cdAttr, mircdAttr = self.sdd_addAttrToHandle('L_eyeAll_I', 'R_eyeAll_I', faceSdkHandle)
         self.sdd_setDrivenKeyframe(FR['L_eye_root'] + _sdk, 'tx', -dis * 0.25, faceSdkHandle, cdAttr, 1, mircdAttr)
 
-    @staticmethod
-    def sdd_eyelidDefultSdk():
+    def sdd_eyelidDefultSdk(self):
         FR, _sdk, _root, _cnt, faceSdkHandle = self.sdd_getDefultSdkName()
         # eyelid
         mpy.addAttr(faceSdkHandle, ln='______eyelid______', at='double', min=0, max=0, k=0)
@@ -1621,3 +1619,16 @@ class FaceRiggingClass(object):
             return mirObj
         else:
             return sdk
+
+    @staticmethod
+    def sdd_getAngleThreePoint(obj1, objRoot, obj2):
+        grp = mpy.group(n='Tmp_arc_grp', em=1)
+        mpy.delete(mpy.parentConstraint(objRoot, grp))
+        mpy.delete(mpy.aimConstraint(obj1, grp, aim=[0, 0, 1], wut='vector'))
+        zeroGrp = mpy.group(n='Tmp_arc_zeroGrp', em=1)
+        mpy.delete(mpy.parentConstraint(grp, zeroGrp))
+        mpy.parent(grp, zeroGrp)
+        mpy.delete(mpy.aimConstraint(obj2, grp, aim=[0, 0, 1], wut='vector'))
+        arc2 = mpy.getAttr(grp + '.rx')
+        mpy.delete(zeroGrp)
+        return math.ceil(arc2)
