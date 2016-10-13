@@ -126,6 +126,8 @@ class FaceRigUISetUp(QtGui.QWidget):
     def base_jnt_mir(self, mir_arrow):
         FBC_C.mirr_jnt_pos(mir_arrow)
 
+
+
     def test_fun(self):
         face_mesh_lineEdit = self.ui.face_mesh_lineEdit
         face_mesh_lineEdit_text = face_mesh_lineEdit.text()

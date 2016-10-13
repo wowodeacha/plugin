@@ -4,6 +4,7 @@
 # mail wowodeacha@gmail.com
 #
 #
+import math
 import maya.OpenMaya as OpenMaya
 import maya.cmds as mpy
 import custom_global_function as CGF
@@ -172,13 +173,12 @@ class FaceRiggingClass(object):
         faceJntList = mpy.listRelatives(faceSdkSkinGrp, c=1, ad=1, typ='joint')
         for i in allMesh:
             mpy.skinCluster(faceJntList, i, mi=1, nw=1, tsb=1)
-        mpy.textField('frCurrentMeshTF', e=1, tx='')
 
         self.importAndConnectPanel()
         if (mpy.objExists('Face_Panel_grp')):
             mpy.parent('Face_Panel_grp', faceAnimCtrlGrp)
 
-        self.reloadFaceMeshInfo()
+        # self.reloadFaceMeshInfo()
 
     def getBoundingBox(self, obj):
         box = mpy.xform(obj, q=1, bbi=1)
@@ -746,30 +746,7 @@ class FaceRiggingClass(object):
             mpy.disconnectAttr(attr2, cnn[0])
         mpy.connectAttr(attr1, attr2, f=1)
 
-    def reloadFaceMeshInfo(self):
-        faceSdkRigGrp = 'face_sdk_rig_grp'
-        if (mpy.objExists(faceSdkRigGrp)):
-            mpy.button('frLoadAllMeshB', e=1, en=0)
-            mpy.button('frSdkRiggingB', e=1, en=1, l='Reset Joint Position', c='sdd_resetJointPosition()')
-        else:
-            mpy.button('frLoadAllMeshB', e=1, en=1)
-            mpy.button('frSdkRiggingB', e=1, en=1, l='Rigging', c='createSdkJntRig()')
 
-        faceBsGrp = 'face_bs_grp'
-        if not (mpy.objExists(faceBsGrp)):
-            return
-        faceSkinMeshGrp = 'face_skin_mesh_grp'
-        if not (mpy.objExists(faceSkinMeshGrp)):
-            return
-        faceAllList = mpy.listRelatives(faceSkinMeshGrp, c=1)
-        mpy.textScrollList('frFaceMeshTSL', e=1, ra=1)
-        for i in faceAllList:
-            mpy.textScrollList('frFaceMeshTSL', e=1, a=i)
-        skinMesh = mpy.listConnections(faceSkinMeshGrp + '.faceMesh')[0]
-        # origMeshName=mpy.listConnections(skinMesh+'.origMesh')[0]
-        # if not(mpy.objExists(origMeshName)):
-        #     return
-        mpy.textField('frFaceMeshTF', e=1, tx=skinMesh)
 
     def importAndConnectPanel(self):
         global frRootPath
