@@ -1044,7 +1044,7 @@ class FaceRiggingClass(object):
         mpy.addAttr(faceSdkHandle, ln='______eyelid______', at='double', min=0, max=0, k=0)
         mpy.setAttr(faceSdkHandle + '.______eyelid______', cb=1)
 
-        arcMid = sdd_getAngleThreePoint(FR['L_eyelid_Up'] + _cnt, FR['L_eye_root'] + _cnt, FR['L_eyelid_Dn'] + _cnt)
+        arcMid = self.sdd_getAngleThreePoint(FR['L_eyelid_Up'] + _cnt, FR['L_eye_root'] + _cnt, FR['L_eyelid_Dn'] + _cnt)
 
         cdAttr, mircdAttr = self.sdd_addAttrToHandle('L_eyelid_Up_U', 'R_eyelid_Up_U', faceSdkHandle)
         self.sdd_setDrivenKeyframe(FR['L_eyelid_Up'] + _root + _sdk, 'rx', -5, faceSdkHandle, cdAttr, 1, mircdAttr)
