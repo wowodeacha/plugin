@@ -476,7 +476,7 @@ class FaceRiggingClass(object):
         mpy.connectAttr(rMouthDnRv + '.ov', FR['R_mouth_Dn'] + '_bta' + '.i[0]', f=1)
         M_mouth_Up_base = self.head_bone_key_dir_reset[FR['M_mouth_Up'] + _base]
         M_mouth_Dn_base = self.head_bone_key_dir_reset[FR['M_mouth_Dn'] + _base]
-        dis = self.self.sdd_getDistanceTwoPoint(M_mouth_Up_base, M_mouth_Dn_base)
+        dis = self.sdd_getDistanceTwoPoint(M_mouth_Up_base, M_mouth_Dn_base)
         for i in mouthList:
             cnt = FR[i] + _cnt
             vtxList = mpy.ls(cnt + '.cv[*]')
@@ -974,8 +974,7 @@ class FaceRiggingClass(object):
         for i in attrList:
             mpy.setAttr(obj + '.' + i, l=1, k=0)
 
-    @staticmethod
-    def sdd_browDefultSdk():
+    def sdd_browDefultSdk(self):
         FR, _sdk, _root, _cnt, faceSdkHandle = self.sdd_getDefultSdkName()
 
         # brow
@@ -1610,15 +1609,15 @@ class FaceRiggingClass(object):
             return attr
         return attr, mirAttr
 
-    def sdd_getMirrorName(self,sdk):
-        TName=sdd_returnTempNameDirc()
-        L_=TName['L_']
-        R_=TName['R_']
-        if(sdk[:len(L_)]==L_):
-            mirObj=R_+sdk[len(L_):]
+    def sdd_getMirrorName(self, sdk):
+        TName = self.sdd_returnTempNameDirc()
+        L_ = TName['L_']
+        R_ = TName['R_']
+        if (sdk[:len(L_)] == L_):
+            mirObj = R_ + sdk[len(L_):]
             return mirObj
-        elif(sdk[:len(R_)]==R_):
-            mirObj=L_+sdk[len(R_):]
+        elif (sdk[:len(R_)] == R_):
+            mirObj = L_ + sdk[len(R_):]
             return mirObj
         else:
             return sdk
