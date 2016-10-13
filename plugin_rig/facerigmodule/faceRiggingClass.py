@@ -1104,8 +1104,8 @@ class FaceRiggingClass(object):
         self.sdd_setDrivenKeyframe(FR['L_cheek_Up'] + _sdk, 'ty', dis * 0.7, faceSdkHandle, cdAttr, 1, mircdAttr)
         self.sdd_setDrivenKeyframe(FR['L_cheek_Out'] + _sdk, 'ty', dis * 0.7, faceSdkHandle, cdAttr, 1, mircdAttr)
 
-    @staticmethod
-    def sdd_noseDefultSdk():
+
+    def sdd_noseDefultSdk(self):
         FR, _sdk, _root, _cnt, faceSdkHandle = self.sdd_getDefultSdkName()
         # nose
         mpy.addAttr(faceSdkHandle, ln='______nose________', at='double', min=0, max=0, k=0)
@@ -1131,8 +1131,7 @@ class FaceRiggingClass(object):
         cdAttr, mircdAttr = self.sdd_addAttrToHandle('L_nose_I', 'R_nose_I', faceSdkHandle)
         self.sdd_setDrivenKeyframe(FR['L_nose'] + _sdk, 'tx', -dis * 0.25, faceSdkHandle, cdAttr, 1, mircdAttr)
 
-    @staticmethod
-    def sdd_cheekDefultSdk():
+    def sdd_cheekDefultSdk(self):
         FR, _sdk, _root, _cnt, faceSdkHandle = self.sdd_getDefultSdkName()
         # cheek
         mpy.addAttr(faceSdkHandle, ln='______cheek_______', at='double', min=0, max=0, k=0)
@@ -1153,8 +1152,7 @@ class FaceRiggingClass(object):
         cdAttr, mircdAttr = self.sdd_addAttrToHandle('L_pump_O', 'R_pump_O', faceSdkHandle)
         self.sdd_setDrivenKeyframe(FR['L_cheek'] + _sdk, 'tx', dis * 0.15, faceSdkHandle, cdAttr, 1, mircdAttr)
 
-    @staticmethod
-    def sdd_mouthDefultSdk():
+    def sdd_mouthDefultSdk(self):
         FR, _sdk, _root, _cnt, faceSdkHandle = self.sdd_getDefultSdkName()
         # mouth
         mpy.addAttr(faceSdkHandle, ln='______jaw_________', at='double', min=0, max=0, k=0)
@@ -1297,8 +1295,7 @@ class FaceRiggingClass(object):
         self.sdd_setDrivenKeyframe(FR['M_mouth_Dn'] + _sdk, 'rx', -35, faceSdkHandle, cdAttr, 1, mircdAttr)
         self.sdd_setDrivenKeyframe(FR['R_mouth_Dn'] + _sdk, 'rx', -35, faceSdkHandle, cdAttr, 1, mircdAttr)
 
-    @staticmethod
-    def sdd_mouthShapeDefultSdk():
+    def sdd_mouthShapeDefultSdk(self):
         FR, _sdk, _root, _cnt, faceSdkHandle = self.sdd_getDefultSdkName()
         # mouthShape
         mpy.addAttr(faceSdkHandle, ln='______motion______', at='double', min=0, max=0, k=0)
