@@ -1,0 +1,77 @@
+global string $gShelfTopLevel;
+string $currentShelf = `tabLayout -q -st $gShelfTopLevel`;
+string $rootPath=`InstallLocationPath`;
+string $pluginPath=$rootPath+"plug-ins/";
+string $scriptPath=$rootPath+"scripts/";
+string $iconsPath=$rootPath+"icons/";
+string $loadMelPath=$scriptPath+"sdd_loadPlugin.mel";
+string $gRigPyPath=$scriptPath+"sdd_GeneralRigWin.py";
+string $bstPyPath=$scriptPath+"sdd_blendShapeTools.py";
+string $uidPyPath=$scriptPath+"sdd_UIDesigner.py";
+string $cstPyPath=$scriptPath+"sdd_CorrectiveBSTools.py";
+shelfButton
+    -command ("source \""+$loadMelPath+"\";sdd_loadPlugin(\""+$pluginPath+"\");sdd_weightTools;")
+    -annotation $pluginPath
+    -label "WT"
+    -imageOverlayLabel ""
+    -image ($iconsPath+"wt.bmp")
+    -image1 ($iconsPath+"wt.bmp")
+    -sourceType "mel"
+    -parent $currentShelf;
+
+shelfButton
+    -command ("execfile('"+$gRigPyPath+"')\r\nsdd_GeneralRigWin('"+$iconsPath+"')")
+    -annotation $pluginPath
+    -label "gRig"
+    -imageOverlayLabel ""
+    -image ($iconsPath+"rig.bmp")
+    -image1 ($iconsPath+"rig.bmp")
+    -sourceType "python"
+    -parent $currentShelf;
+
+shelfButton
+    -command ("execfile('"+$bstPyPath+"')")
+    -annotation $pluginPath
+    -label "BS"
+    -imageOverlayLabel ""
+    -image ($iconsPath+"bs.bmp") 
+    -image1 ($iconsPath+"bs.bmp") 
+    -sourceType "python"
+    -parent $currentShelf;
+
+shelfButton
+    -command ("execfile('"+$cstPyPath+"')")
+    -annotation $pluginPath
+    -label "CS"
+    -imageOverlayLabel ""
+    -image ($iconsPath+"cs.bmp") 
+    -image1 ($iconsPath+"cs.bmp") 
+    -sourceType "python"
+    -parent $currentShelf;
+
+shelfButton
+    -command ("execfile('"+$uidPyPath+"')\r\nsdd_UIDesigner('"+$iconsPath+"')")
+    -annotation "sdd_UIDesigner"
+    -label "UI"
+    -imageOverlayLabel ""
+    -image ($iconsPath+"uid.bmp" )
+    -image1 ($iconsPath+"uid.bmp")
+    -sourceType "python"
+    -parent $currentShelf;
+
+
+//--installTemplate resume--//
+print ("\n// sdd_weightTools has been added to current shelf.\n");
+
+
+global proc string InstallLocationPath ()
+{
+    string $whatIs=`whatIs InstallLocationPath`;
+    string $fullPath=`substring $whatIs 25 999`;
+    string $buffer[];
+    int $numTok=`tokenize $fullPath "/" $buffer`;
+    int $numLetters=size($fullPath);
+    int $numLettersLastFolder=size($buffer[$numTok-1]);
+    string $scriptLocation=`substring $fullPath 1 ($numLetters-$numLettersLastFolder)`;
+    return $scriptLocation;
+}

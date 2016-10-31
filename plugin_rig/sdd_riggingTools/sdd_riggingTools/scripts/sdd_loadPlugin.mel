@@ -1,0 +1,26 @@
+global proc sdd_loadPlugin(string $pluginPath ){
+
+	string $varsion=`about -v`;
+	string $buffer[];
+	$numTokens = `tokenize $varsion " " $buffer`;
+	string $pluginName="sdd_weightTools_"+$buffer[0];
+	$is64=`about -w64`;
+	if($is64)
+	    $pluginName=$pluginName+"_x64";
+
+	string $fullPath=$pluginPath+$pluginName+".mll";
+	if (!`file -q -ex $fullPath`){
+		error ("Can not find: \""+$fullPath+"\"");
+		return;
+	}
+
+	string $plugList[]=`pluginInfo -q -ls`;
+	for($plug in $plugList){
+		if($plug==$pluginName)
+			return;
+		}
+	if (!`file -q -ex $fullPath`)
+		error ("Can not find: \""+$fullPath+"\"");
+	else
+		loadPlugin($fullPath);
+}
