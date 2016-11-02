@@ -34,41 +34,85 @@ customDir = {"HardCtrl": "HardCtrl", "Head_cntr": "Head_cntr",
              "Neck_cntr": "Neck_cntr"
              }
 
-jntCtrlDir = {"BrowOut_R_cntr": "R_brow_c_skin", "BrowIn_R_cntr": "R_brow_a_skin",
-              "Brow_cntr": "M_brow_skin",
+jntCtrlDir = {"Brow_cntr": "M_brow_skin",
               "BrowOut_L_cntr": "L_brow_c_skin", "BrowIn_L_cntr": "L_brow_a_skin",
-              "UprLid_R_cntr": "R_eyelid_Up_skin", "LwrLid_R_cntr": "R_eyelid_Dn_skin",
               "UprLid_L_cntr": "L_eyelid_Up_skin", "LwrLid_L_cntr": "L_eyelid_Dn_skin",
-              "EyeSqz_R_cntr": "R_eyelid_Out_skin",
               "EyeSqz_L_cntr": "L_eyelid_Out_skin",
-              "Cheek_R_2_cntr": "R_cheek_skin",
               "Cheek_L_2_cntr": "L_cheek_skin",
-              "Cheek_R_cntr": "R_cheek_Up_skin",
               "Cheek_L_cntr": "L_cheek_Up_skin",
-              "Nose_R_cntr": "R_nose_skin",
               "Nose_cntr": "M_nose_skin",
               "Nose_L_cntr": "L_nose_skin",
-              "Crnr_R_cntr": "R_mouth_Corner_skin", "UprLip_R_cntr": "R_mouth_Up_skin",
               "Crnr_L_cntr": "L_mouth_Corner_skin", "UprLip_L_cntr": "L_mouth_Up_skin",
               "LwrLip_L_cntr": "L_mouth_Dn_skin",
               "UprLip_cntr": "M_mouth_Up_skin", "LwrLip_cntr": "M_mouth_Dn_skin",
               "Jaw_cntr": "chin_skin",
 
               }
-CtrlToCtrlDir = {"Head_cntr": "Head_cntr", "UprLip_R_2_cntr": "UprLip_R_2_cntr", "UprLip_2_cntr": "UprLip_2_cntr",
-                 "UprLip_L_2_cntr": "UprLip_L_2_cntr",
-                 "Crnr_R_2_cntr": "Crnr_R_2_cntr",
-                 "LwrLip_R_cntr": "R_mouth_Dn_skin",
-                 "Crnr_L_2_cntr": "Crnr_L_2_cntr",
-                 "Mouth_cntr": "Mouth_cntr",
-                 "Chin_R_cntr": "Chin_R_cntr", "Chin_cntr": "Chin_cntr", "Chin_L_cntr": "Chin_L_cntr",
-                 "Neck_cntr": "Neck_cntr"
+CtrlToCtrlDir = {"Head_cntr": ["Brow_cntr", "BrowIn_L_cntr", 1, ".ty"],
+                 "UprLip_R_2_cntr": ["UprLip_R_cntr", "UprLip_cntr", 1, ".ty"],
+                 "UprLip_2_cntr": ["UprLip_cntr", "UprLip_L_cntr", 1, ".ty"],
+                 "UprLip_L_2_cntr": ["UprLip_L_cntr", "UprLip_cntr", 1, ".ty"],
+                 "Crnr_R_2_cntr": ["Crnr_R_cntr", "UprLip_R_cntr", 1, ".tx"],
+                 "Crnr_L_2_cntr": ["Crnr_L_cntr", "UprLip_R_cntr", -1, ".tx"],
+                 "Mouth_cntr": ["UprLip_cntr", "LwrLip_cntr"],
+                 "Chin_R_cntr": ["LwrLip_R_cntr", "LwrLip_cntr", -1, ".ty"],
+                 "Chin_cntr": ["LwrLip_cntr", "LwrLip_L_cntr", -1, ".ty"],
+                 "Chin_L_cntr": ["LwrLip_L_cntr", "LwrLip_cntr", -1, ".ty"],
+                 "Neck_cntr": ["Jaw_cntr", "LwrLip_cntr", -1, ".ty"]
                  }
 
 
-class NewCtrlFun(object):
+class NewCtrlModule(object):
     def __init__(self):
         self.author = "YJ"
+
+    def create_face_snap_ctrl(self):
+        ctrl_key_list = customDir.keys()
+        if cmds.objExists("cntr_grp"):
+            return
+        cmds.file(frRootPath + 'files/head_ctrl.ma', i=1, type="mayaAscii")
+
+    def snap_ctrl_to_jnts(self):
+        jnt_snap_dir_key_list = jntCtrlDir.keys()
+        for i in jnt_snap_dir_key_list:
+            i_value = jntCtrlDir[i]
+            if "_L_" in i:
+                i_value_dub = cmds.duplicate(i_value, n=i_value + "dub", rr=1)
+                cmds.delete(cmds.parentConstraint(i_value_dub, i))
+                i_value_dub_mir = cmds.mirrorJoint(i_value_dub, mirrorYZ=1, mirrorBehavior=1,
+                                                   searchReplace=("L_", "R_"))
+                i_mir = i.replace("_L_", "_R_")
+                cmds.delete(cmds.parentConstraint(i_value_dub_mir, i_mir))
+                cmds.delete(i_value_dub)
+            else:
+                i_value_dub = cmds.duplicate(i_value, n=i_value + "dub", rr=1)
+                cmds.delete(cmds.parentConstraint(i_value_dub, i))
+
+        ctrl_to_ctrl_key_list = CtrlToCtrlDir.keys()
+        print ctrl_to_ctrl_key_list
+        for i in ctrl_to_ctrl_key_list:
+            i_value = CtrlToCtrlDir[i]
+            if len(i_value) == 2:
+                cmds.delete(cmds.parentConstraint([i_value[0], i_value[1]], i))
+                print "been 2"
+            if len(i_value) == 4:
+                cmds.delete(cmds.parentConstraint(i_value[0], i))
+                dis = self.get_distance_two_point(i_value[0], i_value[1])
+                ty = cmds.getAttr(i_value[0] + i_value[3]) + dis * i_value[2]
+                cmds.setAttr(i + i_value[3], ty)
+                print "been 4"
+
+    @staticmethod
+    def get_distance_two_point(star_obj, end_obj):
+        grp = cmds.group(n='Tmp_arc_grp', em=1)
+        cmds.delete(cmds.parentConstraint(star_obj, grp))
+        p1 = cmds.xform(grp, q=1, ws=1, t=1)
+        p2 = cmds.xform(end_obj, q=1, ws=1, t=1)
+        mp1 = OpenMaya.MPoint(p1[0], p1[1], p1[2])
+        mp2 = OpenMaya.MPoint(p2[0], p2[1], p2[2])
+        dis = mp1.distanceTo(mp2)
+        cmds.delete(grp)
+        return round(dis, 2)
 
     def create_snap_ctrl_step(self, ctrl_name, fin_mesh):
         CtrlGrp_OP = cmds.group(n=ctrl_name + "_op", em=1)
@@ -78,9 +122,11 @@ class NewCtrlFun(object):
         cmds.parent(ctrl_name, CtrlGrp_OP)
         cmds.parent(CtrlGrp_OP, CtrlGrp_Zero)
 
-        follice_t = self.create_closest_follicle(ctrl_name, fin_mesh)
-        cmds.parent(CtrlGrp_Zero,follice_t)
+        ctrl_expr = cmds.expression(n=ctrl_name + "_expr", s="%s.tx= -%s.tx;\n%s.ty= -%s.ty;\n%s.tz= -%s.tz;" % (
+            CtrlGrp_OP, ctrl_name, CtrlGrp_OP, ctrl_name, CtrlGrp_OP, ctrl_name), ae=1, uc="all")
 
+        follice_t = self.create_closest_follicle(ctrl_name, fin_mesh)
+        cmds.parent(CtrlGrp_Zero, follice_t)
         # cmds.file(frRootPath + 'files/hard_ctrl.ma', i=1, type="mayaAscii")
 
     # 创建距离模型最近的毛囊
@@ -128,9 +174,9 @@ class NewCtrlFun(object):
 
         cmds.setAttr(follicle_name_s + '.pu', uvPos[0])
         cmds.setAttr(follicle_name_s + '.pv', uvPos[1])
-        if not(cmds.objExists("head_face_ctrlFol_grp")):
-            follicle_Grp = cmds.group(n="head_face_ctrlFol_grp",em=1)
-        cmds.parent(follicle_name_t,follicle_Grp)
+        if not (cmds.objExists("head_face_ctrlFol_grp")):
+            follicle_Grp = cmds.group(n="head_face_ctrlFol_grp", em=1)
+        cmds.parent(follicle_name_t, follicle_Grp)
         return follicle_name_t
 
     # 吸附目标到指定模型最近点
@@ -171,7 +217,7 @@ class NewCtrlFun(object):
 
 
 if __name__ == "__main__":
-    NCF = NewCtrlFun()
+    NCF = NewCtrlModule()
     # NCF.create_snap_ctrl("new")
     # NCF.matchObjToCloset("pSphere1", ["new"])
-    NCF.create_snap_ctrl_step("BrowOut_L_cntr", "pSphere1")
+    NCF.snap_ctrl_to_jnts()
