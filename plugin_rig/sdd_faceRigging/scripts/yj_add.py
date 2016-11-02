@@ -66,11 +66,16 @@ class NewCtrlModule(object):
     def __init__(self):
         self.author = "YJ"
 
-    def create_face_snap_ctrl(self):
+    def create_face_snap_ctrl(self, fin_mesh):
         ctrl_key_list = customDir.keys()
         if cmds.objExists("cntr_grp"):
             return
         cmds.file(frRootPath + 'files/head_ctrl.ma', i=1, type="mayaAscii")
+        self.snap_ctrl_to_jnts()
+        # 需要提取
+        self.matchObjToCloset(fin_mesh, ctrl_key_list)
+        for i in ctrl_key_list:
+            self.create_face_snap_ctrl(i,fin_mesh)
 
     def snap_ctrl_to_jnts(self):
         jnt_snap_dir_key_list = jntCtrlDir.keys()

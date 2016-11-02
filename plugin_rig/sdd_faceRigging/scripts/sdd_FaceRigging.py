@@ -297,6 +297,13 @@ def sdd_FaceRigging(rootPath):
     cmds.button('frSecondMatchB',w=223,l='Match To Clost Point',c='sdd_matchSecLocToCloset()')
     cmds.button('frSecondRigB',p='frSecondCtrlCL',l='Rigging',c='sdd_createSecRigging()')
 
+    cmds.frameLayout('frSnapCtrlFL',p='frAdvancedCL',w=290,l="Snap Control",collapsable=1,cl=0)
+    cmds.columnLayout('frSnapCtrlCL',adj=1)
+    cmds.rowLayout(p='frSnapCtrlCL',nc=4)
+    cmds.button('frSnapCtrlB',w=223,l='Create Snap Ctrl',c='')
+    cmds.button('frSnapMatchB',w=223,l='Match To Clost Point',c='')
+    cmds.button('frSnapRigB',p='frSnapCtrlCL',l='Add',c='')
+
     cmds.frameLayout('frWrapMeshFL',p='frAdvancedCL',w=290,l="Warp Mesh",collapsable=1,cl=1)
     cmds.columnLayout('frWrapMeshCL',adj=1)
     cmds.button(w=256,l='Load Mesh',c='sdd_loadWrapMeshToList()')
