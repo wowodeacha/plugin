@@ -75,7 +75,13 @@ class NewCtrlModule(object):
         # 需要提取
         self.matchObjToCloset(fin_mesh, ctrl_key_list)
         for i in ctrl_key_list:
-            self.create_face_snap_ctrl(i,fin_mesh)
+            self.create_face_snap_ctrl(i, fin_mesh)
+
+    def match_ctrl_mesh(self, fin_mesh):
+        if not cmds.objExists("cntr_grp"):
+            return
+        ctrl_list = cmds.listRelatives("cntr_grp", c=True)
+        self.matchObjToCloset(fin_mesh, ctrl_list)
 
     def snap_ctrl_to_jnts(self):
         jnt_snap_dir_key_list = jntCtrlDir.keys()
@@ -99,13 +105,12 @@ class NewCtrlModule(object):
             i_value = CtrlToCtrlDir[i]
             if len(i_value) == 2:
                 cmds.delete(cmds.parentConstraint([i_value[0], i_value[1]], i))
-                print "been 2"
+
             if len(i_value) == 4:
                 cmds.delete(cmds.parentConstraint(i_value[0], i))
                 dis = self.get_distance_two_point(i_value[0], i_value[1])
                 ty = cmds.getAttr(i_value[0] + i_value[3]) + dis * i_value[2]
                 cmds.setAttr(i + i_value[3], ty)
-                print "been 4"
 
     @staticmethod
     def get_distance_two_point(star_obj, end_obj):
@@ -132,7 +137,6 @@ class NewCtrlModule(object):
 
         follice_t = self.create_closest_follicle(ctrl_name, fin_mesh)
         cmds.parent(CtrlGrp_Zero, follice_t)
-        # cmds.file(frRootPath + 'files/hard_ctrl.ma', i=1, type="mayaAscii")
 
     # 创建距离模型最近的毛囊
     def create_closest_follicle(self, ctrl_name, fin_mesh):
@@ -220,9 +224,44 @@ class NewCtrlModule(object):
         meshPolygon = OpenMaya.MFnMesh(dagPath)
         return meshPolygon
 
+    @staticmethod
+    def mirrorCtrlPos(typ):
+        cntr_grp = 'cntr_grp'
+        if (not cmds.objExists(cntr_grp)):
+            return
+        snap_ctl_list = cmds.listRelatives(cntr_grp,c=1)
+        sel = cmds.ls(sl=1)
+        mirCtrl = []
+        if (len(sel) > 0):
+            for i in sel:
+                if (i in snap_ctl_list):
+                    mirCtrl.append(i)
+        else:
+            mirCtrl = snap_ctl_list
+
+        axis = [-1, 1, 1, 1, -1, -1, 1, 1, 1]
+        for i in mirCtrl:
+            if (typ == 'L>>R'):
+                if ("_L_" in i):
+                    getObj = i
+                    mirObj = i.replace("_L_", "_R_")
+                else:
+                    continue
+
+            if (not cmds.objExists(mirObj)):
+                continue
+
+            pos = cmds.xform(getObj, ws=1, q=1, t=1)
+            cmds.xform(mirObj, ws=1, t=[pos[0] * axis[0], pos[1] * axis[1], pos[2] * axis[2]])
+
+            rot = cmds.xform(getObj, ws=1, q=1, ro=1)
+            cmds.xform(mirObj, ws=1, ro=[rot[0] * axis[3], rot[1] * axis[4], rot[2] * axis[5]])
+        cmds.refresh(cv=1, f=1)
+
+
 
 if __name__ == "__main__":
     NCF = NewCtrlModule()
-    # NCF.create_snap_ctrl("new")
+    NCF.create_face_snap_ctrl("head_HI_final")
     # NCF.matchObjToCloset("pSphere1", ["new"])
-    NCF.snap_ctrl_to_jnts()
+    # NCF.snap_ctrl_to_jnts()

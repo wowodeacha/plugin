@@ -8,7 +8,7 @@ string $filesPath=$rootPath+"files/";
 
 string $FRPluginPyPath=$scriptPath+"sdd_FaceRigging.py";
 shelfButton
-    -command ("execfile('"+$FRPluginPyPath+"')\r\nsdd_FaceRigging('"+$rootPath+"')")
+    -command ("import sys\r\nsys.path.append( '"+$scriptPath+"' )\r\nexecfile('"+$FRPluginPyPath+"')\r\nsdd_FaceRigging('"+$rootPath+"')")
     -annotation $pluginPath
     -label ""
     -imageOverlayLabel ""
@@ -30,6 +30,7 @@ shelfButton
     -sourceType "python"
     -parent $currentShelf;
 */
+
 
 global proc string InstallLocationPath ()
 {
