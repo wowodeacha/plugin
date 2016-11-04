@@ -20,7 +20,7 @@ def sdd_FaceRigging(rootPath):
     curTime = time.time()
     endTime = time.mktime(time.strptime('2016-12-30', '%Y-%m-%d'))
     if (curTime > endTime):
-        cmds.confirmDialog(t='Timeout', m='Please contact sundongdong.\r\nEmail:136941679@qq.com', b=['OK'])
+        cmds.confirmDialog(t='Timeout', m='Please contact sundongdong.\r\nEmail:136941679@qq.com\r\nEmail:691633493@qq.com', b=['OK'])
         return
 
     global frRootPath
