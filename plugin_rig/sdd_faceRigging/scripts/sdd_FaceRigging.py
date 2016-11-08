@@ -17,11 +17,11 @@ NewCtrlModule = yj_add.NewCtrlModule()
 def sdd_FaceRigging(rootPath):
     # if(sdd_checkRegister()==False):
     #     return
-    curTime = time.time()
-    endTime = time.mktime(time.strptime('2016-12-30', '%Y-%m-%d'))
-    if (curTime > endTime):
-        cmds.confirmDialog(t='Timeout', m='Please contact sundongdong.\r\nEmail:136941679@qq.com\r\nEmail:691633493@qq.com', b=['OK'])
-        return
+    # curTime=time.time()
+    # endTime=time.mktime(time.strptime('2016-10-20','%Y-%m-%d'))
+    # if(curTime>endTime):
+    #     cmds.confirmDialog(t='Timeout',m='Please contact sundongdong.\r\nEmail:136941679@qq.com',b=['OK'])
+    #     return
 
     global frRootPath
     global ctrBsPuffDate
@@ -31,8 +31,8 @@ def sdd_FaceRigging(rootPath):
     T = sdd_returnTempNameDirc()
     _skin = T['_skin']
 
-    if (cmds.window('sdd_YJ_FaceRiggingWin', q=1, ex=1)): cmds.deleteUI('sdd_YJ_FaceRiggingWin')
-    cmds.window('sdd_YJ_FaceRiggingWin', ret=1, s=0)
+    if (cmds.window('sdd_FaceRiggingWin', q=1, ex=1)): cmds.deleteUI('sdd_FaceRiggingWin')
+    cmds.window('sdd_FaceRiggingWin', ret=1, s=0)
     cmds.columnLayout('frMainCL')
 
     cmds.tabLayout('frMainRigTL', p='frMainCL', sc='sdd_tabLayoutSelectChange()')
@@ -318,7 +318,7 @@ def sdd_FaceRigging(rootPath):
 
     cmds.tabLayout('frMainRigTL', e=1,
                    tli=[[1, 'Joint Template'], [2, 'Rigging'], [3, 'Sdk Define'], [4, 'Corrective'], [5, 'Advanced']])
-    cmds.showWindow('sdd_YJ_FaceRiggingWin')
+    cmds.showWindow('sdd_FaceRiggingWin')
 
 
 def sdd_addOrSubScaleValue(typ):
@@ -604,78 +604,79 @@ def sdd_createSecRigging():
     sdd_secondRigButtonChange()
 
 
-def sdd_createSecLacator():
-    FR, FRJntPos, FRUIPos = sdd_frTNameDirc()
-    T = sdd_returnTempNameDirc()
-    _sdk = T['_sdk']
-    _cnt = T['_cnt']
-    _rig = T['_rig']
-    _anim = T['_anim']
-    _grp = T['_grp']
-    _loc = T['_loc']
-    _skin = T['_skin']
-    faceCur = 'faceMoveCur'
+# def sdd_createSecLacator():
+#     FR,FRJntPos,FRUIPos=sdd_frTNameDirc()
+#     T=sdd_returnTempNameDirc()
+#     _sdk=T['_sdk']
+#     _cnt=T['_cnt']
+#     _rig=T['_rig']
+#     _anim=T['_anim']
+#     _grp=T['_grp']
+#     _loc=T['_loc']
+#     _skin=T['_skin']
+#     faceCur='faceMoveCur'
 
-    faceAdvancedGrp = 'face_advanced_rig_grp'
-    if not (cmds.objExists(faceAdvancedGrp)):
-        return
+#     faceAdvancedGrp='face_advanced_rig_grp'
+#     if not(cmds.objExists(faceAdvancedGrp)):
+#         return
 
-    faceSecLocGrp = 'face_second_loctor_grp'
-    if not (cmds.objExists(faceSecLocGrp)):
-        faceSecLocGrp = cmds.group(em=1, n=faceSecLocGrp)
-        cmds.setAttr(faceSecLocGrp + '.it', 0)
-        cmds.parent(faceSecLocGrp, faceAdvancedGrp)
-    _rad = cmds.getAttr(faceCur + '.globalScale')
+#     faceSecLocGrp='face_second_loctor_grp'
+#     if not(cmds.objExists(faceSecLocGrp)):
+#         faceSecLocGrp=cmds.group(em=1,n=faceSecLocGrp)
+#         cmds.setAttr(faceSecLocGrp+'.it',0)
+#         cmds.parent(faceSecLocGrp,faceAdvancedGrp)
+#     _rad=cmds.getAttr(faceCur+'.globalScale')
 
-    secMesh = sdd_getSecondMesh()
-    secMFnMesh = sdd_getMfnMeshByName(secMesh)
+#     secMesh=sdd_getSecondMesh()
+#     secMFnMesh=sdd_getMfnMeshByName(secMesh)
 
-    clostP = OpenMaya.MPoint()
-    util = OpenMaya.MScriptUtil()
-    util.createFromInt(0)
-    idPointer = util.asIntPtr()
-    vtxPointList = OpenMaya.MPointArray()
-    secMFnMesh.getPoints(vtxPointList, OpenMaya.MSpace.kWorld)
-    # mirDis=5
 
-    baseNameList = sdd_returnAllSdkCntList()
-    skipList = [FR['head'], FR['jaw'], FR['L_eye_root'], FR['R_eye_root'], FR['L_eyeBall'], FR['R_eyeBall']]
-    for i in baseNameList:
-        if (i in skipList):
-            continue
-        sdkCnt = i + _cnt
-        sdkJnt = i + _skin
-        if (not (cmds.objExists(sdkCnt)) or not (cmds.objExists(sdkJnt))):
-            continue
-        secLoc = i + _loc
-        if (cmds.objExists(secLoc)):
-            continue
 
-        secLoc = sdd_createSpaceLocator(secLoc, _rad * 0.1)
-        cmds.delete(cmds.parentConstraint(sdkCnt, secLoc))
-        cmds.parent(secLoc, faceSecLocGrp)
+#     clostP=OpenMaya.MPoint()
+#     util = OpenMaya.MScriptUtil()
+#     util.createFromInt(0)
+#     idPointer = util.asIntPtr()
+#     vtxPointList=OpenMaya.MPointArray()
+#     secMFnMesh.getPoints(vtxPointList,OpenMaya.MSpace.kWorld)
+#     # mirDis=5
 
-        pos = cmds.xform(secLoc, q=1, ws=1, t=1)
+#     baseNameList=sdd_returnAllSdkCntList()
+#     skipList=[FR['head'],FR['jaw'],FR['L_eye_root'],FR['R_eye_root'],FR['L_eyeBall'],FR['R_eyeBall']]
+#     for i in baseNameList:
+#         if(i in skipList):
+#             continue
+#         sdkCnt=i+_cnt
+#         sdkJnt=i+_skin
+#         if (not(cmds.objExists(sdkCnt)) or not(cmds.objExists(sdkJnt))):
+#             continue
+#         secLoc=i+_loc
+#         if (cmds.objExists(secLoc)):
+#             continue
 
-        curPos = OpenMaya.MPoint(pos[0], pos[1], pos[2])
+#         secLoc=sdd_createSpaceLocator(secLoc,_rad*0.1)
+#         cmds.delete(cmds.parentConstraint(sdkCnt,secLoc))
+#         cmds.parent(secLoc,faceSecLocGrp)
 
-        secMFnMesh.getClosestPoint(curPos, clostP, OpenMaya.MSpace.kWorld, idPointer)
-        idx = OpenMaya.MScriptUtil(idPointer).asInt()
-        nearestList = OpenMaya.MIntArray()
-        secMFnMesh.getPolygonVertices(idx, nearestList)
-        tmpdis = None
-        retIdx = None
-        for d in nearestList:
-            dis = vtxPointList[d].distanceTo(curPos)
-            if (tmpdis == None or dis < tmpdis):
-                tmpdis = dis
-                retIdx = d
-        # if(vtxPointList[retIdx].distanceTo(curPos)<mirDis):
-        cmds.xform(secLoc, ws=1, t=[vtxPointList[retIdx].x, vtxPointList[retIdx].y, vtxPointList[retIdx].z])
+#         pos=cmds.xform(secLoc,q=1,ws=1,t=1)
 
-    cmds.select(faceSecLocGrp)
-    cmds.setAttr(faceSecLocGrp + '.v', 1)
+#         curPos=OpenMaya.MPoint(pos[0],pos[1],pos[2])
 
+#         secMFnMesh.getClosestPoint(curPos,clostP,OpenMaya.MSpace.kWorld,idPointer)
+#         idx = OpenMaya.MScriptUtil(idPointer).asInt()
+#         nearestList=OpenMaya.MIntArray()
+#         secMFnMesh.getPolygonVertices(idx,nearestList)
+#         tmpdis=None
+#         retIdx=None
+#         for d in nearestList:
+#             dis=vtxPointList[d].distanceTo(curPos)
+#             if(tmpdis==None or dis<tmpdis):
+#                 tmpdis=dis
+#                 retIdx=d
+#         # if(vtxPointList[retIdx].distanceTo(curPos)<mirDis):
+#         cmds.xform(secLoc,ws=1,t=[vtxPointList[retIdx].x,vtxPointList[retIdx].y,vtxPointList[retIdx].z])
+
+#     cmds.select(faceSecLocGrp)
+#     cmds.setAttr(faceSecLocGrp+'.v',1)
 
 def sdd_secondRigButtonChange():
     faceSecFolGrp = 'face_second_follicle_grp'
@@ -1933,6 +1934,7 @@ def sdd_sdkRedefine():
         cmds.parent(tmpOffGrp, pCnt)
         cmds.delete(cmds.parentConstraint(cnt, tmpOffGrp))
         for a in range(len(attrList)):
+
             val = cmds.getAttr(tmpOffGrp + '.' + attrList[a])
             cmds.setAttr(cnt + '.' + attrList[a], valueList[a])
 
@@ -1942,11 +1944,10 @@ def sdd_sdkRedefine():
 
             if (round(val, 4) == valueList[a] and animNode == None):
                 continue
-            print animNode
 
             cmds.setDrivenKeyframe(attr, cd=cdAttr, v=0, dv=0, itt='linear', ott='linear')
             cmds.setDrivenKeyframe(attr, cd=cdAttr, v=val, dv=kValue, itt='linear', ott='linear')
-            if (animNode == None):
+            if (animNode == None and kValue == 0.5):
                 cmds.setDrivenKeyframe(attr, cd=cdAttr, v=0, dv=1, itt='linear', ott='linear')
 
             cmds.setAttr(cdAttr, kValue)
@@ -5029,3 +5030,4 @@ def sdd_wrapMeshRestore():
 # ============================================================================================================
 
 sdd_FaceRigging('C:/Users/sundongdong/Desktop/sdd_faceRigging/')
+
