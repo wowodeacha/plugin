@@ -66,7 +66,14 @@ class NewCtrlModule(object):
     def __init__(self):
         self.author = "YJ"
 
+    def get_fin_mesh(self):
+        faceSecMeshGrp = 'face_final_mesh_grp'
+        fin_mesh = cmds.listRelatives(faceSecMeshGrp, c=1)
+        if (fin_mesh != None):
+            return fin_mesh[0]
     def create_face_snap_ctrl(self, fin_mesh):
+        if  fin_mesh ==0:
+            fin_mesh =self.get_fin_mesh()
         ctrl_key_list = customDir.keys()
         if cmds.objExists("cntr_grp"):
             return
@@ -78,10 +85,56 @@ class NewCtrlModule(object):
             self.create_face_snap_ctrl(i, fin_mesh)
 
     def match_ctrl_mesh(self, fin_mesh):
+        if  fin_mesh ==0:
+            fin_mesh =self.get_fin_mesh()
         if not cmds.objExists("cntr_grp"):
             return
         ctrl_list = cmds.listRelatives("cntr_grp", c=True)
         self.matchObjToCloset(fin_mesh, ctrl_list)
+
+    @staticmethod
+    def mirrorCtrlPos(typ):
+        cntr_grp = 'cntr_grp'
+        if (not cmds.objExists(cntr_grp)):
+            return
+        snap_ctl_list = cmds.listRelatives(cntr_grp, c=1)
+        sel = cmds.ls(sl=1)
+        mirCtrl = []
+        if (len(sel) > 0):
+            for i in sel:
+                if (i in snap_ctl_list):
+                    mirCtrl.append(i)
+        else:
+            mirCtrl = snap_ctl_list
+
+        axis = [-1, 1, 1, 1, -1, -1, 1, 1, 1]
+        for i in mirCtrl:
+            if (typ == 'L>>R'):
+                if ("_L_" in i):
+                    getObj = i
+                    mirObj = i.replace("_L_", "_R_")
+                else:
+                    continue
+
+            if (not cmds.objExists(mirObj)):
+                continue
+
+            pos = cmds.xform(getObj, ws=1, q=1, t=1)
+            cmds.xform(mirObj, ws=1, t=[pos[0] * axis[0], pos[1] * axis[1], pos[2] * axis[2]])
+
+            rot = cmds.xform(getObj, ws=1, q=1, ro=1)
+            cmds.xform(mirObj, ws=1, ro=[rot[0] * axis[3], rot[1] * axis[4], rot[2] * axis[5]])
+        cmds.refresh(cv=1, f=1)
+
+    def set_up_snap_ctrl(self,fin_mesh):
+        if fin_mesh == 0:
+            fin_mesh = self.get_fin_mesh()
+        cntr_grp = 'cntr_grp'
+        if (not cmds.objExists(cntr_grp)):
+            return
+        snap_ctl_list = cmds.listRelatives(cntr_grp, c=1)
+        for i in snap_ctl_list:
+            self.create_snap_ctrl_step(i,fin_mesh)
 
     def snap_ctrl_to_jnts(self):
         jnt_snap_dir_key_list = jntCtrlDir.keys()
@@ -137,6 +190,12 @@ class NewCtrlModule(object):
 
         follice_t = self.create_closest_follicle(ctrl_name, fin_mesh)
         cmds.parent(CtrlGrp_Zero, follice_t)
+        try:
+            cmds.transformLimits(ctrl_name, tx=(-1, 1), etx=(1, 1))
+            cmds.transformLimits(ctrl_name, ty=(-1, 1), ety=(1, 1))
+            cmds.transformLimits(ctrl_name, tz=(-1, 1), etz=(1, 1))
+        except:
+            pass
 
     # 创建距离模型最近的毛囊
     def create_closest_follicle(self, ctrl_name, fin_mesh):
