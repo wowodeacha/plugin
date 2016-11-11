@@ -11,10 +11,11 @@ import os
 import yj_add as yj_add
 
 reload(yj_add)
-NewCtrlModule = yj_add.NewCtrlModule()
 
 
 def sdd_FaceRigging(rootPath):
+    global NewCtrlModule
+    NewCtrlModule = yj_add.NewCtrlModule(frRootPath=rootPath)
     # if(sdd_checkRegister()==False):
     #     return
     # curTime=time.time()
@@ -3927,6 +3928,16 @@ def sdd_getAvergeDistance(objList):
     return val
 
 
+# def sdd_setDrivenKeyframe(c, cAttr, v, cd, cdAttr, dv, mircdAttr=None):
+#     cmds.setDrivenKeyframe(c + '.' + cAttr, cd=cd + '.' + cdAttr, v=0, dv=0, itt='linear', ott='linear')
+#     cmds.setDrivenKeyframe(c + '.' + cAttr, cd=cd + '.' + cdAttr, v=v, dv=dv, itt='linear', ott='linear')
+#     if (mircdAttr != None):
+#         attrList = ['tx', 'ty', 'tz', 'rx', 'ry', 'rz', 'sx', 'sy', 'sz']
+#         valList = [-1, 1, 1, 1, -1, -1, 1, 1, 1]
+#         mirc = sdd_getMirrorName(c)
+#         v = v * valList[attrList.index(cAttr)]
+#         cmds.setDrivenKeyframe(mirc + '.' + cAttr, cd=cd + '.' + mircdAttr, v=0, dv=0, itt='linear', ott='linear')
+#         cmds.setDrivenKeyframe(mirc + '.' + cAttr, cd=cd + '.' + mircdAttr, v=v, dv=dv, itt='linear', ott='linear')
 def sdd_browDefultSdk():
     FR, _sdk, _root, _cnt, faceSdkHandle, faceCur = sdd_getDefultSdkName()
 
@@ -3940,6 +3951,11 @@ def sdd_browDefultSdk():
     sdd_setDrivenKeyframe(FR['M_brow'] + _sdk, 'ty', dis, faceSdkHandle, cdAttr, 1)
     cdAttr = sdd_addAttrToHandle('M_brow_D', None, faceSdkHandle)
     sdd_setDrivenKeyframe(FR['M_brow'] + _sdk, 'ty', -dis, faceSdkHandle, cdAttr, 1)
+
+    # cdAttr = sdd_addAttrToHandle('M_Brow_snap_U', None, faceSdkHandle)
+    # sdd_setDrivenKeyframe(FR['M_brow'] + _sdk, 'ty', dis, faceSdkHandle, cdAttr, 1)
+    # cdAttr = sdd_addAttrToHandle('M_Brow_snap_D', None, faceSdkHandle)
+    # sdd_setDrivenKeyframe(FR['M_brow'] + _sdk, 'ty', -dis, faceSdkHandle, cdAttr, 1)
 
     cdAttr, mircdAttr = sdd_addAttrToHandle('L_brow_In_U', 'R_brow_In_U', faceSdkHandle)
     sdd_setDrivenKeyframe(FR['L_brow_a'] + _sdk, 'ty', dis, faceSdkHandle, cdAttr, 1, mircdAttr)
@@ -5030,4 +5046,3 @@ def sdd_wrapMeshRestore():
 # ============================================================================================================
 
 sdd_FaceRigging('C:/Users/sundongdong/Desktop/sdd_faceRigging/')
-

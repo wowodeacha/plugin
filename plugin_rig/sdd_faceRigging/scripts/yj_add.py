@@ -7,7 +7,7 @@
 import maya.OpenMaya as OpenMaya
 import maya.cmds as cmds
 
-customDir = {"HardCtrl": "HardCtrl", "Head_cntr": "Head_cntr",
+customDir = {"Head_cntr": "Head_cntr",
              "BrowOut_R_cntr": "BrowOut_R_cntr", "BrowIn_R_cntr": "BrowIn_R_cntr",
              "Brow_cntr": "Brow_cntr",
              "BrowOut_L_cntr": "BrowOut_L_cntr", "BrowIn_L_cntr": "BrowIn_L_cntr",
@@ -63,30 +63,33 @@ CtrlToCtrlDir = {"Head_cntr": ["Brow_cntr", "BrowIn_L_cntr", 1, ".ty"],
 
 
 class NewCtrlModule(object):
-    def __init__(self):
+    def __init__(self, frRootPath=None):
         self.author = "YJ"
+        self.frRootPath = frRootPath
 
     def get_fin_mesh(self):
         faceSecMeshGrp = 'face_final_mesh_grp'
         fin_mesh = cmds.listRelatives(faceSecMeshGrp, c=1)
         if (fin_mesh != None):
             return fin_mesh[0]
+
     def create_face_snap_ctrl(self, fin_mesh):
-        if  fin_mesh ==0:
-            fin_mesh =self.get_fin_mesh()
+        if fin_mesh == 0:
+            fin_mesh = self.get_fin_mesh()
         ctrl_key_list = customDir.keys()
         if cmds.objExists("cntr_grp"):
             return
-        cmds.file(frRootPath + 'files/head_ctrl.ma', i=1, type="mayaAscii")
+
+        cmds.file(self.frRootPath + 'files/head_ctrl.ma', i=1, type="mayaAscii")
         self.snap_ctrl_to_jnts()
         # 需要提取
         self.matchObjToCloset(fin_mesh, ctrl_key_list)
         for i in ctrl_key_list:
-            self.create_face_snap_ctrl(i, fin_mesh)
+            cmds.scale(0.2, 0.2, 0.2, cmds.ls(i + '.cv[*]'), r=1, ocp=1)
 
     def match_ctrl_mesh(self, fin_mesh):
-        if  fin_mesh ==0:
-            fin_mesh =self.get_fin_mesh()
+        if fin_mesh == 0:
+            fin_mesh = self.get_fin_mesh()
         if not cmds.objExists("cntr_grp"):
             return
         ctrl_list = cmds.listRelatives("cntr_grp", c=True)
@@ -126,7 +129,7 @@ class NewCtrlModule(object):
             cmds.xform(mirObj, ws=1, ro=[rot[0] * axis[3], rot[1] * axis[4], rot[2] * axis[5]])
         cmds.refresh(cv=1, f=1)
 
-    def set_up_snap_ctrl(self,fin_mesh):
+    def set_up_snap_ctrl(self, fin_mesh):
         if fin_mesh == 0:
             fin_mesh = self.get_fin_mesh()
         cntr_grp = 'cntr_grp'
@@ -134,7 +137,7 @@ class NewCtrlModule(object):
             return
         snap_ctl_list = cmds.listRelatives(cntr_grp, c=1)
         for i in snap_ctl_list:
-            self.create_snap_ctrl_step(i,fin_mesh)
+            self.create_snap_ctrl_step(i, fin_mesh)
 
     def snap_ctrl_to_jnts(self):
         jnt_snap_dir_key_list = jntCtrlDir.keys()
@@ -211,6 +214,7 @@ class NewCtrlModule(object):
         fin_mesh_shape = cmds.listRelatives(fin_mesh, s=1, f=1)[0]
         cmds.connectAttr(fin_mesh_shape + '.worldMatrix[0]', follicle_name_s + '.inputWorldMatrix')
         cmds.connectAttr(fin_mesh_shape + '.outMesh', follicle_name_s + '.inputMesh')
+        cmds.setAttr(follicle_name_s + ".v", 0)
 
         # 获取最近的UV
 
@@ -242,9 +246,10 @@ class NewCtrlModule(object):
 
         cmds.setAttr(follicle_name_s + '.pu', uvPos[0])
         cmds.setAttr(follicle_name_s + '.pv', uvPos[1])
-        if not (cmds.objExists("head_face_ctrlFol_grp")):
-            follicle_Grp = cmds.group(n="head_face_ctrlFol_grp", em=1)
-        cmds.parent(follicle_name_t, follicle_Grp)
+        snap_follicle_Grp = "head_face_ctrlFol_grp"
+        if not (cmds.objExists(snap_follicle_Grp)):
+            snap_follicle_Grp = cmds.group(n=snap_follicle_Grp, em=1)
+        cmds.parent(follicle_name_t, snap_follicle_Grp)
         return follicle_name_t
 
     # 吸附目标到指定模型最近点
@@ -288,7 +293,7 @@ class NewCtrlModule(object):
         cntr_grp = 'cntr_grp'
         if (not cmds.objExists(cntr_grp)):
             return
-        snap_ctl_list = cmds.listRelatives(cntr_grp,c=1)
+        snap_ctl_list = cmds.listRelatives(cntr_grp, c=1)
         sel = cmds.ls(sl=1)
         mirCtrl = []
         if (len(sel) > 0):
@@ -316,7 +321,6 @@ class NewCtrlModule(object):
             rot = cmds.xform(getObj, ws=1, q=1, ro=1)
             cmds.xform(mirObj, ws=1, ro=[rot[0] * axis[3], rot[1] * axis[4], rot[2] * axis[5]])
         cmds.refresh(cv=1, f=1)
-
 
 
 if __name__ == "__main__":
