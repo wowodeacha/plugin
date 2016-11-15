@@ -52,8 +52,8 @@ CtrlToCtrlDir = {"Head_cntr": ["Brow_cntr", "BrowIn_L_cntr", 1, ".ty"],
                  "UprLip_R_2_cntr": ["UprLip_R_cntr", "UprLip_cntr", 1, ".ty"],
                  "UprLip_2_cntr": ["UprLip_cntr", "UprLip_L_cntr", 1, ".ty"],
                  "UprLip_L_2_cntr": ["UprLip_L_cntr", "UprLip_cntr", 1, ".ty"],
-                 "Crnr_R_2_cntr": ["Crnr_R_cntr", "UprLip_R_cntr", 1, ".tx"],
-                 "Crnr_L_2_cntr": ["Crnr_L_cntr", "UprLip_R_cntr", -1, ".tx"],
+                 "Crnr_R_2_cntr": ["Crnr_R_cntr", "UprLip_R_cntr", -1, ".tx"],
+                 "Crnr_L_2_cntr": ["Crnr_L_cntr", "UprLip_L_cntr", 1, ".tx"],
                  "Mouth_cntr": ["UprLip_cntr", "LwrLip_cntr"],
                  "Chin_R_cntr": ["LwrLip_R_cntr", "LwrLip_cntr", -1, ".ty"],
                  "Chin_cntr": ["LwrLip_cntr", "LwrLip_L_cntr", -1, ".ty"],
@@ -94,6 +94,11 @@ class NewCtrlModule(object):
             return
         ctrl_list = cmds.listRelatives("cntr_grp", c=True)
         self.matchObjToCloset(fin_mesh, ctrl_list)
+        for i in ctrl_list:
+            if "_R_" in i:
+                cmds.setAttr(i + ".sx", -1)
+                # cmds.rotate('180deg', 0, 0, i, r=1, os=1)
+
 
     @staticmethod
     def mirrorCtrlPos(typ):
@@ -138,6 +143,13 @@ class NewCtrlModule(object):
         snap_ctl_list = cmds.listRelatives(cntr_grp, c=1)
         for i in snap_ctl_list:
             self.create_snap_ctrl_step(i, fin_mesh)
+        cmds.delete(cntr_grp)
+        snap_follicle_Grp = "head_face_ctrlFol_grp"
+        faceMoveCur = "faceMoveCur"
+        try:
+            cmds.parent(snap_follicle_Grp, faceMoveCur)
+        except:
+            pass
 
     def snap_ctrl_to_jnts(self):
         jnt_snap_dir_key_list = jntCtrlDir.keys()
@@ -150,13 +162,14 @@ class NewCtrlModule(object):
                                                    searchReplace=("L_", "R_"))
                 i_mir = i.replace("_L_", "_R_")
                 cmds.delete(cmds.parentConstraint(i_value_dub_mir, i_mir))
+                # cmds.rotate(0, 0, '180deg', i_mir)
+                # cmds.setAttr(i_mir+".sx",-1)
                 cmds.delete(i_value_dub)
             else:
                 i_value_dub = cmds.duplicate(i_value, n=i_value + "dub", rr=1)
                 cmds.delete(cmds.parentConstraint(i_value_dub, i))
 
         ctrl_to_ctrl_key_list = CtrlToCtrlDir.keys()
-        print ctrl_to_ctrl_key_list
         for i in ctrl_to_ctrl_key_list:
             i_value = CtrlToCtrlDir[i]
             if len(i_value) == 2:
@@ -185,8 +198,10 @@ class NewCtrlModule(object):
         CtrlGrp_Zero = cmds.group(n=ctrl_name + "_zerp", em=1)
         cmds.delete(cmds.parentConstraint(ctrl_name, CtrlGrp_OP))
         cmds.delete(cmds.parentConstraint(ctrl_name, CtrlGrp_Zero))
+
         cmds.parent(ctrl_name, CtrlGrp_OP)
         cmds.parent(CtrlGrp_OP, CtrlGrp_Zero)
+
 
         ctrl_expr = cmds.expression(n=ctrl_name + "_expr", s="%s.tx= -%s.tx;\n%s.ty= -%s.ty;\n%s.tz= -%s.tz;" % (
             CtrlGrp_OP, ctrl_name, CtrlGrp_OP, ctrl_name, CtrlGrp_OP, ctrl_name), ae=1, uc="all")
@@ -250,6 +265,7 @@ class NewCtrlModule(object):
         if not (cmds.objExists(snap_follicle_Grp)):
             snap_follicle_Grp = cmds.group(n=snap_follicle_Grp, em=1)
         cmds.parent(follicle_name_t, snap_follicle_Grp)
+
         return follicle_name_t
 
     # 吸附目标到指定模型最近点
