@@ -94,9 +94,7 @@ class NewCtrlModule(object):
             return
         ctrl_list = cmds.listRelatives("cntr_grp", c=True)
         self.matchObjToCloset(fin_mesh, ctrl_list)
-        for i in ctrl_list:
-            if "_R_" in i:
-                cmds.setAttr(i + ".sx", -1)
+
                 # cmds.rotate('180deg', 0, 0, i, r=1, os=1)
 
 
@@ -165,6 +163,7 @@ class NewCtrlModule(object):
                 # cmds.rotate(0, 0, '180deg', i_mir)
                 # cmds.setAttr(i_mir+".sx",-1)
                 cmds.delete(i_value_dub)
+                cmds.delete(i_value_dub_mir)
             else:
                 i_value_dub = cmds.duplicate(i_value, n=i_value + "dub", rr=1)
                 cmds.delete(cmds.parentConstraint(i_value_dub, i))
@@ -197,6 +196,7 @@ class NewCtrlModule(object):
     def create_snap_ctrl_step(self, ctrl_name, fin_mesh):
         CtrlGrp_OP = cmds.group(n=ctrl_name + "_op", em=1)
         CtrlGrp_Zero = cmds.group(n=ctrl_name + "_zerp", em=1)
+
         cmds.delete(cmds.parentConstraint(ctrl_name, CtrlGrp_OP))
         cmds.delete(cmds.parentConstraint(ctrl_name, CtrlGrp_Zero))
 
@@ -215,6 +215,9 @@ class NewCtrlModule(object):
             cmds.transformLimits(ctrl_name, tz=(-1, 1), etz=(1, 1))
         except:
             pass
+        if "_R_" in CtrlGrp_Zero:
+            cmds.setAttr(CtrlGrp_Zero + ".sx", -1)
+            cmds.rotate(180 ,0, 0, CtrlGrp_Zero,r=1,os=1)
 
     # 创建距离模型最近的毛囊
     def create_closest_follicle(self, ctrl_name, fin_mesh):
