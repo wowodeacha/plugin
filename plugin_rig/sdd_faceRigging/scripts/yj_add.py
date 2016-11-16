@@ -156,7 +156,7 @@ class NewCtrlModule(object):
         for i in jnt_snap_dir_key_list:
             i_value = jntCtrlDir[i]
             if "_L_" in i:
-                i_value_dub = cmds.duplicate(i_value, n=i_value + "dub", rr=1)
+                i_value_dub = cmds.duplicate(i_value, n=i_value + "_dub", rr=1)
                 cmds.delete(cmds.parentConstraint(i_value_dub, i))
                 i_value_dub_mir = cmds.mirrorJoint(i_value_dub, mirrorYZ=1, mirrorBehavior=1,
                                                    searchReplace=("L_", "R_"))
@@ -168,6 +168,7 @@ class NewCtrlModule(object):
             else:
                 i_value_dub = cmds.duplicate(i_value, n=i_value + "dub", rr=1)
                 cmds.delete(cmds.parentConstraint(i_value_dub, i))
+                cmds.delete(i_value_dub)
 
         ctrl_to_ctrl_key_list = CtrlToCtrlDir.keys()
         for i in ctrl_to_ctrl_key_list:

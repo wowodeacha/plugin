@@ -32,8 +32,8 @@ def sdd_FaceRigging(rootPath):
     T = sdd_returnTempNameDirc()
     _skin = T['_skin']
 
-    if (cmds.window('sdd_FaceRiggingWin', q=1, ex=1)): cmds.deleteUI('sdd_FaceRiggingWin')
-    cmds.window('sdd_FaceRiggingWin', ret=1, s=0)
+    if (cmds.window('sdd_YJ_FaceRiggingWin', q=1, ex=1)): cmds.deleteUI('sdd_YJ_FaceRiggingWin')
+    cmds.window('sdd_YJ_FaceRiggingWin', ret=1, s=0)
     cmds.columnLayout('frMainCL')
 
     cmds.tabLayout('frMainRigTL', p='frMainCL', sc='sdd_tabLayoutSelectChange()')
@@ -320,7 +320,7 @@ def sdd_FaceRigging(rootPath):
 
     cmds.tabLayout('frMainRigTL', e=1,
                    tli=[[1, 'Joint Template'], [2, 'Rigging'], [3, 'Sdk Define'], [4, 'Corrective'], [5, 'Advanced']])
-    cmds.showWindow('sdd_FaceRiggingWin')
+    cmds.showWindow('sdd_YJ_FaceRiggingWin')
 
 
 def sdd_addOrSubScaleValue(typ):
@@ -3891,28 +3891,6 @@ def sdd_noseDefultSdk():
     sdd_setDrivenKeyframe(FR['L_nose'] + _sdk, 'tx', -dis * 0.25, faceSdkHandle, cdAttr, 1, mircdAttr)
 
 
-def sdd_cheekDefultSdk():
-    FR, _sdk, _root, _cnt, faceSdkHandle, faceCur = sdd_getDefultSdkName()
-    # cheek
-    cmds.addAttr(faceSdkHandle, ln='______cheek_______', at='double', min=0, max=0, k=0)
-    cmds.setAttr(faceSdkHandle + '.______cheek_______', cb=1)
-
-    dis = cmds.getAttr(faceCur + '.cheek_factor')
-
-    cdAttr, mircdAttr = sdd_addAttrToHandle('L_cheek_U', 'R_cheek_U', faceSdkHandle)
-    sdd_setDrivenKeyframe(FR['L_cheek'] + _sdk, 'ty', dis * 0.8, faceSdkHandle, cdAttr, 1, mircdAttr)
-    # sdd_setDrivenKeyframe(FR['L_cheek_Up']+_sdk,'ty',dis*0.05,faceSdkHandle,cdAttr,1,mircdAttr)
-
-    cdAttr, mircdAttr = sdd_addAttrToHandle('L_cheek_O', 'R_cheek_O', faceSdkHandle)
-    sdd_setDrivenKeyframe(FR['L_cheek'] + _sdk, 'tx', dis * 0.8, faceSdkHandle, cdAttr, 1, mircdAttr)
-
-    cdAttr, mircdAttr = sdd_addAttrToHandle('L_cheek_I', 'R_cheek_I', faceSdkHandle)
-    sdd_setDrivenKeyframe(FR['L_cheek'] + _sdk, 'tx', -dis * 0.8, faceSdkHandle, cdAttr, 1, mircdAttr)
-
-    cdAttr, mircdAttr = sdd_addAttrToHandle('L_pump_O', 'R_pump_O', faceSdkHandle)
-    sdd_setDrivenKeyframe(FR['L_cheek'] + _sdk, 'tx', dis, faceSdkHandle, cdAttr, 1, mircdAttr)
-
-
 def sdd_mouthDefultSdk():
     FR, _sdk, _root, _cnt, faceSdkHandle, faceCur = sdd_getDefultSdkName()
     # mouth
@@ -4840,6 +4818,7 @@ def YJ_connectAttr():
 class YJDefultSDK(object):
     def __init__(self):
         self.author = "YJ"
+
     def yj_foreHeadSdk(self):
         FR, _sdk, _root, _cnt, faceSdkHandle, faceCur = sdd_getDefultSdkName()
         # foreHead
@@ -4862,10 +4841,10 @@ class YJDefultSDK(object):
         sdd_setDrivenKeyframe(FR['M_brow'] + _sdk, 'ty', -dis, faceSdkHandle, cdAttr, 1)
         #
         cdAttr = sdd_addAttrToHandle('M_Brow_snap_I', None, faceSdkHandle)
-        sdd_setDrivenKeyframe(FR['L_brow_a'] + _sdk, 'tx', -dis, faceSdkHandle, cdAttr, 1, mircdAttr)
-        sdd_setDrivenKeyframe(FR['L_brow_b'] + _sdk, 'tx', -dis * 0.5, faceSdkHandle, cdAttr, 1, mircdAttr)
-        sdd_setDrivenKeyframe(FR['R_brow_a'] + _sdk, 'tx', dis, faceSdkHandle, cdAttr, 1, mircdAttr)
-        sdd_setDrivenKeyframe(FR['R_brow_b'] + _sdk, 'tx', dis * 0.5, faceSdkHandle, cdAttr, 1, mircdAttr)
+        sdd_setDrivenKeyframe(FR['L_brow_a'] + _sdk, 'tx', -dis * 0.8, faceSdkHandle, cdAttr, 1, )
+        sdd_setDrivenKeyframe(FR['L_brow_b'] + _sdk, 'tx', -dis * 0.4, faceSdkHandle, cdAttr, 1, )
+        sdd_setDrivenKeyframe(FR['R_brow_a'] + _sdk, 'tx', dis * 0.8, faceSdkHandle, cdAttr, 1, )
+        sdd_setDrivenKeyframe(FR['R_brow_b'] + _sdk, 'tx', dis * 0.4, faceSdkHandle, cdAttr, 1, )
         #
         cdAttr, mircdAttr = sdd_addAttrToHandle('L_snap_BrowIn_U', 'R_snap_BrowIn_U', faceSdkHandle)
         sdd_setDrivenKeyframe(FR['L_brow_a'] + _sdk, 'ty', dis, faceSdkHandle, cdAttr, 1, mircdAttr)
@@ -4913,13 +4892,39 @@ class YJDefultSDK(object):
         sdd_setDrivenKeyframe(FR['L_eyelid_Dn'] + _root + _sdk, 'rx', 5, faceSdkHandle, cdAttr, 1, mircdAttr)
         #
         cdAttr, mircdAttr = sdd_addAttrToHandle('L_snap_EyeSqz_U', 'R_snap_EyeSqz_U', faceSdkHandle)
+
         #
         cdAttr, mircdAttr = sdd_addAttrToHandle('L_snap_EyeSqz_D', 'R_snap_EyeSqz_D', faceSdkHandle)
+        sdd_setDrivenKeyframe(FR['L_eyelid_Up'] + _root + _sdk, 'rx', (arcMid + 2) * 0.7, faceSdkHandle, cdAttr, 1,
+                              mircdAttr)
+        sdd_setDrivenKeyframe(FR['L_eyelid_Dn'] + _root + _sdk, 'rx', (-arcMid - 2) * 0.3, faceSdkHandle, cdAttr, 1,
+                              mircdAttr)
+        dis = cmds.getAttr(faceCur + '.eyeBrow_factor')
+        sdd_setDrivenKeyframe(FR['L_brow_a'] + _sdk, 'ty', -dis * 0.8, faceSdkHandle, cdAttr, 1, mircdAttr)
+        sdd_setDrivenKeyframe(FR['L_brow_b'] + _sdk, 'ty', -dis * 0.8, faceSdkHandle, cdAttr, 1, mircdAttr)
+        sdd_setDrivenKeyframe(FR['L_brow_c'] + _sdk, 'ty', -dis * 0.8, faceSdkHandle, cdAttr, 1, mircdAttr)
         #
         cdAttr, mircdAttr = sdd_addAttrToHandle('L_snap_EyeSqz_I', 'R_snap_EyeSqz_I', faceSdkHandle)
         #
         cdAttr, mircdAttr = sdd_addAttrToHandle('L_snap_EyeSqz_O', 'R_snap_EyeSqz_O', faceSdkHandle)
         #
+        # cdAttr, mircdAttr = sdd_addAttrToHandle('L_eyelid_Squint', 'R_eyelid_Squint', faceSdkHandle)
+        # sdd_setDrivenKeyframe(FR['L_eyelid_Up'] + _root + _sdk, 'rx', (arcMid + 2) * 0.7, faceSdkHandle, cdAttr, 1,
+        #                       mircdAttr)
+        # sdd_setDrivenKeyframe(FR['L_eyelid_Dn'] + _root + _sdk, 'rx', (-arcMid - 2) * 0.3, faceSdkHandle, cdAttr, 1,
+        #                       mircdAttr)
+        # dis = cmds.getAttr(faceCur + '.eyeBrow_factor')
+        #
+        # sdd_setDrivenKeyframe(FR['L_brow_a'] + _sdk, 'ty', -dis * 0.8, faceSdkHandle, cdAttr, 1, mircdAttr)
+        # sdd_setDrivenKeyframe(FR['L_brow_b'] + _sdk, 'ty', -dis * 0.8, faceSdkHandle, cdAttr, 1, mircdAttr)
+        # sdd_setDrivenKeyframe(FR['L_brow_c'] + _sdk, 'ty', -dis * 0.8, faceSdkHandle, cdAttr, 1, mircdAttr)
+        #
+        # sdd_setDrivenKeyframe(FR['L_eyeSag_Up'] + _sdk, 'ty', -dis * 0.4, faceSdkHandle, cdAttr, 1, mircdAttr)
+        #
+        # sdd_setDrivenKeyframe(FR['L_eyeSag_Dn'] + _sdk, 'ty', dis * 0.25, faceSdkHandle, cdAttr, 1, mircdAttr)
+        # sdd_setDrivenKeyframe(FR['L_cheek_In'] + _sdk, 'ty', dis * 0.4, faceSdkHandle, cdAttr, 1, mircdAttr)
+        # sdd_setDrivenKeyframe(FR['L_cheek_Up'] + _sdk, 'ty', dis * 0.6, faceSdkHandle, cdAttr, 1, mircdAttr)
+        # sdd_setDrivenKeyframe(FR['L_cheek_Out'] + _sdk, 'ty', dis * 0.9, faceSdkHandle, cdAttr, 1, mircdAttr)
         # cdAttr, mircdAttr = sdd_addAttrToHandle('L_eyelid_Up_side_O', 'R_eyelid_Up_side_O', faceSdkHandle)
         # sdd_setDrivenKeyframe(FR['L_eyelid_UpIn'] + _root + _sdk, 'rx', 15, faceSdkHandle, cdAttr, 1, mircdAttr)
         # sdd_setDrivenKeyframe(FR['L_eyelid_Up'] + _sdk, 'rz', 15, faceSdkHandle, cdAttr, 1, mircdAttr)
@@ -4946,23 +4951,6 @@ class YJDefultSDK(object):
         # sdd_setDrivenKeyframe(FR['L_eyelid_Dn'] + _root + _sdk, 'rx', (-arcMid - 2) * 0.3, faceSdkHandle, cdAttr, 1,
         #                       mircdAttr)
         #
-        # cdAttr, mircdAttr = sdd_addAttrToHandle('L_eyelid_Squint', 'R_eyelid_Squint', faceSdkHandle)
-        # sdd_setDrivenKeyframe(FR['L_eyelid_Up'] + _root + _sdk, 'rx', (arcMid + 2) * 0.7, faceSdkHandle, cdAttr, 1,
-        #                       mircdAttr)
-        # sdd_setDrivenKeyframe(FR['L_eyelid_Dn'] + _root + _sdk, 'rx', (-arcMid - 2) * 0.3, faceSdkHandle, cdAttr, 1,
-        #                       mircdAttr)
-        # dis = cmds.getAttr(faceCur + '.eyeBrow_factor')
-        #
-        # sdd_setDrivenKeyframe(FR['L_brow_a'] + _sdk, 'ty', -dis * 0.8, faceSdkHandle, cdAttr, 1, mircdAttr)
-        # sdd_setDrivenKeyframe(FR['L_brow_b'] + _sdk, 'ty', -dis * 0.8, faceSdkHandle, cdAttr, 1, mircdAttr)
-        # sdd_setDrivenKeyframe(FR['L_brow_c'] + _sdk, 'ty', -dis * 0.8, faceSdkHandle, cdAttr, 1, mircdAttr)
-        #
-        # sdd_setDrivenKeyframe(FR['L_eyeSag_Up'] + _sdk, 'ty', -dis * 0.4, faceSdkHandle, cdAttr, 1, mircdAttr)
-        #
-        # sdd_setDrivenKeyframe(FR['L_eyeSag_Dn'] + _sdk, 'ty', dis * 0.25, faceSdkHandle, cdAttr, 1, mircdAttr)
-        # sdd_setDrivenKeyframe(FR['L_cheek_In'] + _sdk, 'ty', dis * 0.4, faceSdkHandle, cdAttr, 1, mircdAttr)
-        # sdd_setDrivenKeyframe(FR['L_cheek_Up'] + _sdk, 'ty', dis * 0.6, faceSdkHandle, cdAttr, 1, mircdAttr)
-        # sdd_setDrivenKeyframe(FR['L_cheek_Out'] + _sdk, 'ty', dis * 0.9, faceSdkHandle, cdAttr, 1, mircdAttr)
 
     def yj_cheekDefultSdk(self):
         FR, _sdk, _root, _cnt, faceSdkHandle, faceCur = sdd_getDefultSdkName()
@@ -4973,6 +4961,8 @@ class YJDefultSDK(object):
         dis = cmds.getAttr(faceCur + '.cheek_factor')
 
         cdAttr, mircdAttr = sdd_addAttrToHandle('L_snap_Cheek_U', 'R_snap_Cheek_U', faceSdkHandle)
+        sdd_setDrivenKeyframe(FR['L_cheek_Up'] + _sdk, 'ty', dis * 0.45, faceSdkHandle, cdAttr, 1, mircdAttr)
+        sdd_setDrivenKeyframe(FR['L_cheek_Up'] + _sdk, 'tz', dis * 0.35, faceSdkHandle, cdAttr, 1, mircdAttr)
 
         #
         cdAttr, mircdAttr = sdd_addAttrToHandle('L_snap_Cheek_2_U', 'R_snap_Cheek_2_U', faceSdkHandle)
@@ -4994,11 +4984,23 @@ class YJDefultSDK(object):
         cmds.addAttr(faceSdkHandle, ln='______nose________', at='double', min=0, max=0, k=0)
         cmds.setAttr(faceSdkHandle + '.______nose________', cb=1)
 
+        dis = cmds.getAttr(faceCur + '.nose_factor')
         cdAttr = sdd_addAttrToHandle('M_snap_Nose_I', None, faceSdkHandle)
+        sdd_setDrivenKeyframe(FR['L_nose'] + _sdk, 'tx', -dis * 0.2, faceSdkHandle, cdAttr, 1)
+        sdd_setDrivenKeyframe(FR['R_nose'] + _sdk, 'tx', dis * 0.2, faceSdkHandle, cdAttr, 1)
+
         #
         cdAttr = sdd_addAttrToHandle('M_snap_Nose_O', None, faceSdkHandle)
+        sdd_setDrivenKeyframe(FR['L_nose'] + _sdk, 'ty', dis * 0.25, faceSdkHandle, cdAttr, 1)
+        sdd_setDrivenKeyframe(FR['L_nose'] + _sdk, 'tx', dis * 0.25, faceSdkHandle, cdAttr, 1)
+        sdd_setDrivenKeyframe(FR['R_nose'] + _sdk, 'ty', dis * 0.25, faceSdkHandle, cdAttr, 1)
+        sdd_setDrivenKeyframe(FR['R_nose'] + _sdk, 'tx', -dis * 0.25, faceSdkHandle, cdAttr, 1)
         #
-        cdAttr = sdd_addAttrToHandle('L_snap_Nose_U', "R_snap_Nose_U", faceSdkHandle)
+        cdAttr, mircdAttr = sdd_addAttrToHandle('L_snap_Nose_U', "R_snap_Nose_U", faceSdkHandle)
+        sdd_setDrivenKeyframe(FR['L_nose'] + _sdk, 'ty', dis * 0.25, faceSdkHandle, cdAttr, 1, mircdAttr)
+        sdd_setDrivenKeyframe(FR['L_cheek_In'] + _sdk, 'ty', dis * 0.25 * 0.8, faceSdkHandle, cdAttr, 1, mircdAttr)
+
+
         #
         #
         #
@@ -5024,91 +5026,482 @@ class YJDefultSDK(object):
 
     def yj_mouthDefultSdk(self):
         FR, _sdk, _root, _cnt, faceSdkHandle, faceCur = sdd_getDefultSdkName()
-        # mouth
+        # jaw
         cmds.addAttr(faceSdkHandle, ln='______jaw_________', at='double', min=0, max=0, k=0)
         cmds.setAttr(faceSdkHandle + '.______jaw_________', cb=1)
-
+        #
         dis = cmds.getAttr(faceCur + '.mouth_factor')
+        #
+        cdAttr = sdd_addAttrToHandle('M_snap_Jaw_U', None, faceSdkHandle)
+        sdd_setDrivenKeyframe(FR['jaw'] + _sdk, 'rx', -5, faceSdkHandle, cdAttr, 0.5)
 
+        #
+        cdAttr = sdd_addAttrToHandle('M_snap_Jaw_D', None, faceSdkHandle)
+        sdd_setDrivenKeyframe(FR['jaw'] + _sdk, 'rx', 30, faceSdkHandle, cdAttr, 1)
+        sdd_setDrivenKeyframe(FR['L_mouth_Corner'] + _sdk, 'tz', -dis * 0.2, faceSdkHandle, cdAttr, 1)
+        sdd_setDrivenKeyframe(FR['R_mouth_Corner'] + _sdk, 'tz', -dis * 0.2, faceSdkHandle, cdAttr, 1)
+        #
+        cdAttr, mircdAttr = sdd_addAttrToHandle('L_M_snap_Jaw', "R_M_snap_Jaw", faceSdkHandle)
+        sdd_setDrivenKeyframe(FR['jaw'] + _sdk, 'ry', 20, faceSdkHandle, cdAttr, 1, mircdAttr)
+        #
+        # cdAttr = sdd_addAttrToHandle('R_M_snap_Jaw', None, faceSdkHandle)
+        #
+        cdAttr = sdd_addAttrToHandle('M_snap_Jaw_I', None, faceSdkHandle)
+        sdd_setDrivenKeyframe(FR['jaw'] + _sdk, 'tz', -dis * 0.5, faceSdkHandle, cdAttr, 0.5)
+        #
+        cdAttr = sdd_addAttrToHandle('M_snap_Jaw_O', None, faceSdkHandle)
+        sdd_setDrivenKeyframe(FR['jaw'] + _sdk, 'tz', dis * 0.5, faceSdkHandle, cdAttr, 0.5)
+        # mouth
+        cmds.addAttr(faceSdkHandle, ln='______mouth_______', at='double', min=0, max=0, k=0)
+        cmds.setAttr(faceSdkHandle + '.______mouth_______', cb=1)
+
+        #
         cdAttr = sdd_addAttrToHandle('M_snap_UprLip_2_D', None, faceSdkHandle)
+        sdd_setDrivenKeyframe(FR['jaw'] + _sdk, 'rx', -1, faceSdkHandle, cdAttr, 1)
+
+        sdd_setDrivenKeyframe(FR['L_mouth_Up'] + _sdk, 'rx', 60, faceSdkHandle, cdAttr, 1)
+        sdd_setDrivenKeyframe(FR['R_mouth_Up'] + _sdk, 'rx', 60, faceSdkHandle, cdAttr, 1)
+        sdd_setDrivenKeyframe(FR['M_mouth_Up'] + _sdk, 'rx', 60, faceSdkHandle, cdAttr, 1)
+
+        sdd_setDrivenKeyframe(FR['L_mouth_Dn'] + _sdk, 'rx', -45, faceSdkHandle, cdAttr, 1)
+        sdd_setDrivenKeyframe(FR['R_mouth_Dn'] + _sdk, 'rx', -45, faceSdkHandle, cdAttr, 1)
+        sdd_setDrivenKeyframe(FR['M_mouth_Dn'] + _sdk, 'rx', -45, faceSdkHandle, cdAttr, 1)
+
+        sdd_setDrivenKeyframe(FR['L_mouth_Corner'] + _sdk, 'ty', dis * 0.2, faceSdkHandle, cdAttr, 1)
+        sdd_setDrivenKeyframe(FR['R_mouth_Corner'] + _sdk, 'ty', dis * 0.2, faceSdkHandle, cdAttr, 1)
+        sdd_setDrivenKeyframe(FR['L_mouth_Corner'] + _sdk, 'tx', dis * 0.2, faceSdkHandle, cdAttr, 1)
+        sdd_setDrivenKeyframe(FR['R_mouth_Corner'] + _sdk, 'tx', -dis * 0.2, faceSdkHandle, cdAttr, 1)
+
+        sdd_setDrivenKeyframe(FR['L_mouth_Dn'] + _sdk, 'ty', dis * 0.75, faceSdkHandle, cdAttr, 1)
+        sdd_setDrivenKeyframe(FR['R_mouth_Dn'] + _sdk, 'ty', dis * 0.75, faceSdkHandle, cdAttr, 1)
+        sdd_setDrivenKeyframe(FR['M_mouth_Dn'] + _sdk, 'ty', dis * 0.75, faceSdkHandle, cdAttr, 1)
+
+        sdd_setDrivenKeyframe(FR['L_mouth_Dn'] + _sdk, 'tz', dis * 0.3, faceSdkHandle, cdAttr, 1)
+        sdd_setDrivenKeyframe(FR['R_mouth_Dn'] + _sdk, 'tz', dis * 0.3, faceSdkHandle, cdAttr, 1)
+        sdd_setDrivenKeyframe(FR['M_mouth_Dn'] + _sdk, 'tz', dis * 0.3, faceSdkHandle, cdAttr, 1)
+
+        sdd_setDrivenKeyframe(FR['L_mouth_Up'] + _sdk, 'ty', dis * 0.1, faceSdkHandle, cdAttr, 1)
+        sdd_setDrivenKeyframe(FR['R_mouth_Up'] + _sdk, 'ty', dis * 0.1, faceSdkHandle, cdAttr, 1)
+        sdd_setDrivenKeyframe(FR['M_mouth_Up'] + _sdk, 'ty', dis * 0.1, faceSdkHandle, cdAttr, 1)
+
+        sdd_setDrivenKeyframe(FR['L_mouth_Up'] + _sdk, 'tz', -dis * 0.3, faceSdkHandle, cdAttr, 1)
+        sdd_setDrivenKeyframe(FR['R_mouth_Up'] + _sdk, 'tz', -dis * 0.3, faceSdkHandle, cdAttr, 1)
+        sdd_setDrivenKeyframe(FR['M_mouth_Up'] + _sdk, 'tz', -dis * 0.3, faceSdkHandle, cdAttr, 1)
         #
         cdAttr = sdd_addAttrToHandle('M_snap_UprLip_2_I', None, faceSdkHandle)
+
+        sdd_setDrivenKeyframe(FR['L_mouth_Up'] + _sdk, 'rx', 35, faceSdkHandle, cdAttr, 1)
+        sdd_setDrivenKeyframe(FR['R_mouth_Up'] + _sdk, 'rx', 35, faceSdkHandle, cdAttr, 1)
+        sdd_setDrivenKeyframe(FR['M_mouth_Up'] + _sdk, 'rx', 35, faceSdkHandle, cdAttr, 1)
+        sdd_setDrivenKeyframe(FR['L_mouth_Up'] + _sdk, 'tz', -dis * 0.3, faceSdkHandle, cdAttr, 1)
+        sdd_setDrivenKeyframe(FR['R_mouth_Up'] + _sdk, 'tz', -dis * 0.3, faceSdkHandle, cdAttr, 1)
+        sdd_setDrivenKeyframe(FR['M_mouth_Up'] + _sdk, 'tz', -dis * 0.3, faceSdkHandle, cdAttr, 1)
         #
-        cdAttr = sdd_addAttrToHandle('M_snap_UprLip_2_O', None, faceSdkHandle)
+        cdAttr = sdd_addAttrToHandle('M_snap_UprLip_2_I_I', None, faceSdkHandle)
+        sdd_setDrivenKeyframe(FR['jaw'] + _sdk, 'rx', -1, faceSdkHandle, cdAttr, 1)
+
+        sdd_setDrivenKeyframe(FR['L_mouth_Up'] + _sdk, 'rx', 60, faceSdkHandle, cdAttr, 1)
+        sdd_setDrivenKeyframe(FR['R_mouth_Up'] + _sdk, 'rx', 60, faceSdkHandle, cdAttr, 1)
+        sdd_setDrivenKeyframe(FR['M_mouth_Up'] + _sdk, 'rx', 60, faceSdkHandle, cdAttr, 1)
+
+        sdd_setDrivenKeyframe(FR['L_mouth_Dn'] + _sdk, 'rx', -45, faceSdkHandle, cdAttr, 1)
+        sdd_setDrivenKeyframe(FR['R_mouth_Dn'] + _sdk, 'rx', -45, faceSdkHandle, cdAttr, 1)
+        sdd_setDrivenKeyframe(FR['M_mouth_Dn'] + _sdk, 'rx', -45, faceSdkHandle, cdAttr, 1)
+
+        sdd_setDrivenKeyframe(FR['L_mouth_Corner'] + _sdk, 'ty', dis * 0.2, faceSdkHandle, cdAttr, 1)
+        sdd_setDrivenKeyframe(FR['R_mouth_Corner'] + _sdk, 'ty', dis * 0.2, faceSdkHandle, cdAttr, 1)
+        sdd_setDrivenKeyframe(FR['L_mouth_Corner'] + _sdk, 'tx', -dis * 0.3, faceSdkHandle, cdAttr, 1)
+        sdd_setDrivenKeyframe(FR['R_mouth_Corner'] + _sdk, 'tx', dis * 0.3, faceSdkHandle, cdAttr, 1)
+        sdd_setDrivenKeyframe(FR['L_mouth_Up'] + _sdk, 'tx', -dis * 0.35, faceSdkHandle, cdAttr, 1)
+        sdd_setDrivenKeyframe(FR['R_mouth_Up'] + _sdk, 'tx', dis * 0.35, faceSdkHandle, cdAttr, 1)
+        sdd_setDrivenKeyframe(FR['L_mouth_Dn'] + _sdk, 'tx', -dis * 0.35, faceSdkHandle, cdAttr, 1)
+        sdd_setDrivenKeyframe(FR['R_mouth_Dn'] + _sdk, 'tx', dis * 0.35, faceSdkHandle, cdAttr, 1)
+
+        sdd_setDrivenKeyframe(FR['L_mouth_Dn'] + _sdk, 'ty', dis * 0.75, faceSdkHandle, cdAttr, 1)
+        sdd_setDrivenKeyframe(FR['R_mouth_Dn'] + _sdk, 'ty', dis * 0.75, faceSdkHandle, cdAttr, 1)
+        sdd_setDrivenKeyframe(FR['M_mouth_Dn'] + _sdk, 'ty', dis * 0.75, faceSdkHandle, cdAttr, 1)
+
+        sdd_setDrivenKeyframe(FR['L_mouth_Dn'] + _sdk, 'tz', dis * 0.3, faceSdkHandle, cdAttr, 1)
+        sdd_setDrivenKeyframe(FR['R_mouth_Dn'] + _sdk, 'tz', dis * 0.3, faceSdkHandle, cdAttr, 1)
+        sdd_setDrivenKeyframe(FR['M_mouth_Dn'] + _sdk, 'tz', dis * 0.3, faceSdkHandle, cdAttr, 1)
+
+        sdd_setDrivenKeyframe(FR['L_mouth_Up'] + _sdk, 'ty', dis * 0.1, faceSdkHandle, cdAttr, 1)
+        sdd_setDrivenKeyframe(FR['R_mouth_Up'] + _sdk, 'ty', dis * 0.1, faceSdkHandle, cdAttr, 1)
+        sdd_setDrivenKeyframe(FR['M_mouth_Up'] + _sdk, 'ty', dis * 0.1, faceSdkHandle, cdAttr, 1)
+
+        sdd_setDrivenKeyframe(FR['L_mouth_Up'] + _sdk, 'tz', -dis * 0.3, faceSdkHandle, cdAttr, 1)
+        sdd_setDrivenKeyframe(FR['R_mouth_Up'] + _sdk, 'tz', -dis * 0.3, faceSdkHandle, cdAttr, 1)
+        sdd_setDrivenKeyframe(FR['M_mouth_Up'] + _sdk, 'tz', -dis * 0.3, faceSdkHandle, cdAttr, 1)
         #
 
         cdAttr = sdd_addAttrToHandle('M_snap_UprLip_U', None, faceSdkHandle)
+        sdd_setDrivenKeyframe(FR['M_mouth_Up'] + _sdk, 'ty', dis * 0.5, faceSdkHandle, cdAttr, 1)
         #
         cdAttr = sdd_addAttrToHandle('M_snap_UprLip_I', None, faceSdkHandle)
+        sdd_setDrivenKeyframe(FR['M_mouth_Up'] + _sdk, 'tz', -dis * 0.5, faceSdkHandle, cdAttr, 1)
+        sdd_setDrivenKeyframe(FR['L_mouth_Up'] + _sdk, 'tz', -dis * 0.25, faceSdkHandle, cdAttr, 1)
+        sdd_setDrivenKeyframe(FR['R_mouth_Up'] + _sdk, 'tz', -dis * 0.25, faceSdkHandle, cdAttr, 1)
         #
         cdAttr = sdd_addAttrToHandle('M_snap_UprLip_O', None, faceSdkHandle)
+
+        sdd_setDrivenKeyframe(FR['L_mouth_Corner'] + _sdk, 'tx', -dis*0.8, faceSdkHandle, cdAttr, 1)
+        sdd_setDrivenKeyframe(FR['R_mouth_Corner'] + _sdk, 'tx', dis*0.8, faceSdkHandle, cdAttr, 1)
+
+        sdd_setDrivenKeyframe(FR['L_mouth_Corner'] + _sdk, 'tz', dis * 0.2, faceSdkHandle, cdAttr, 1)
+        sdd_setDrivenKeyframe(FR['R_mouth_Corner'] + _sdk, 'tz', dis * 0.2, faceSdkHandle, cdAttr, 1)
+
+        sdd_setDrivenKeyframe(FR['L_mouth_Up'] + _sdk, 'tx', -dis * 0.25, faceSdkHandle, cdAttr, 1)
+        sdd_setDrivenKeyframe(FR['R_mouth_Up'] + _sdk, 'tx', dis * 0.25, faceSdkHandle, cdAttr, 1)
+
+        sdd_setDrivenKeyframe(FR['L_mouth_Up'] + _sdk, 'ry', 20, faceSdkHandle, cdAttr, 1)
+        sdd_setDrivenKeyframe(FR['R_mouth_Up'] + _sdk, 'ry', -20, faceSdkHandle, cdAttr, 1)
+
+        sdd_setDrivenKeyframe(FR['L_mouth_Up'] + _sdk, 'rz', -20, faceSdkHandle, cdAttr, 1)
+        sdd_setDrivenKeyframe(FR['R_mouth_Up'] + _sdk, 'rz', 20, faceSdkHandle, cdAttr, 1)
+
+        sdd_setDrivenKeyframe(FR['M_mouth_Up'] + _sdk, 'ty', dis * 0.35, faceSdkHandle, cdAttr, 1)
+        sdd_setDrivenKeyframe(FR['M_mouth_Up'] + _sdk, 'tz', dis * 0.3, faceSdkHandle, cdAttr, 1)
+
+        sdd_setDrivenKeyframe(FR['L_mouth_Dn'] + _sdk, 'tx', -dis * 0.3, faceSdkHandle, cdAttr, 1)
+        sdd_setDrivenKeyframe(FR['R_mouth_Dn'] + _sdk, 'tx', dis * 0.3, faceSdkHandle, cdAttr, 1)
+
+        sdd_setDrivenKeyframe(FR['L_mouth_Dn'] + _sdk, 'tz', dis * 0.25, faceSdkHandle, cdAttr, 1)
+        sdd_setDrivenKeyframe(FR['R_mouth_Dn'] + _sdk, 'tz', dis * 0.25, faceSdkHandle, cdAttr, 1)
+
+        sdd_setDrivenKeyframe(FR['L_mouth_Dn'] + _sdk, 'ry', 15, faceSdkHandle, cdAttr, 1)
+        sdd_setDrivenKeyframe(FR['R_mouth_Dn'] + _sdk, 'ry', -15, faceSdkHandle, cdAttr, 1)
+
+        sdd_setDrivenKeyframe(FR['L_mouth_Dn'] + _sdk, 'rz', 15, faceSdkHandle, cdAttr, 1)
+        sdd_setDrivenKeyframe(FR['R_mouth_Dn'] + _sdk, 'rz', -15, faceSdkHandle, cdAttr, 1)
+
+        sdd_setDrivenKeyframe(FR['M_mouth_Dn'] + _sdk, 'ty', -dis * 0.4, faceSdkHandle, cdAttr, 1)
+        sdd_setDrivenKeyframe(FR['M_mouth_Dn'] + _sdk, 'tz', dis * 0.3, faceSdkHandle, cdAttr, 1)
+
+        sdd_setDrivenKeyframe(FR['L_cheek'] + _sdk, 'tx', -dis * 0.4, faceSdkHandle, cdAttr, 1)
+        sdd_setDrivenKeyframe(FR['R_cheek'] + _sdk, 'tx', dis * 0.4, faceSdkHandle, cdAttr, 1)
+
+        sdd_setDrivenKeyframe(FR['L_cheek'] + _sdk, 'tz', dis * 0.25, faceSdkHandle, cdAttr, 1)
+        sdd_setDrivenKeyframe(FR['R_cheek'] + _sdk, 'tz', dis * 0.25, faceSdkHandle, cdAttr, 1)
         #
         cdAttr = sdd_addAttrToHandle('M_snap_UprLip_S', None, faceSdkHandle)
 
         #
         cdAttr, mircdAttr = sdd_addAttrToHandle('L_snap_UprLip_2_U', 'R_snap_UprLip_2_U', faceSdkHandle)
+        sdd_setDrivenKeyframe(FR['L_mouth_Corner'] + _sdk, 'ty', dis * 0.7, faceSdkHandle, cdAttr, 1, mircdAttr)
+        sdd_setDrivenKeyframe(FR['L_mouth_Corner'] + _sdk, 'tx', dis * 0.2, faceSdkHandle, cdAttr, 1, mircdAttr)
+        sdd_setDrivenKeyframe(FR['L_mouth_Up'] + _sdk, 'ty', dis * 0.6, faceSdkHandle, cdAttr, 1, mircdAttr)
+        sdd_setDrivenKeyframe(FR['L_mouth_Up'] + _sdk, 'tx', dis * 0.1, faceSdkHandle, cdAttr, 1, mircdAttr)
+        sdd_setDrivenKeyframe(FR['M_mouth_Up'] + _sdk, 'ty', dis * 0.3, faceSdkHandle, cdAttr, 1, mircdAttr)
+        sdd_setDrivenKeyframe(FR['M_mouth_Up'] + _sdk, 'rz', 10, faceSdkHandle, cdAttr, 1, mircdAttr)
         #
         cdAttr, mircdAttr = sdd_addAttrToHandle('L_snap_UprLip_2_O', 'R_snap_UprLip_2_O', faceSdkHandle)
+        sdd_setDrivenKeyframe(FR['L_mouth_Up'] + _sdk, 'ty', dis * 0.6, faceSdkHandle, cdAttr, 1, mircdAttr)
+        sdd_setDrivenKeyframe(FR['L_mouth_Up'] + _sdk, 'tx', -dis * 0.1, faceSdkHandle, cdAttr, 1, mircdAttr)
+        sdd_setDrivenKeyframe(FR['M_mouth_Up'] + _sdk, 'ty', dis * 0.3, faceSdkHandle, cdAttr, 1, mircdAttr)
+        sdd_setDrivenKeyframe(FR['M_mouth_Up'] + _sdk, 'rz', 10, faceSdkHandle, cdAttr, 1, mircdAttr)
         #
         cdAttr, mircdAttr = sdd_addAttrToHandle('L_snap_Crnr_2_D', 'R_snap_Crnr_2_D', faceSdkHandle)
-        #
-        cdAttr, mircdAttr = sdd_addAttrToHandle('L_snap_Crnr_2_B', 'R_snap_Crnr_2_B', faceSdkHandle)
-        #
-        cdAttr, mircdAttr = sdd_addAttrToHandle('L_snap_Crnr_2_O', 'R_snap_Crnr_2_O', faceSdkHandle)
+        sdd_setDrivenKeyframe(FR['L_mouth_Corner'] + _sdk, 'ty', -dis * 0.625, faceSdkHandle, cdAttr, 1, mircdAttr)
+        sdd_setDrivenKeyframe(FR['L_mouth_Up'] + _sdk, 'ty', -dis * 0.25, faceSdkHandle, cdAttr, 1, mircdAttr)
+        sdd_setDrivenKeyframe(FR['L_mouth_Up'] + _sdk, 'rz', -5, faceSdkHandle, cdAttr, 1, mircdAttr)
+        sdd_setDrivenKeyframe(FR['L_mouth_Dn'] + _sdk, 'ty', -dis * 0.25, faceSdkHandle, cdAttr, 1, mircdAttr)
+        sdd_setDrivenKeyframe(FR['L_mouth_Dn'] + _sdk, 'rz', -5, faceSdkHandle, cdAttr, 1, mircdAttr)
+        sdd_setDrivenKeyframe(FR['L_mouth_Corner'] + _sdk, 'tz', -dis * 0.25, faceSdkHandle, cdAttr, 1, mircdAttr)
+        sdd_setDrivenKeyframe(FR['L_mouth_Corner'] + _sdk, 'rz', -10, faceSdkHandle, cdAttr, 1, mircdAttr)
+        sdd_setDrivenKeyframe(FR['L_mouth_Up'] + _sdk, 'rz', -5, faceSdkHandle, cdAttr, 1, mircdAttr)
+        sdd_setDrivenKeyframe(FR['L_mouth_Dn'] + _sdk, 'rz', -5, faceSdkHandle, cdAttr, 1, mircdAttr)
+        sdd_setDrivenKeyframe(FR['L_cheek'] + _sdk, 'ty', -dis * 0.5, faceSdkHandle, cdAttr, 1, mircdAttr)
+        sdd_setDrivenKeyframe(FR['L_noseFold'] + _sdk, 'ty', -dis * 0.125, faceSdkHandle, cdAttr, 1, mircdAttr)
 
         #
+        cdAttr, mircdAttr = sdd_addAttrToHandle('L_snap_Crnr_2_B', 'R_snap_Crnr_2_B', faceSdkHandle)
+        sdd_setDrivenKeyframe(FR['L_mouth_Corner'] + _sdk, 'tz', -dis* 0.3, faceSdkHandle, cdAttr, 1, mircdAttr)
+        sdd_setDrivenKeyframe(FR['L_mouth_Up'] + _sdk, 'tz', -dis * 0.2, faceSdkHandle, cdAttr, 1, mircdAttr)
+        sdd_setDrivenKeyframe(FR['L_mouth_Dn'] + _sdk, 'tz', -dis * 0.2, faceSdkHandle, cdAttr, 1, mircdAttr)
+        sdd_setDrivenKeyframe(FR['L_mouth_Corner'] + _sdk, 'tx', dis* 0.3, faceSdkHandle, cdAttr, 1, mircdAttr)
+        sdd_setDrivenKeyframe(FR['L_mouth_Up'] + _sdk, 'tx', dis * 0.2, faceSdkHandle, cdAttr, 1, mircdAttr)
+        sdd_setDrivenKeyframe(FR['L_mouth_Dn'] + _sdk, 'tx', dis * 0.2, faceSdkHandle, cdAttr, 1, mircdAttr)
+        #
+        cdAttr, mircdAttr = sdd_addAttrToHandle('L_snap_Crnr_2_O', 'R_snap_Crnr_2_O', faceSdkHandle)
+        sdd_setDrivenKeyframe(FR['L_mouth_Corner'] + _sdk, 'tx', dis, faceSdkHandle, cdAttr, 1, mircdAttr)
+        sdd_setDrivenKeyframe(FR['L_mouth_Corner'] + _sdk, 'ty', dis, faceSdkHandle, cdAttr, 1, mircdAttr)
+        sdd_setDrivenKeyframe(FR['L_mouth_Corner'] + _sdk, 'tz', -dis * 0.25, faceSdkHandle, cdAttr, 1, mircdAttr)
+        sdd_setDrivenKeyframe(FR['L_mouth_Corner'] + _sdk, 'rz', 10, faceSdkHandle, cdAttr, 1, mircdAttr)
+
+        sdd_setDrivenKeyframe(FR['L_mouth_Up'] + _sdk, 'tx', dis * 0.5, faceSdkHandle, cdAttr, 1, mircdAttr)
+        sdd_setDrivenKeyframe(FR['L_mouth_Up'] + _sdk, 'ty', dis * 0.5, faceSdkHandle, cdAttr, 1, mircdAttr)
+        sdd_setDrivenKeyframe(FR['L_mouth_Up'] + _sdk, 'rz', 5, faceSdkHandle, cdAttr, 1, mircdAttr)
+        sdd_setDrivenKeyframe(FR['L_mouth_Up'] + _sdk, 'rz', 5, faceSdkHandle, cdAttr, 1, mircdAttr)
+
+        sdd_setDrivenKeyframe(FR['L_mouth_Dn'] + _sdk, 'tx', dis * 0.5, faceSdkHandle, cdAttr, 1, mircdAttr)
+        sdd_setDrivenKeyframe(FR['L_mouth_Dn'] + _sdk, 'ty', dis * 0.5, faceSdkHandle, cdAttr, 1, mircdAttr)
+        sdd_setDrivenKeyframe(FR['L_mouth_Dn'] + _sdk, 'rz', 5, faceSdkHandle, cdAttr, 1, mircdAttr)
+        sdd_setDrivenKeyframe(FR['L_mouth_Dn'] + _sdk, 'rz', 5, faceSdkHandle, cdAttr, 1, mircdAttr)
+
+        sdd_setDrivenKeyframe(FR['L_cheek'] + _sdk, 'tx', dis * 0.5, faceSdkHandle, cdAttr, 1, mircdAttr)
+        sdd_setDrivenKeyframe(FR['L_cheek'] + _sdk, 'tz', dis * 0.5, faceSdkHandle, cdAttr, 1, mircdAttr)
+        sdd_setDrivenKeyframe(FR['L_cheek'] + _sdk, 'ty', dis * 0.5, faceSdkHandle, cdAttr, 1, mircdAttr)
+
+        sdd_setDrivenKeyframe(FR['L_noseFold'] + _sdk, 'tx', dis * 0.125, faceSdkHandle, cdAttr, 1, mircdAttr)
+        sdd_setDrivenKeyframe(FR['L_noseFold'] + _sdk, 'ty', dis * 0.125, faceSdkHandle, cdAttr, 1, mircdAttr)
 
         #
         cdAttr, mircdAttr = sdd_addAttrToHandle('L_snap_UprLip_U', 'R_snap_UprLip_U', faceSdkHandle)
+        sdd_setDrivenKeyframe(FR['L_mouth_Up'] + _sdk, 'ty', dis * 0.6, faceSdkHandle, cdAttr, 1, mircdAttr)
+        sdd_setDrivenKeyframe(FR['M_mouth_Up'] + _sdk, 'ty', dis * 0.25, faceSdkHandle, cdAttr, 1, mircdAttr)
+        sdd_setDrivenKeyframe(FR['M_mouth_Up'] + _sdk, 'rz', 10, faceSdkHandle, cdAttr, 1, mircdAttr)
         #
         cdAttr, mircdAttr = sdd_addAttrToHandle('L_snap_UprLip_D', 'R_snap_UprLip_D', faceSdkHandle)
+        sdd_setDrivenKeyframe(FR['L_mouth_Up'] + _sdk, 'ty', -dis * 0.6, faceSdkHandle, cdAttr, 1, mircdAttr)
+        sdd_setDrivenKeyframe(FR['M_mouth_Up'] + _sdk, 'ty', -dis * 0.25, faceSdkHandle, cdAttr, 1, mircdAttr)
+        sdd_setDrivenKeyframe(FR['M_mouth_Up'] + _sdk, 'rz', -10, faceSdkHandle, cdAttr, 1, mircdAttr)
         #
         cdAttr, mircdAttr = sdd_addAttrToHandle('L_snap_UprLip_I', 'R_snap_UprLip_I', faceSdkHandle)
+        sdd_setDrivenKeyframe(FR['L_mouth_Up'] + _sdk, 'ty', -dis * 0.6, faceSdkHandle, cdAttr, 1, mircdAttr)
+        sdd_setDrivenKeyframe(FR['M_mouth_Up'] + _sdk, 'ty', -dis * 0.25, faceSdkHandle, cdAttr, 1, mircdAttr)
+        sdd_setDrivenKeyframe(FR['M_mouth_Up'] + _sdk, 'rz', -10, faceSdkHandle, cdAttr, 1, mircdAttr)
+        sdd_setDrivenKeyframe(FR['L_mouth_Up'] + _sdk, 'rx', 35, faceSdkHandle, cdAttr, 1)
+        sdd_setDrivenKeyframe(FR['M_mouth_Up'] + _sdk, 'rx', 35*0.5, faceSdkHandle, cdAttr, 1)
+
         #
         cdAttr, mircdAttr = sdd_addAttrToHandle('L_snap_UprLip_O', 'R_snap_UprLip_O', faceSdkHandle)
+        sdd_setDrivenKeyframe(FR['L_mouth_Up'] + _sdk, 'ty', dis * 0.6, faceSdkHandle, cdAttr, 1, mircdAttr)
+        sdd_setDrivenKeyframe(FR['L_mouth_Up'] + _sdk, 'tx', dis * 0.3, faceSdkHandle, cdAttr, 1, mircdAttr)
+
 
         #
 
         cdAttr = sdd_addAttrToHandle('M_snap_Mouth_U', None, faceSdkHandle)
+        sdd_setDrivenKeyframe(FR['M_mouth_Up'] + _sdk, 'ty', dis * 0.6, faceSdkHandle, cdAttr, 1)
+        sdd_setDrivenKeyframe(FR['R_mouth_Up'] + _sdk, 'ty', dis * 0.3, faceSdkHandle, cdAttr, 1)
+        sdd_setDrivenKeyframe(FR['L_mouth_Up'] + _sdk, 'ty', dis * 0.3, faceSdkHandle, cdAttr, 1)
+        sdd_setDrivenKeyframe(FR['L_mouth_Corner'] + _sdk, 'ty', dis*0.05, faceSdkHandle, cdAttr, 1, mircdAttr)
+        sdd_setDrivenKeyframe(FR['M_mouth_Dn'] + _sdk, 'ty', dis * 0.6, faceSdkHandle, cdAttr, 1)
+        sdd_setDrivenKeyframe(FR['R_mouth_Dn'] + _sdk, 'ty', dis * 0.3, faceSdkHandle, cdAttr, 1)
+        sdd_setDrivenKeyframe(FR['L_mouth_Dn'] + _sdk, 'ty', dis * 0.3, faceSdkHandle, cdAttr, 1)
+        sdd_setDrivenKeyframe(FR['R_mouth_Corner'] + _sdk, 'ty', dis*0.05, faceSdkHandle, cdAttr, 1, mircdAttr)
+
         #
         cdAttr = sdd_addAttrToHandle('M_snap_Mouth_I', None, faceSdkHandle)
+        sdd_setDrivenKeyframe(FR['jaw'] + _sdk, 'rx', 3, faceSdkHandle, cdAttr, 1)
+
+        sdd_setDrivenKeyframe(FR['L_mouth_Up'] + _sdk, 'rx', 35, faceSdkHandle, cdAttr, 1)
+        sdd_setDrivenKeyframe(FR['R_mouth_Up'] + _sdk, 'rx', 35, faceSdkHandle, cdAttr, 1)
+        sdd_setDrivenKeyframe(FR['M_mouth_Up'] + _sdk, 'rx', 35, faceSdkHandle, cdAttr, 1)
+
+        sdd_setDrivenKeyframe(FR['L_mouth_Dn'] + _sdk, 'rx', -15, faceSdkHandle, cdAttr, 1)
+        sdd_setDrivenKeyframe(FR['R_mouth_Dn'] + _sdk, 'rx', -15, faceSdkHandle, cdAttr, 1)
+        sdd_setDrivenKeyframe(FR['M_mouth_Dn'] + _sdk, 'rx', -15, faceSdkHandle, cdAttr, 1)
+
+        sdd_setDrivenKeyframe(FR['L_mouth_Dn'] + _sdk, 'ty', dis * 0.1, faceSdkHandle, cdAttr, 1)
+        sdd_setDrivenKeyframe(FR['R_mouth_Dn'] + _sdk, 'ty', dis * 0.1, faceSdkHandle, cdAttr, 1)
+        sdd_setDrivenKeyframe(FR['M_mouth_Dn'] + _sdk, 'ty', dis * 0.1, faceSdkHandle, cdAttr, 1)
+
+        sdd_setDrivenKeyframe(FR['L_mouth_Dn'] + _sdk, 'tz', dis * 0.1, faceSdkHandle, cdAttr, 1)
+        sdd_setDrivenKeyframe(FR['R_mouth_Dn'] + _sdk, 'tz', dis * 0.1, faceSdkHandle, cdAttr, 1)
+        sdd_setDrivenKeyframe(FR['M_mouth_Dn'] + _sdk, 'tz', dis * 0.1, faceSdkHandle, cdAttr, 1)
+
+        sdd_setDrivenKeyframe(FR['L_mouth_Up'] + _sdk, 'ty', -dis * 0.2, faceSdkHandle, cdAttr, 1)
+        sdd_setDrivenKeyframe(FR['R_mouth_Up'] + _sdk, 'ty', -dis * 0.2, faceSdkHandle, cdAttr, 1)
+        sdd_setDrivenKeyframe(FR['M_mouth_Up'] + _sdk, 'ty', -dis * 0.2, faceSdkHandle, cdAttr, 1)
+
+        sdd_setDrivenKeyframe(FR['L_mouth_Up'] + _sdk, 'tz', -dis * 0.1, faceSdkHandle, cdAttr, 1)
+        sdd_setDrivenKeyframe(FR['R_mouth_Up'] + _sdk, 'tz', -dis * 0.1, faceSdkHandle, cdAttr, 1)
+        sdd_setDrivenKeyframe(FR['M_mouth_Up'] + _sdk, 'tz', -dis * 0.1, faceSdkHandle, cdAttr, 1)
         #
         cdAttr = sdd_addAttrToHandle('M_snap_Mouth_O', None, faceSdkHandle)
+        sdd_setDrivenKeyframe(FR['jaw'] + _sdk, 'rx', 3, faceSdkHandle, cdAttr, 1)
+
+        sdd_setDrivenKeyframe(FR['L_mouth_Corner'] + _sdk, 'tx', -dis, faceSdkHandle, cdAttr, 1)
+        sdd_setDrivenKeyframe(FR['R_mouth_Corner'] + _sdk, 'tx', dis, faceSdkHandle, cdAttr, 1)
+
+        sdd_setDrivenKeyframe(FR['L_mouth_Corner'] + _sdk, 'tz', dis * 0.1, faceSdkHandle, cdAttr, 1)
+        sdd_setDrivenKeyframe(FR['R_mouth_Corner'] + _sdk, 'tz', dis * 0.1, faceSdkHandle, cdAttr, 1)
+
+        sdd_setDrivenKeyframe(FR['L_mouth_Up'] + _sdk, 'tx', -dis * 0.2, faceSdkHandle, cdAttr, 1)
+        sdd_setDrivenKeyframe(FR['R_mouth_Up'] + _sdk, 'tx', dis * 0.2, faceSdkHandle, cdAttr, 1)
+
+        sdd_setDrivenKeyframe(FR['L_mouth_Up'] + _sdk, 'ry', 15, faceSdkHandle, cdAttr, 1)
+        sdd_setDrivenKeyframe(FR['R_mouth_Up'] + _sdk, 'ry', -15, faceSdkHandle, cdAttr, 1)
+
+        sdd_setDrivenKeyframe(FR['L_mouth_Up'] + _sdk, 'rz', -15, faceSdkHandle, cdAttr, 1)
+        sdd_setDrivenKeyframe(FR['R_mouth_Up'] + _sdk, 'rz', 15, faceSdkHandle, cdAttr, 1)
+
+        sdd_setDrivenKeyframe(FR['M_mouth_Up'] + _sdk, 'ty', dis * 0.3, faceSdkHandle, cdAttr, 1)
+        sdd_setDrivenKeyframe(FR['M_mouth_Up'] + _sdk, 'tz', dis * 0.2, faceSdkHandle, cdAttr, 1)
+
+        sdd_setDrivenKeyframe(FR['L_mouth_Dn'] + _sdk, 'tx', -dis * 0.3, faceSdkHandle, cdAttr, 1)
+        sdd_setDrivenKeyframe(FR['R_mouth_Dn'] + _sdk, 'tx', dis * 0.3, faceSdkHandle, cdAttr, 1)
+
+        sdd_setDrivenKeyframe(FR['L_mouth_Dn'] + _sdk, 'tz', dis * 0.1, faceSdkHandle, cdAttr, 1)
+        sdd_setDrivenKeyframe(FR['R_mouth_Dn'] + _sdk, 'tz', dis * 0.1, faceSdkHandle, cdAttr, 1)
+
+        sdd_setDrivenKeyframe(FR['L_mouth_Dn'] + _sdk, 'ry', 10, faceSdkHandle, cdAttr, 1)
+        sdd_setDrivenKeyframe(FR['R_mouth_Dn'] + _sdk, 'ry', -10, faceSdkHandle, cdAttr, 1)
+
+        sdd_setDrivenKeyframe(FR['L_mouth_Dn'] + _sdk, 'rz', 10, faceSdkHandle, cdAttr, 1)
+        sdd_setDrivenKeyframe(FR['R_mouth_Dn'] + _sdk, 'rz', -10, faceSdkHandle, cdAttr, 1)
+
+        sdd_setDrivenKeyframe(FR['M_mouth_Dn'] + _sdk, 'ty', -dis * 0.4, faceSdkHandle, cdAttr, 1)
+        sdd_setDrivenKeyframe(FR['M_mouth_Dn'] + _sdk, 'tz', dis * 0.2, faceSdkHandle, cdAttr, 1)
+
+        sdd_setDrivenKeyframe(FR['L_cheek'] + _sdk, 'tx', -dis * 0.4, faceSdkHandle, cdAttr, 1)
+        sdd_setDrivenKeyframe(FR['R_cheek'] + _sdk, 'tx', dis * 0.4, faceSdkHandle, cdAttr, 1)
+
+        sdd_setDrivenKeyframe(FR['L_cheek'] + _sdk, 'tz', -dis * 0.2, faceSdkHandle, cdAttr, 1)
+        sdd_setDrivenKeyframe(FR['R_cheek'] + _sdk, 'tz', -dis * 0.2, faceSdkHandle, cdAttr, 1)
         #
         cdAttr, mircdAttr = sdd_addAttrToHandle('L_M_snap_Mouth', 'R_M_snap_Mouth', faceSdkHandle)
+        sdd_setDrivenKeyframe(FR['jaw'] + _root + _sdk, 'ry', 3, faceSdkHandle, cdAttr, 1,mircdAttr)
+        sdd_setDrivenKeyframe(FR['jaw'] + _root + _sdk, 'rz', 5, faceSdkHandle, cdAttr, 1,mircdAttr)
         #
 
         #
         cdAttr = sdd_addAttrToHandle('M_snap_LwrLip_U', None, faceSdkHandle)
+        sdd_setDrivenKeyframe(FR['M_mouth_Dn'] + _sdk, 'ty', dis * 0.5, faceSdkHandle, cdAttr, 1)
         #
         cdAttr = sdd_addAttrToHandle('M_snap_LwrLip_D', None, faceSdkHandle)
+        sdd_setDrivenKeyframe(FR['M_mouth_Dn'] + _sdk, 'ty', -dis * 0.5, faceSdkHandle, cdAttr, 1)
+        sdd_setDrivenKeyframe(FR['L_mouth_Dn'] + _sdk, 'ty', -dis * 0.25, faceSdkHandle, cdAttr, 1)
+        sdd_setDrivenKeyframe(FR['R_mouth_Dn'] + _sdk, 'ty', -dis * 0.25, faceSdkHandle, cdAttr, 1)
         #
-        cdAttr = sdd_addAttrToHandle('M_snap_LwrLip_L', None, faceSdkHandle)
-        #
-        cdAttr = sdd_addAttrToHandle('M_snap_LwrLip_R', None, faceSdkHandle)
-        #
-        cdAttr = sdd_addAttrToHandle('M_snap_LwrLip_I', None, faceSdkHandle)
-        #
-        cdAttr = sdd_addAttrToHandle('M_snap_LwrLip_O', None, faceSdkHandle)
+        cdAttr = sdd_addAttrToHandle('M_snap_LwrLip_L', None, faceSdkHandle)#M_snap_LwrLip_L
+        sdd_setDrivenKeyframe(FR['jaw'] + _sdk, 'rx', 3, faceSdkHandle, cdAttr, 1)
+
+        sdd_setDrivenKeyframe(FR['L_mouth_Corner'] + _sdk, 'tx', -dis*0.8, faceSdkHandle, cdAttr, 1)
+        sdd_setDrivenKeyframe(FR['R_mouth_Corner'] + _sdk, 'tx', dis*0.8, faceSdkHandle, cdAttr, 1)
+
+        sdd_setDrivenKeyframe(FR['L_mouth_Corner'] + _sdk, 'tz', dis * 0.1, faceSdkHandle, cdAttr, 1)
+        sdd_setDrivenKeyframe(FR['R_mouth_Corner'] + _sdk, 'tz', dis * 0.1, faceSdkHandle, cdAttr, 1)
+
+        sdd_setDrivenKeyframe(FR['L_mouth_Up'] + _sdk, 'tx', -dis * 0.25*0.8, faceSdkHandle, cdAttr, 1)
+        sdd_setDrivenKeyframe(FR['R_mouth_Up'] + _sdk, 'tx', dis * 0.25*0.8, faceSdkHandle, cdAttr, 1)
+        sdd_setDrivenKeyframe(FR['L_mouth_Up'] + _sdk, 'ty', -dis * 0.2, faceSdkHandle, cdAttr, 1)
+        sdd_setDrivenKeyframe(FR['R_mouth_Up'] + _sdk, 'ty', -dis * 0.2, faceSdkHandle, cdAttr, 1)
+
+        sdd_setDrivenKeyframe(FR['L_mouth_Up'] + _sdk, 'rx', -50, faceSdkHandle, cdAttr, 1)
+        sdd_setDrivenKeyframe(FR['R_mouth_Up'] + _sdk, 'rx', -50, faceSdkHandle, cdAttr, 1)
+
+        sdd_setDrivenKeyframe(FR['M_mouth_Up'] + _sdk, 'tz', dis * 0.2, faceSdkHandle, cdAttr, 1)
+        sdd_setDrivenKeyframe(FR['M_mouth_Up'] + _sdk, 'rx', -60, faceSdkHandle, cdAttr, 1)
+        sdd_setDrivenKeyframe(FR['M_mouth_Up'] + _sdk, 'ty', -dis * 0.2, faceSdkHandle, cdAttr, 1)
+
+        sdd_setDrivenKeyframe(FR['L_mouth_Dn'] + _sdk, 'tx', -dis * 0.2*0.8, faceSdkHandle, cdAttr, 1)
+        sdd_setDrivenKeyframe(FR['R_mouth_Dn'] + _sdk, 'tx', dis * 0.2*0.8, faceSdkHandle, cdAttr, 1)
+        sdd_setDrivenKeyframe(FR['L_mouth_Dn'] + _sdk, 'ty', dis * 0.2, faceSdkHandle, cdAttr, 1)
+        sdd_setDrivenKeyframe(FR['R_mouth_Dn'] + _sdk, 'ty', dis * 0.2, faceSdkHandle, cdAttr, 1)
+
+        sdd_setDrivenKeyframe(FR['L_mouth_Dn'] + _sdk, 'tz', dis * 0.1, faceSdkHandle, cdAttr, 1)
+        sdd_setDrivenKeyframe(FR['R_mouth_Dn'] + _sdk, 'tz', dis * 0.1, faceSdkHandle, cdAttr, 1)
+
+        sdd_setDrivenKeyframe(FR['L_mouth_Dn'] + _sdk, 'rx', 40, faceSdkHandle, cdAttr, 1)
+        sdd_setDrivenKeyframe(FR['R_mouth_Dn'] + _sdk, 'rx', 40, faceSdkHandle, cdAttr, 1)
+
+        sdd_setDrivenKeyframe(FR['M_mouth_Dn'] + _sdk, 'rx', 50, faceSdkHandle, cdAttr, 1)
+        sdd_setDrivenKeyframe(FR['M_mouth_Dn'] + _sdk, 'tz', dis * 0.3, faceSdkHandle, cdAttr, 1)
+        sdd_setDrivenKeyframe(FR['M_mouth_Dn'] + _sdk, 'ty', dis * 0.2, faceSdkHandle, cdAttr, 1)
+
+        sdd_setDrivenKeyframe(FR['L_cheek'] + _sdk, 'tx', -dis * 0.4*0.8, faceSdkHandle, cdAttr, 1)
+        sdd_setDrivenKeyframe(FR['R_cheek'] + _sdk, 'tx', dis * 0.4*0.8, faceSdkHandle, cdAttr, 1)
+
+        sdd_setDrivenKeyframe(FR['L_cheek'] + _sdk, 'tz', -dis * 0.2, faceSdkHandle, cdAttr, 1)
+        sdd_setDrivenKeyframe(FR['R_cheek'] + _sdk, 'tz', -dis * 0.2, faceSdkHandle, cdAttr, 1)
 
         #
+        cdAttr = sdd_addAttrToHandle('M_snap_LwrLip_R', None, faceSdkHandle)
+        sdd_setDrivenKeyframe(FR['jaw'] + _sdk, 'rx', 3, faceSdkHandle, cdAttr, 1)
+
+        sdd_setDrivenKeyframe(FR['L_mouth_Corner'] + _sdk, 'tx', -dis, faceSdkHandle, cdAttr, 1)
+        sdd_setDrivenKeyframe(FR['R_mouth_Corner'] + _sdk, 'tx', dis, faceSdkHandle, cdAttr, 1)
+
+        sdd_setDrivenKeyframe(FR['L_mouth_Corner'] + _sdk, 'tz', dis * 0.1, faceSdkHandle, cdAttr, 1)
+        sdd_setDrivenKeyframe(FR['R_mouth_Corner'] + _sdk, 'tz', dis * 0.1, faceSdkHandle, cdAttr, 1)
+
+        sdd_setDrivenKeyframe(FR['L_mouth_Up'] + _sdk, 'tx', -dis * 0.25, faceSdkHandle, cdAttr, 1)
+        sdd_setDrivenKeyframe(FR['R_mouth_Up'] + _sdk, 'tx', dis * 0.25, faceSdkHandle, cdAttr, 1)
+        sdd_setDrivenKeyframe(FR['L_mouth_Up'] + _sdk, 'ty', -dis * 0.2, faceSdkHandle, cdAttr, 1)
+        sdd_setDrivenKeyframe(FR['R_mouth_Up'] + _sdk, 'ty', -dis * 0.2, faceSdkHandle, cdAttr, 1)
+
+        sdd_setDrivenKeyframe(FR['L_mouth_Up'] + _sdk, 'rx', -15, faceSdkHandle, cdAttr, 1)
+        sdd_setDrivenKeyframe(FR['R_mouth_Up'] + _sdk, 'rx', -15, faceSdkHandle, cdAttr, 1)
+
+        sdd_setDrivenKeyframe(FR['M_mouth_Up'] + _sdk, 'tz', dis * 0.2, faceSdkHandle, cdAttr, 1)
+        sdd_setDrivenKeyframe(FR['M_mouth_Up'] + _sdk, 'rx', -30, faceSdkHandle, cdAttr, 1)
+        sdd_setDrivenKeyframe(FR['M_mouth_Up'] + _sdk, 'ty', -dis * 0.2, faceSdkHandle, cdAttr, 1)
+
+        sdd_setDrivenKeyframe(FR['L_mouth_Dn'] + _sdk, 'tx', -dis * 0.2, faceSdkHandle, cdAttr, 1)
+        sdd_setDrivenKeyframe(FR['R_mouth_Dn'] + _sdk, 'tx', dis * 0.2, faceSdkHandle, cdAttr, 1)
+        sdd_setDrivenKeyframe(FR['L_mouth_Dn'] + _sdk, 'ty', dis * 0.2, faceSdkHandle, cdAttr, 1)
+        sdd_setDrivenKeyframe(FR['R_mouth_Dn'] + _sdk, 'ty', dis * 0.2, faceSdkHandle, cdAttr, 1)
+
+        sdd_setDrivenKeyframe(FR['L_mouth_Dn'] + _sdk, 'tz', dis * 0.1, faceSdkHandle, cdAttr, 1)
+        sdd_setDrivenKeyframe(FR['R_mouth_Dn'] + _sdk, 'tz', dis * 0.1, faceSdkHandle, cdAttr, 1)
+
+        sdd_setDrivenKeyframe(FR['L_mouth_Dn'] + _sdk, 'rx', 10, faceSdkHandle, cdAttr, 1)
+        sdd_setDrivenKeyframe(FR['R_mouth_Dn'] + _sdk, 'rx', 10, faceSdkHandle, cdAttr, 1)
+
+        sdd_setDrivenKeyframe(FR['M_mouth_Dn'] + _sdk, 'rx', 30, faceSdkHandle, cdAttr, 1)
+        sdd_setDrivenKeyframe(FR['M_mouth_Dn'] + _sdk, 'tz', dis * 0.3, faceSdkHandle, cdAttr, 1)
+        sdd_setDrivenKeyframe(FR['M_mouth_Dn'] + _sdk, 'ty', dis * 0.2, faceSdkHandle, cdAttr, 1)
+
+        sdd_setDrivenKeyframe(FR['L_cheek'] + _sdk, 'tx', -dis * 0.4, faceSdkHandle, cdAttr, 1)
+        sdd_setDrivenKeyframe(FR['R_cheek'] + _sdk, 'tx', dis * 0.4, faceSdkHandle, cdAttr, 1)
+
+        sdd_setDrivenKeyframe(FR['L_cheek'] + _sdk, 'tz', -dis * 0.2, faceSdkHandle, cdAttr, 1)
+        sdd_setDrivenKeyframe(FR['R_cheek'] + _sdk, 'tz', -dis * 0.2, faceSdkHandle, cdAttr, 1)
+        #
+        cdAttr = sdd_addAttrToHandle('M_snap_LwrLip_I', None, faceSdkHandle)
+        sdd_setDrivenKeyframe(FR['M_mouth_Dn'] + _sdk, 'tz', -dis * 0.5, faceSdkHandle, cdAttr, 1)
+        sdd_setDrivenKeyframe(FR['L_mouth_Dn'] + _sdk, 'tz', -dis * 0.25, faceSdkHandle, cdAttr, 1)
+        sdd_setDrivenKeyframe(FR['R_mouth_Dn'] + _sdk, 'tz', -dis * 0.25, faceSdkHandle, cdAttr, 1)
+        #
+        cdAttr = sdd_addAttrToHandle('M_snap_LwrLip_O', None, faceSdkHandle)
+        sdd_setDrivenKeyframe(FR['L_mouth_Dn'] + _sdk, 'rx', 35, faceSdkHandle, cdAttr, 1, mircdAttr)
+        sdd_setDrivenKeyframe(FR['M_mouth_Dn'] + _sdk, 'rx', 35, faceSdkHandle, cdAttr, 1, mircdAttr)
+        sdd_setDrivenKeyframe(FR['R_mouth_Dn'] + _sdk, 'rx', 35, faceSdkHandle, cdAttr, 1, mircdAttr)
+        #
         cdAttr, mircdAttr = sdd_addAttrToHandle('L_snap_LwrLip_U', 'R_snap_LwrLip_U', faceSdkHandle)
+        sdd_setDrivenKeyframe(FR['L_mouth_Dn'] + _sdk, 'ty', dis * 0.6, faceSdkHandle, cdAttr, 1, mircdAttr)
+        sdd_setDrivenKeyframe(FR['M_mouth_Dn'] + _sdk, 'ty', dis * 0.25, faceSdkHandle, cdAttr, 1, mircdAttr)
+        # sdd_setDrivenKeyframe(FR['M_mouth_Dn'] + _sdk, 'rz', 10, faceSdkHandle, cdAttr, 1, mircdAttr)
         #
         cdAttr, mircdAttr = sdd_addAttrToHandle('L_snap_LwrLip_D', 'R_snap_LwrLip_D', faceSdkHandle)
+        sdd_setDrivenKeyframe(FR['L_mouth_Corner'] + _sdk, 'ty', -dis * 0.6, faceSdkHandle, cdAttr, 1)
+        sdd_setDrivenKeyframe(FR['L_mouth_Dn'] + _sdk, 'ty', -dis * 0.6, faceSdkHandle, cdAttr, 1, mircdAttr)
+        sdd_setDrivenKeyframe(FR['M_mouth_Dn'] + _sdk, 'ty', -dis * 0.25, faceSdkHandle, cdAttr, 1, mircdAttr)
+        # sdd_setDrivenKeyframe(FR['M_mouth_Dn'] + _sdk, 'rz', -10, faceSdkHandle, cdAttr, 1, mircdAttr)
         #
         cdAttr, mircdAttr = sdd_addAttrToHandle('L_snap_LwrLip_L', 'R_snap_LwrLip_L', faceSdkHandle)
+        sdd_setDrivenKeyframe(FR['L_mouth_Corner'] + _sdk, 'tx', dis * 0.1, faceSdkHandle, cdAttr, 1)
+        sdd_setDrivenKeyframe(FR['L_mouth_Dn'] + _sdk, 'ty', -dis * 0.6, faceSdkHandle, cdAttr, 1, mircdAttr)
+        sdd_setDrivenKeyframe(FR['M_mouth_Dn'] + _sdk, 'ty', -dis * 0.25, faceSdkHandle, cdAttr, 1, mircdAttr)
+
+        sdd_setDrivenKeyframe(FR['L_mouth_Up'] + _sdk, 'ty', dis * 0.6, faceSdkHandle, cdAttr, 1, mircdAttr)
+        sdd_setDrivenKeyframe(FR['M_mouth_Up'] + _sdk, 'ty', dis * 0.25, faceSdkHandle, cdAttr, 1, mircdAttr)
+        # sdd_setDrivenKeyframe(FR['M_mouth_Up'] + _sdk, 'rz', 10, faceSdkHandle, cdAttr, 1, mircdAttr)
         #
         cdAttr, mircdAttr = sdd_addAttrToHandle('L_snap_LwrLip_I', 'R_snap_LwrLip_I', faceSdkHandle)
+        sdd_setDrivenKeyframe(FR['L_mouth_Dn'] + _sdk, 'tz', -dis * 0.4, faceSdkHandle, cdAttr, 1, mircdAttr)
+        sdd_setDrivenKeyframe(FR['M_mouth_Dn'] + _sdk, 'tz', -dis * 0.2, faceSdkHandle, cdAttr, 1, mircdAttr)
+        sdd_setDrivenKeyframe(FR['L_mouth_Dn'] + _sdk, 'ty', dis * 0.6, faceSdkHandle, cdAttr, 1, mircdAttr)
+        sdd_setDrivenKeyframe(FR['M_mouth_Dn'] + _sdk, 'ty', dis * 0.25, faceSdkHandle, cdAttr, 1, mircdAttr)
+        sdd_setDrivenKeyframe(FR['L_mouth_Dn'] + _sdk, 'rx', -60, faceSdkHandle, cdAttr, 1, mircdAttr)
+        sdd_setDrivenKeyframe(FR['M_mouth_Dn'] + _sdk, 'rx', -30, faceSdkHandle, cdAttr, 1, mircdAttr)
         #
 
         #
         cdAttr = sdd_addAttrToHandle('M_snap_Chin_U', None, faceSdkHandle)
         #
         cdAttr = sdd_addAttrToHandle('M_snap_Chin_D', None, faceSdkHandle)
+        sdd_setDrivenKeyframe(FR['L_mouth_Dn'] + _sdk, 'rx', 35*0.5, faceSdkHandle, cdAttr, 1, mircdAttr)
+        sdd_setDrivenKeyframe(FR['M_mouth_Dn'] + _sdk, 'rx', 35, faceSdkHandle, cdAttr, 1, mircdAttr)
+        sdd_setDrivenKeyframe(FR['R_mouth_Dn'] + _sdk, 'rx', 35*0.5, faceSdkHandle, cdAttr, 1, mircdAttr)
         #
         cdAttr = sdd_addAttrToHandle('M_snap_Chin_B', None, faceSdkHandle)
         #
         cdAttr = sdd_addAttrToHandle('M_snap_Chin_O', None, faceSdkHandle)
+        sdd_setDrivenKeyframe(FR['L_cheek'] + _sdk, 'ry', 15, faceSdkHandle, cdAttr, 1)
+        sdd_setDrivenKeyframe(FR['R_cheek'] + _sdk, 'ry', 15, faceSdkHandle, cdAttr, 1)
         #
         # cdAttr, mircdAttr = sdd_addAttrToHandle('L_M_snap_Chin', 'R_M_snap_Chin', faceSdkHandle)
         #
@@ -5119,28 +5512,9 @@ class YJDefultSDK(object):
         #
 
         #
-        cdAttr = sdd_addAttrToHandle('M_snap_Jaw_U', None, faceSdkHandle)
-        #
-        cdAttr = sdd_addAttrToHandle('M_snap_Jaw_D', None, faceSdkHandle)
-        #
-        cdAttr = sdd_addAttrToHandle('M_snap_Jaw_L', None, faceSdkHandle)
-        #
-        cdAttr = sdd_addAttrToHandle('M_snap_Jaw_R', None, faceSdkHandle)
-        #
-        cdAttr = sdd_addAttrToHandle('M_snap_Jaw_I', None, faceSdkHandle)
-        #
-        cdAttr = sdd_addAttrToHandle('M_snap_Jaw_O', None, faceSdkHandle)
-
-        #
         cdAttr = sdd_addAttrToHandle('M_snap_Neck_U', None, faceSdkHandle)
 
-        # cdAttr = sdd_addAttrToHandle('M_jaw_U', None, faceSdkHandle)
-        # cdAttr = sdd_addAttrToHandle('M_jaw_U', None, faceSdkHandle)
-        # sdd_setDrivenKeyframe(FR['jaw'] + _sdk, 'rx', -5, faceSdkHandle, cdAttr, 0.5)
-        # cdAttr = sdd_addAttrToHandle('M_jaw_D', None, faceSdkHandle)
-        # sdd_setDrivenKeyframe(FR['jaw'] + _sdk, 'rx', 30, faceSdkHandle, cdAttr, 1)
-        # sdd_setDrivenKeyframe(FR['L_mouth_Corner'] + _sdk, 'tz', -dis * 0.2, faceSdkHandle, cdAttr, 1)
-        # sdd_setDrivenKeyframe(FR['R_mouth_Corner'] + _sdk, 'tz', -dis * 0.2, faceSdkHandle, cdAttr, 1)
+
         #
         # cdAttr = sdd_addAttrToHandle('M_jaw_L', None, faceSdkHandle)
         # sdd_setDrivenKeyframe(FR['jaw'] + _sdk, 'ry', 20, faceSdkHandle, cdAttr, 1)
@@ -5334,14 +5708,14 @@ class YJDefultSDK(object):
         sdd_connectPanelAttr('R_snap_Cheek_2_O', 'Cheek_R_2_cntr.tx', 1)
         sdd_connectPanelAttr('R_snap_Cheek_2_I', 'Cheek_R_2_cntr.tx', -1)
         #
-        sdd_connectPanelAttr('M_snap_Nose_I', 'Nose_cntr.tx', 1)
+        sdd_connectPanelAttr('M_snap_Nose_O', 'Nose_cntr.tx', 1)
         sdd_connectPanelAttr('M_snap_Nose_I', 'Nose_cntr.tx', -1)
         sdd_connectPanelAttr('L_snap_Nose_U', 'Nose_L_cntr.ty', 1)
-        sdd_connectPanelAttr('R_snap_Nose_U', 'Nose_L_cntr.ty', 1)
+        sdd_connectPanelAttr('R_snap_Nose_U', 'Nose_R_cntr.ty', 1)
 
         sdd_connectPanelAttr('M_snap_UprLip_2_D', 'UprLip_2_cntr.ty', -1)
         sdd_connectPanelAttr('M_snap_UprLip_2_I', 'UprLip_2_cntr.tx', -1)
-        sdd_connectPanelAttr('M_snap_UprLip_2_O', 'UprLip_2_cntr.tx', 1)
+        sdd_connectPanelAttr('M_snap_UprLip_2_I_I', 'UprLip_2_cntr.tx', 1)
         '''
         sdd_connectPanelAttr('L_mouth_corner_O', 'Crnr_L_2_cntr.txLink', 1)#here
         sdd_connectPanelAttr('L_mouth_corner_I', 'Crnr_L_2_cntr.txLink', -1)#here
@@ -5372,7 +5746,7 @@ class YJDefultSDK(object):
         sdd_connectPanelAttr('L_snap_Crnr_2_O', 'Crnr_L_2_cntr.tx', 1)
         sdd_connectPanelAttr('R_snap_Crnr_2_D', 'Crnr_R_2_cntr.ty', -1)
         sdd_connectPanelAttr('R_snap_Crnr_2_B', 'Crnr_R_2_cntr.tz', -1)
-        sdd_connectPanelAttr('R_snap_Crnr_2_O', 'Crnr_R_2_cntr.tx', 1)
+        sdd_connectPanelAttr('R_snap_Crnr_2_O', 'Crnr_R_2_cntr.tx', -1)
         # sdd_connectPanelAttr('R_mouth_Dn_D', 'Face_R_lip_side_Dn_anim.ty', -1)
 
         sdd_connectPanelAttr('L_snap_UprLip_U', 'UprLip_L_cntr.ty', 1)
@@ -5385,8 +5759,8 @@ class YJDefultSDK(object):
         sdd_connectPanelAttr('R_snap_UprLip_O', 'UprLip_R_cntr.tx', 1)
 
         sdd_connectPanelAttr('M_snap_Mouth_U', 'UprLip_cntr.ty', 1)
-        sdd_connectPanelAttr('M_snap_Mouth_I', 'UprLip_cntr.tx', -1)
-        sdd_connectPanelAttr('M_snap_Mouth_O', 'UprLip_cntr.tx', 1)
+        sdd_connectPanelAttr('M_snap_Mouth_I', 'UprLip_cntr.tz', -1)
+        sdd_connectPanelAttr('M_snap_Mouth_O', 'UprLip_cntr.tz', 1)
         sdd_connectPanelAttr('L_M_snap_Mouth', 'Mouth_cntr.tx', 1)
         sdd_connectPanelAttr('R_M_snap_Mouth', 'Mouth_cntr.tx', -1)
         # sdd_connectPanelAttr('mouth_O', 'Face_L_mouth_O_anim.tx', 1)
@@ -5475,8 +5849,8 @@ class YJDefultSDK(object):
         # cdAttr = sdd_addAttrToHandle('M_snap_Jaw_O', None, faceSdkHandle)
         sdd_connectPanelAttr('M_snap_Jaw_U', 'Jaw_cntr.ty', 1)
         sdd_connectPanelAttr('M_snap_Jaw_D', 'Jaw_cntr.ty', -1)
-        sdd_connectPanelAttr('M_snap_Jaw_L', 'Jaw_cntr.tx', 1)
-        sdd_connectPanelAttr('M_snap_Jaw_R', 'Jaw_cntr.tx', -1)
+        sdd_connectPanelAttr('L_M_snap_Jaw', 'Jaw_cntr.tx', 1)
+        sdd_connectPanelAttr('R_M_snap_Jaw', 'Jaw_cntr.tx', -1)
         sdd_connectPanelAttr('M_snap_Jaw_I', 'Jaw_cntr.tz', -1)
         sdd_connectPanelAttr('M_snap_Jaw_O', 'Jaw_cntr.tz', 1)
         '''
