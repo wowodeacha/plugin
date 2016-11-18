@@ -217,7 +217,7 @@ class NewCtrlModule(object):
             pass
         if "_R_" in CtrlGrp_Zero:
             cmds.setAttr(CtrlGrp_Zero + ".sx", -1)
-            cmds.rotate(180 ,0, 0, CtrlGrp_Zero,r=1,os=1)
+            # cmds.rotate(180 ,0, 0, CtrlGrp_Zero,r=1,os=1)
 
     # 创建距离模型最近的毛囊
     def create_closest_follicle(self, ctrl_name, fin_mesh):
@@ -228,12 +228,14 @@ class NewCtrlModule(object):
         follicle_name_t = ctrl_name + "_fol"
         cmds.rename(follicle_name_t_orig, follicle_name_t)
         cmds.connectAttr(follicle_name_s + '.ot', follicle_name_t + '.t')
-        cmds.connectAttr(follicle_name_s + '.or', follicle_name_t + '.r')
+        # cmds.connectAttr(follicle_name_s + '.or', follicle_name_t + '.r')
 
         fin_mesh_shape = cmds.listRelatives(fin_mesh, s=1, f=1)[0]
         cmds.connectAttr(fin_mesh_shape + '.worldMatrix[0]', follicle_name_s + '.inputWorldMatrix')
         cmds.connectAttr(fin_mesh_shape + '.outMesh', follicle_name_s + '.inputMesh')
         cmds.setAttr(follicle_name_s + ".v", 0)
+        #cmds.rotate(180,120,0,fin_mesh_shape)
+        # cmds.connectAttr(180,120,0,fin_mesh_shape)
 
         # 获取最近的UV
 
