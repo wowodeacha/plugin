@@ -5526,7 +5526,7 @@ class YJDefultSDK(object):
         cdAttr = sdd_addAttrToHandle('M_snap_Chin_B', None, faceSdkHandle)
         #
         cdAttr = sdd_addAttrToHandle('M_snap_Chin_O', None, faceSdkHandle)
-        sdd_setDrivenKeyframe(FR['L_cheek'] + _sdk, 'ry', 15, faceSdkHandle, cdAttr, 1)
+        sdd_setDrivenKeyframe(FR['L_cheek'] + _sdk, 'ry', -15, faceSdkHandle, cdAttr, 1)
         sdd_setDrivenKeyframe(FR['R_cheek'] + _sdk, 'ry', 15, faceSdkHandle, cdAttr, 1)
         #
         # cdAttr, mircdAttr = sdd_addAttrToHandle('L_M_snap_Chin', 'R_M_snap_Chin', faceSdkHandle)
@@ -5868,6 +5868,8 @@ class YJDefultSDK(object):
         sdd_connectPanelAttr('R_M_snap_Jaw', 'Jaw_cntr.tx', -1)
         sdd_connectPanelAttr('M_snap_Jaw_I', 'Jaw_cntr.tz', -1)
         sdd_connectPanelAttr('M_snap_Jaw_O', 'Jaw_cntr.tz', 1)
+
+        sdd_connectPanelAttr('M_ForeHead_snap_U', 'Head_cntr.ty', 1)
         '''
         cmds.connectAttr('Face_jaw_anim.jawTranslateX', FR['jaw'] + _grp + '.tx')
         cmds.connectAttr('Face_jaw_anim.jawTranslateY', FR['jaw'] + _grp + '.ty')
