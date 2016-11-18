@@ -5870,6 +5870,7 @@ class YJDefultSDK(object):
         sdd_connectPanelAttr('M_snap_Jaw_O', 'Jaw_cntr.tz', 1)
 
         sdd_connectPanelAttr('M_ForeHead_snap_U', 'Head_cntr.ty', 1)
+        sdd_connectPanelAttr('M_snap_Neck_U', 'Head_cntr.ty', -1)
         '''
         cmds.connectAttr('Face_jaw_anim.jawTranslateX', FR['jaw'] + _grp + '.tx')
         cmds.connectAttr('Face_jaw_anim.jawTranslateY', FR['jaw'] + _grp + '.ty')
