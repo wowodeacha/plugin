@@ -1,0 +1,45 @@
+global string $gShelfTopLevel;
+string $currentShelf = `tabLayout -q -st $gShelfTopLevel`;
+string $rootPath=`InstallLocationPath`;
+string $pluginPath=$rootPath+"plug-ins/";
+string $scriptPath=$rootPath+"scripts/";
+string $iconsPath=$rootPath+"icons/";
+string $filesPath=$rootPath+"files/";
+
+string $FRPluginPyPath=$scriptPath+"sdd_YJ_FaceRigging.py";
+shelfButton
+    -command ("import sys\r\nsys.path.append( '"+$scriptPath+"' )\r\nexecfile('"+$FRPluginPyPath+"')\r\nsdd_FaceRigging('"+$rootPath+"')")
+    -annotation $pluginPath
+    -label ""
+    -imageOverlayLabel ""
+    -image ($iconsPath+"faceRig.bmp")
+    -image1 ($iconsPath+"faceRig.bmp")
+    -sourceType "python"
+    -parent $currentShelf;
+
+
+/*
+string $FRPluginPyPath=$scriptPath+"sdd_loadFRPlugin.py";
+shelfButton
+    -command ("execfile('"+$FRPluginPyPath+"')\r\nsdd_loadFRPlugin('"+$pluginPath+"')\r\nsdd_FaceRigging('"+$rootPath+"')")
+    -annotation $pluginPath
+    -label ""
+    -imageOverlayLabel ""
+    -image ($iconsPath+"faceRig.bmp")
+    -image1 ($iconsPath+"faceRig.bmp")
+    -sourceType "python"
+    -parent $currentShelf;
+*/
+
+
+global proc string InstallLocationPath ()
+{
+    string $whatIs=`whatIs InstallLocationPath`;
+    string $fullPath=`substring $whatIs 25 999`;
+    string $buffer[];
+    int $numTok=`tokenize $fullPath "/" $buffer`;
+    int $numLetters=size($fullPath);
+    int $numLettersLastFolder=size($buffer[$numTok-1]);
+    string $scriptLocation=`substring $fullPath 1 ($numLetters-$numLettersLastFolder)`;
+    return $scriptLocation;
+}
