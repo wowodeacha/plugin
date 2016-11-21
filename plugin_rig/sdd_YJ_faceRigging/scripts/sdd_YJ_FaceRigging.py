@@ -14,13 +14,12 @@ import os
 def sdd_FaceRigging(rootPath):
     global NCM
     NCM = NewCtrlModule(frRootPath = rootPath)
-    # if(sdd_checkRegister()==False):
-    #     return
-    # curTime=time.time()
-    # endTime=time.mktime(time.strptime('2016-10-20','%Y-%m-%d'))
-    # if(curTime>endTime):
-    #     cmds.confirmDialog(t='Timeout',m='Please contact sundongdong.\r\nEmail:136941679@qq.com',b=['OK'])
-    #     return
+
+    curTime=time.time()
+    startTime=time.mktime(time.strptime('2016-10-20','%Y-%m-%d'))
+    endTime=time.mktime(time.strptime('2017-06-20','%Y-%m-%d'))
+    if(curTime>endTime) or(curTime<startTime) :
+        return
 
     global frRootPath
     global ctrBsPuffDate
@@ -332,73 +331,8 @@ def sdd_addOrSubScaleValue(typ):
 
 
 # ==================================================================================
-# zzx .........................
-def zzx_importExportCnt(_type):
-    global _ctrlPosDict
-    if _type == "export":
-        _ctrlPosDict = {}
-        _ctrlList = cmds.ls('*FK') + cmds.ls('*Ctrl') + cmds.ls('*IK') + cmds.ls('*Pole') + cmds.ls('*CC') + cmds.ls(
-            '*cnt') + cmds.ls('*Switch')
-        for i in range(len(_ctrlList)):
-            _ctrlPosList_ele = []
-            for j in range(100):
-                if cmds.objExists(_ctrlList[i] + ".cv[" + str(j) + "]"):
-                    _TXGrp = cmds.xform(_ctrlList[i] + ".cv[" + str(j) + "]", q=1, ws=1, t=1)
-                    _ctrlPosList_ele.append(_TXGrp)
-                else:
-                    break
-            _ctrlPosDict[_ctrlList[i]] = _ctrlPosList_ele
-    else:
-        for _cnt in _ctrlPosDict.keys():
-            if cmds.objExists(_cnt):
-                _anim = _cnt
-                _ctrlPosList_ele = _ctrlPosDict[_cnt]
-                for k in range(len(_ctrlPosList_ele)):
-                    cmds.xform(_anim + ".cv[" + str(k) + "]", ws=1, t=_ctrlPosList_ele[k])
-
-    if _type == "export":
-        sys.stderr.write('Export Cnt ~')
-    else:
-        sys.stderr.write('Import Cnt ~')
 
 
-def zzx_mirrorCnt(_type):
-    _from_AnimList = cmds.ls('Left*FK') + cmds.ls('Left*IK') + cmds.ls('Left*Pole') + cmds.ls('Left*CC') + cmds.ls(
-        'Left*Switch') + cmds.ls('L*cnt')
-    _to_AnimList = cmds.ls('Right*FK') + cmds.ls('Right*IK') + cmds.ls('Right*Pole') + cmds.ls('Right*CC') + cmds.ls(
-        'Right*Switch') + cmds.ls('R*cnt')
-    if _type == 'LtoR':
-        zzx_mirrorCntCMD(_from_AnimList, _to_AnimList)
-    else:
-        zzx_mirrorCntCMD(_to_AnimList, _from_AnimList)
-
-
-def zzx_mirrorCntCMD(_from_AnimList, _to_AnimList):
-    for _num in range(len(_from_AnimList)):
-        _LCtrl = _from_AnimList[_num]
-        _RCtrl = _to_AnimList[_num]
-        for i in range(100):
-            if cmds.objExists(_LCtrl + ".cv[" + str(i) + "]"):
-                _TXGrp = cmds.xform(_LCtrl + ".cv[" + str(i) + "]", q=1, ws=1, t=1)
-                _TXGrp_new = [_TXGrp[0] * (-1), _TXGrp[1], _TXGrp[2]]
-                cmds.xform(_RCtrl + ".cv[" + str(i) + "]", ws=1, t=_TXGrp_new)
-            else:
-                continue
-
-
-# def zzx_zeroCnt():
-#     _allAnimGrp = cmds.ls('*FK') + cmds.ls('*Ctrl') + cmds.ls('*IK') + cmds.ls('*Pole') + cmds.ls('*CC') + cmds.ls(
-#         '*cnt')
-#     _attrLists = ['translateX', 'translateY', 'translateZ', 'rotateX', 'rotateY', 'rotateZ', 'Shut', 'Thumb', 'Index',
-#                   'Middle', 'Ring', 'Pinky', 'stertch', 'Heel', 'Ball', 'TipToe', 'Side']
-#     for _anim in _allAnimGrp:
-#         _attrGrp = cmds.listAttr(_anim, k=1)
-#         for _attr in _attrGrp:
-#             if _attr in _attrLists:
-#                 cmds.setAttr(_anim + "." + _attr, 0)
-
-
-# zzx .........................
 # ==================================================================================
 def sdd_createSecLacator():
     FR, FRJntPos, FRUIPos = sdd_frTNameDirc()
@@ -3259,8 +3193,8 @@ def sdd_inverseCaclBlendShape(outMeshName, skinMeshName, finalMeshName, skinNode
                 finalBeforePoint = sdd_convertMatrixToPoint(finalbeforeMatrix)
                 skinBeforePoint = sdd_convertMatrixToPoint(skinBeforeMatrix)
 
-                if (finalBeforePoint != finalPoint):
-                    outPoint = origPoint + (finalBeforePoint - skinBeforePoint)
+
+                outPoint = origPoint + (finalBeforePoint - skinBeforePoint)
 
             outPointArray.append(outPoint)
 
@@ -6259,4 +6193,3 @@ class NewCtrlModule(object):
 
 
 
-sdd_FaceRigging('C:/Users/sundongdong/Desktop/sdd_faceRigging/')
